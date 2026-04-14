@@ -195,11 +195,78 @@ client.related(resource, id, sub, **params)
 # Voorbeeld: client.related("aangeboden-opleidingen", uuid, "aangeboden-opleiding-cohorten")
 ```
 
-API-tips:
-- Paginering: de API pagineert via HATEOAS `_links.next`; `client.fetch()` volgt dit automatisch
-- Filters: gebruik query-parameters zoals `organisatorischeEenheidType=ONDERWIJSINSTELLING`
-- Datum: `datumGeldigOp=2024-01-01` voor historische snapshots
-- Alle beschikbare endpoints en parameters staan in `RIO_LOD_API_v2.yml`
+---
+
+## Efficiënt queries schrijven
+
+RIO is een HATEOAS-API: resources zijn via UUID-links aan elkaar gekoppeld. De valkuil is dat
+je voor elke gerichte query eerst duizenden records ophaalt om een UUID te vinden. Hieronder
+de regels om dat te vermijden.
+
+### Regel 1 — Gebruik altijd top-level `fetch()` met filters, niet traversal
+
+De meeste analyses zijn te beantwoorden door direct de juiste top-level resource op te halen
+met een filter. `client.related()` is zelden nodig voor bulkanalyses.
+
+```python
+# FOUT: 20.700 records ophalen om UUID te vinden, dan sub-resource
+alle = client.fetch("organisatorische-eenheden")
+uuid = next(i["id"] for i in alle if "ROC" in i.get("naam", ""))
+aanbod = client.related("organisatorische-eenheden", uuid, "aangeboden-opleidingen")
+
+# GOED: aangeboden-opleidingen direct ophalen met organisatorischeEenheidcode (BRIN)
+aanbod = client.fetch("aangeboden-opleidingen", organisatorischeEenheidcode="25LH")
+```
+
+### Regel 2 — Beschikbare filters per resource
+
+Gebruik deze filters om de dataset te verkleinen vóórdat je gaat filteren in pandas.
+
+| Resource | Nuttige filters |
+|---|---|
+| `organisatorische-eenheden` | `organisatorischeEenheidType` (`ONDERWIJSINSTELLING` / `ONDERWIJSBESTUUR` / `ONDERWIJSAANBIEDER`) |
+| `aangeboden-opleidingen` | `organisatorischeEenheidcode` (BRIN), `onderwijslocatieId` (UUID), `type`, `opleidingseenheidcode` |
+| `onderwijslocatiegebruiken` | `onderwijslocatieId` (UUID), `onderwijsbestuurId` (UUID) |
+| `onderwijslocaties` | `aangebodenOpleidingId` (UUID) |
+| `erkenningen` | `volledigeNaam`, `plaatsnaam`, `erkenningtype` |
+| `opleidingserkenningen` | `erkendeopleidingscode`, `opleidingserkenningtype` |
+| Alle resources | `datumGeldigOp` (datum, bijv. `2024-01-01`) voor historische snapshots |
+
+### Regel 3 — Als UUID toch nodig is, filter eerst op type
+
+`organisatorische-eenheden` bevat ~20.700 records van drie typen. Filter op type om de
+zoekruimte te verkleinen voordat je een naam opzoekt:
+
+```python
+# Alleen instellingen (~2.000 i.p.v. 20.700)
+instellingen = client.fetch("organisatorische-eenheden",
+                             organisatorischeEenheidType="ONDERWIJSINSTELLING")
+uuid = next(i["id"] for i in instellingen if "ROC van Amsterdam" in i.get("naam", ""))
+```
+
+### Regel 4 — `client.related()` alleen voor één specifiek record
+
+`related()` is efficiënt als je al een UUID hebt en de gelinkte sub-data wil zien.
+Gebruik het niet in een loop over honderden records.
+
+```python
+# GOED: één instelling, UUID bekend, sub-resources ophalen
+cohorten = client.related("aangeboden-opleidingen", known_uuid, "aangeboden-opleiding-cohorten")
+
+# FOUT: related() in een loop — levert honderden losse API-calls
+for item in alle_opleidingen:
+    cohorten = client.related("aangeboden-opleidingen", item["id"], "aangeboden-opleiding-cohorten")
+```
+
+### Regel 5 — Steekproef altijd vóór volledige fetch
+
+Grote resources (`organisatorische-eenheden` ~20.700, `onderwijslocaties` ~13.700,
+`aangeboden-opleidingen` variabel) kosten tijd. Verken de veldstructuur eerst:
+
+```python
+sample = client.fetch("aangeboden-opleidingen", page=0, pageSize=5)
+print(sample[0].keys())  # Welke velden zijn er?
+```
 
 ---
 
