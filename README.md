@@ -1,47 +1,45 @@
-# rio-duo-open-onderwijsdata
+# riodata
 
-Python package en catalogussite voor de [RIO LOD API v2](https://lod.onderwijsregistratie.nl/api/rio/v2) — het dagelijks bijgewerkte register van Nederlandse onderwijsinstellingen, -aanbieders en opleidingen (Registratie Instellingen en Opleidingen).
+Python client voor de [RIO LOD API v2](https://lod.onderwijsregistratie.nl/api/rio/v2) — het dagelijks bijgewerkte register van Nederlandse onderwijsinstellingen en opleidingen.
 
 ## Installatie
 
 ```bash
-uv sync
+pip install riodata                  # alleen client
+pip install riodata[analyse]         # + pandas en matplotlib
+pip install riodata[catalogus]       # + anthropic (voor catalogus_ai.py)
 ```
 
 ## Gebruik
 
 ```python
-from riodata import client
+from riodata import fetch, get, related
 
 # Alle onderwijslocaties ophalen (pagineert automatisch)
-locaties = client.fetch("onderwijslocaties")
+locaties = fetch("onderwijslocaties")
 
-# Één record ophalen via ID
-instelling = client.get("organisatorische-eenheden", "some-uuid")
+# Aangeboden opleidingen per instelling via BRIN-code
+aanbod = fetch("aangeboden-opleidingen", organisatorischeEenheidcode="25LH")
 
-# Sub-resources ophalen
-cohorten = client.related("aangeboden-opleidingen", uuid, "aangeboden-opleiding-cohorten")
+# Één record ophalen via UUID
+instelling = get("organisatorische-eenheden", "some-uuid")
+
+# Sub-resources van een record
+cohorten = related("aangeboden-opleidingen", uuid, "aangeboden-opleiding-cohorten")
 ```
 
 ## Structuur
 
 ```
-src/riodata/client.py           RIO LOD API client (fetch, get, related)
-data/02-prepared/
-  rio_resources.json            14 resources — basismetadata
-  rio_resources_ai.json         14 resources — met AI-samenvatting, tags, voorbeeldvragen
-catalogus/catalogus_ai.py       AI-verrijking via Claude Batches API
-voorbeelden/                    Analysescripts + output
-docs/                           GitHub Pages catalogussite
-RIO_LOD_API_v2.yml              OpenAPI spec van de RIO API
+src/riodata/          Python package (RIO LOD API client)
+catalogus/            AI-verrijking van de resourcecatalogus
+data/02-prepared/     14 RIO-resources met samenvatting, tags en voorbeeldvragen
+voorbeelden/          Analysescripts + gegenereerde plots
+docs/                 GitHub Pages catalogussite
+RIO_LOD_API_v2.yml    OpenAPI spec van de RIO API
 ```
 
-## Nieuwe analyse toevoegen
+## Links
 
-Zie `CLAUDE.md` voor de stap-voor-stap workflow.
-
-Scripts draaien met:
-
-```bash
-uv run python voorbeelden/rio_onderwijslocaties.py
-```
+- [Catalogussite](https://cedanl.github.io/rio-onderwijsdata)
+- [RIO LOD API documentatie](https://lod.onderwijsregistratie.nl/api/rio/v2)

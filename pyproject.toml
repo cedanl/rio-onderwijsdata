@@ -1,16 +1,20 @@
 [project]
 name = "riodata"
 version = "0.1.0"
+description = "Python client voor de RIO LOD API v2 — het Nederlandse register van onderwijsinstellingen en opleidingen"
+readme = "README.md"
+license = { text = "MIT" }
+authors = [{ name = "cedanl", email = "info@cedanl.nl" }]
 requires-python = ">=3.11"
-dependencies = [
-    "httpx",
-    "pandas",
-    "matplotlib",
-    "anthropic>=0.87.0",
-]
+dependencies = ["httpx"]
 
-[dependency-groups]
-dev = []
+[project.optional-dependencies]
+analyse = ["pandas", "matplotlib"]
+catalogus = ["anthropic>=0.87.0"]
+
+[project.urls]
+Homepage = "https://cedanl.github.io/rio-onderwijsdata"
+Repository = "https://github.com/cedanl/rio-onderwijsdata"
 
 [tool.hatch.build.targets.wheel]
 packages = ["src/riodata"]
