@@ -1,0 +1,11 @@
+[
+  {
+    "id": "rio_onderwijslocaties",
+    "titel": "Top 25 steden naar aantal onderwijslocaties",
+    "vraag": "In welke steden staan de meeste geregistreerde onderwijslocaties?",
+    "datasets": ["onderwijslocaties"],
+    "plot": "rio_onderwijslocaties.png",
+    "interpretatie": null,
+    "status": "experimenteel"
+  }
+]
