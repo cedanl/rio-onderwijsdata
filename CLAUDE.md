@@ -1,25 +1,31 @@
 # CLAUDE.md — RIO DUO Open Onderwijsdata
 
-Dit is een Python package voor de RIO LOD API v2 — het dagelijks bijgewerkte
-publieke register van Nederlandse onderwijsinstellingen en opleidingen —
-plus een GitHub Pages catalogussite. Hieronder staat hoe je als AI-assistent
-een nieuwe analyse maakt van A tot Z.
+Dit is een Python package voor twee bronnen van Nederlandse onderwijsdata:
+
+1. **RIO LOD API v2** — dagelijks bijgewerkt register van instellingen en opleidingen
+2. **DUO Open Data** — 57 datasets via onderwijsdata.duo.nl (CKAN API)
+
+Hieronder staat hoe je als AI-assistent een nieuwe analyse maakt van A tot Z.
 
 ---
 
 ## Repo-structuur
 
 ```
-src/riodata/client.py           RIO LOD API client (fetch, get, related)
-data/02-prepared/
-  rio_resources_ai.json         Catalogus: 14 resources met AI-samenvatting, tags, voorbeeldvragen
-  rio_resources.json            Catalogus: zelfde resources, zonder AI-verrijking
-RIO_LOD_API_v2.yml              OpenAPI spec van de RIO API
+src/riodata/
+  client.py               RIO LOD API client (fetch, get, related)
+  duo.py                  DUO CKAN client (catalog, resources, load, search)
+  data/
+    rio_resources_ai.json Catalogus: 14 RIO-resources met AI-samenvatting, tags, voorbeeldvragen
+    rio_resources.json    Catalogus: zelfde resources, zonder AI-verrijking
+    duo_resources.json    Catalogus: 57 DUO-datasets (gegenereerd uit CKAN)
+data/02-prepared/         bron-JSONs voor de RIO-catalogus
+RIO_LOD_API_v2.yml        OpenAPI spec van de RIO API
 voorbeelden/
-  manifest.json                 Bron voor alle voorbeelden op de site
-  output/                       Plots (.png) en interpretaties (INTERPRETATIE.md)
-  *.py                          Analysescripts
-docs/                           GitHub Pages site (gebouwd door workflow)
+  manifest.json           Bron voor alle voorbeelden op de site
+  output/                 Plots (.png) en interpretaties (INTERPRETATIE.md)
+  *.py                    Analysescripts
+docs/                     GitHub Pages site (gebouwd door workflow)
 ```
 
 ---
@@ -28,44 +34,71 @@ docs/                           GitHub Pages site (gebouwd door workflow)
 
 ### Stap 1 — Verken de catalogus
 
-Lees `data/02-prepared/rio_resources_ai.json` om te zien welke resources beschikbaar zijn.
-Elk object heeft: `_rio_resource`, `bron`, `periode`, `doel`, `tags`, `voorbeeldvragen`, `categorie`, `sub_resources`, `filters`.
+```python
+import riodata
 
-Handige filters om relevante resources te vinden:
+# RIO: 14 live API-resources
+rio = riodata.catalog(source="rio")
+
+# DUO: 57 downloadbare datasets (offline, lokale JSON)
+duo = riodata.catalog(source="duo")
+
+# Alles gecombineerd
+alle = riodata.catalog(source="all")
+```
+
+**RIO-records** hebben: `_rio_resource`, `bron`, `periode`, `doel`, `tags`, `voorbeeldvragen`,
+`categorie`, `sub_resources`, `filters`.
+
+**DUO-records** hebben dezelfde velden plus: `_ckan_id`, `_resources` (downloadlinks),
+`_kolommen` (CSV-kolomnamen).
+
+Handige filters voor RIO:
 - Op categorie: `Instellingen`, `Opleidingsstructuur`, `Aanbod`, `Locaties`, `Licenties en erkenningen`
-- Op `_rio_resource`: bijv. `"organisatorische-eenheden"`, `"aangeboden-opleidingen"`, `"onderwijslocaties"`
-- Op `tags`: bijv. `instellingen`, `opleidingen`, `locaties`, `erkenningen`, `mbo`, `cohorten`
+- Op `_rio_resource`: bijv. `"organisatorische-eenheden"`, `"aangeboden-opleidingen"`
+
+Handige filters voor DUO:
+- Op categorie: `PO`, `VO`, `MBO`, `HO`, `SO`, `Arbeidsmarkt`
+- Via `riodata.duo.search("trefwoord")` voor full-text zoeken in CKAN
 
 ### Stap 2 — Verken de resource
 
-Gebruik de client om data te bekijken vóórdat je analyses schrijft:
-
+**RIO:**
 ```python
-from riodata import client
+from riodata import fetch, get, related
 
-# Kleine steekproef van een resource
-sample = client.fetch("onderwijslocaties", page=0, pageSize=3)
-
-# Één record ophalen via ID (UUID)
-instelling = client.get("organisatorische-eenheden", "some-uuid")
-
-# Sub-resources ophalen
-cohorten = client.related("aangeboden-opleidingen", uuid, "aangeboden-opleiding-cohorten")
+sample = fetch("onderwijslocaties", page=0, pageSize=3)
+instelling = get("organisatorische-eenheden", "some-uuid")
+cohorten = related("aangeboden-opleidingen", uuid, "aangeboden-opleiding-cohorten")
 ```
 
-Alle beschikbare resources staan in `RIO_LOD_API_v2.yml` (OpenAPI spec).
+**DUO:**
+```python
+from riodata import duo
+
+# Bekijk beschikbare bestanden per dataset
+duo.resources("studentprognoses-mbo-per-instelling")
+
+# Laad als DataFrame (vereist pandas)
+df = duo.load("studentprognoses-mbo-per-instelling", 0)          # index
+df = duo.load("p01hoinges", "wetenschappelijk")                   # naam-substring
+```
+
+DUO-datasets bestaan uit meerdere CSV-bestanden per dimensie-combinatie
+(bijv. `_instelling`, `_gemeente`, `_sectorkamer`). Bekijk `duo.resources()` eerst.
 
 ### Stap 3 — Schrijf het analysescript
 
 Maak een nieuw script in `voorbeelden/`. Conventies:
 
-- **Bestandsnaam**: beschrijvend, lowercase met underscores, bijv. `rio_mbo_aanbod_regio.py`
+- **Bestandsnaam**: beschrijvend, lowercase met underscores, bijv. `duo_mbo_prognose_regio.py`
+- **Prefix**: `rio_` voor RIO-analyses, `duo_` voor DUO-analyses
 - **Docstring bovenaan**: vermeld gebruikte resource(s) en de centrale vraag
 - **Output**: sla plot(s) op in `voorbeelden/output/` als PNG
-- **Submap**: bij meerdere plots per analyse, gebruik een submap: `voorbeelden/output/{analyse_naam}/`
+- **Submap**: bij meerdere plots per analyse: `voorbeelden/output/{analyse_naam}/`
 - Gebruik `matplotlib` voor visualisaties; geen interactieve libraries
 
-Minimale scriptstructuur:
+Minimale structuur voor een **RIO-analyse**:
 
 ```python
 """
@@ -75,94 +108,100 @@ Centrale vraag: ...
 """
 import pandas as pd
 import matplotlib.pyplot as plt
-from riodata import client
+from riodata import fetch
 
 OUTPUT = "voorbeelden/output/mijn_analyse.png"
 
-# 1. Data ophalen
-items = client.fetch("onderwijslocaties")
+items = fetch("onderwijslocaties")
 df = pd.DataFrame(items)
 
-# 2. Bewerken en plotten
 fig, ax = plt.subplots(figsize=(10, 6))
 # ...
-fig.suptitle("Titel", fontsize=14, fontweight="bold")
 fig.tight_layout()
 fig.savefig(OUTPUT, dpi=150, bbox_inches="tight")
-print(f"Plot opgeslagen: {OUTPUT}")
+```
+
+Minimale structuur voor een **DUO-analyse**:
+
+```python
+"""
+Titel van de analyse
+Resource(s): DUO CKAN — studentprognoses-mbo-per-instelling
+Centrale vraag: ...
+"""
+import pandas as pd
+import matplotlib.pyplot as plt
+from riodata import duo
+
+OUTPUT = "voorbeelden/output/mijn_analyse.png"
+
+df = duo.load("studentprognoses-mbo-per-instelling", "mbo-studentenprognose_instelling")
+
+fig, ax = plt.subplots(figsize=(10, 6))
+# ...
+fig.tight_layout()
+fig.savefig(OUTPUT, dpi=150, bbox_inches="tight")
 ```
 
 Scripts draaien met: `uv run python voorbeelden/mijn_analyse.py`
 
 ### Stap 4 — Schrijf de interpretatie
 
-Maak een `INTERPRETATIE.md` naast de plot. Bij een enkele plot: `voorbeelden/output/{naam}_INTERPRETATIE.md`.
+Bij een enkele plot: `voorbeelden/output/{naam}_INTERPRETATIE.md`.
 Bij een submap: `voorbeelden/output/{naam}/INTERPRETATIE.md`.
-
-Structuur van de interpretatie:
 
 ```markdown
 # Titel van de analyse
 
-**Resource(s):** RIO LOD API v2 — [resource naam]
-**Periode:** actueel (dagelijks bijgewerkt)
+**Resource(s):** DUO CKAN — [dataset naam]
+**Periode:** ...
 **Analyseniveau:** ...
 
 ---
 
+## Kerncijfers
+
+| | |
+|---|---|
+| Totaal ... | **...** |
+
 ## Belangrijkste bevindingen
 
 ### 1. Bevinding
-Beschrijving met concrete cijfers uit de plot.
-
-### 2. Bevinding
-...
+Beschrijving met concrete cijfers.
 
 ---
 
 ## Strategische implicaties
 
 1. ...
-2. ...
 
 ---
 
-*Bron: RIO LOD API v2 — lod.onderwijsregistratie.nl*
+*Bron: DUO Open Data — onderwijsdata.duo.nl*
 *Analyse: [maand jaar]*
 ```
 
 ### Stap 5 — Voeg toe aan manifest
-
-Voeg een entry toe aan `voorbeelden/manifest.json`:
 
 ```json
 {
   "id": "mijn_analyse",
   "titel": "Korte beschrijvende titel",
   "vraag": "De centrale vraag die deze analyse beantwoordt?",
-  "datasets": ["onderwijslocaties"],
+  "datasets": ["studentprognoses-mbo-per-instelling"],
   "plot": "mijn_analyse.png",
   "interpretatie": "mijn_analyse_INTERPRETATIE.md",
   "status": "experimenteel"
 }
 ```
 
-Het veld `datasets` bevat `_rio_resource` waarden (bijv. `"onderwijslocaties"`, `"organisatorische-eenheden"`).
+Voor DUO: `datasets` bevat de `_ckan_id` waarden (bijv. `"p01hoinges"`).
+Voor RIO: `datasets` bevat de `_rio_resource` waarden (bijv. `"onderwijslocaties"`).
 
 Voor een analyse met submap:
-- `"plot": "mijn_analyse/mijn_analyse.png"`
-- `"interpretatie": "mijn_analyse/INTERPRETATIE.md"` → wordt door de workflow hernoemd naar `mijn_analyse_INTERPRETATIE.md`
-
-Velden:
-| Veld | Beschrijving |
-|---|---|
-| `id` | Uniek, lowercase underscore, zelfde als scriptnaam |
-| `titel` | Wat de analyse laat zien (max ~60 tekens) |
-| `vraag` | De concrete vraag die beantwoord wordt |
-| `datasets` | Lijst van `_rio_resource` waarden die gebruikt worden |
-| `plot` | Pad relatief t.o.v. `voorbeelden/output/` |
-| `interpretatie` | Idem, of `null` als er geen is |
-| `status` | Altijd `"experimenteel"` |
+- `"plot": "mijn_analyse/01_plot.png"`
+- `"interpretatie": "mijn_analyse/INTERPRETATIE.md"`
 
 ### Stap 6 — Push
 
@@ -172,100 +211,113 @@ git commit -m "feat: [beschrijving analyse]"
 git push
 ```
 
-De GitHub Actions workflow pikt de wijzigingen in `voorbeelden/manifest.json` en `voorbeelden/output/` automatisch op, en synct alles naar `docs/voorbeelden/`.
-
 ---
 
 ## Client-referentie
 
+### RIO LOD API
+
 ```python
-from riodata import client
+from riodata import fetch, get, related
 
-client.fetch(resource, **params)
-# Haalt alle items op van een list-resource, pagineert automatisch via HATEOAS.
-# page=N voor slechts één pagina; pageSize=N (max 100, API-maximum)
-# Voorbeeld: client.fetch("onderwijslocaties", page=0, pageSize=10)
+fetch(resource, **params)
+# Pagineert automatisch via HATEOAS. page=N voor één pagina, pageSize=N (max 100).
 
-client.get(resource, id, **params)
-# Haalt één resource op via UUID.
-# Voorbeeld: client.get("organisatorische-eenheden", "some-uuid")
+get(resource, id, **params)
+# Één resource via UUID.
 
-client.related(resource, id, sub, **params)
-# Haalt gelinkte sub-resources op.
-# Voorbeeld: client.related("aangeboden-opleidingen", uuid, "aangeboden-opleiding-cohorten")
+related(resource, id, sub, **params)
+# Gelinkte sub-resources van één record.
+```
+
+### DUO CKAN
+
+```python
+from riodata import duo
+
+duo.catalog()
+# 57 DUO-datasets als catalogusrecords (offline, lokale JSON).
+
+duo.catalog()  # gebruik riodata.catalog(source="duo", live=True) voor live CKAN
+
+duo.search("trefwoord")
+# Zoek datasets via CKAN full-text search.
+
+duo.resources("dataset-id")
+# Lijst van downloadbare bestanden voor een dataset.
+# Returns: [{"naam": ..., "url": ..., "format": ..., "id": ...}]
+
+duo.load("dataset-id", resource=0, skiprows=None, **kwargs)
+# Download en laad als DataFrame. resource: int (index) of str (naam-substring).
+# Vereist pandas + openpyxl voor .xlsx; pandas is voldoende voor .csv.
+```
+
+### Catalogus
+
+```python
+import riodata
+
+riodata.catalog(source="rio")              # 14 RIO-resources
+riodata.catalog(source="duo")              # 57 DUO-datasets (lokale snapshot)
+riodata.catalog(source="all")              # 71 gecombineerd
+riodata.catalog(source="duo", live=True)   # live van CKAN
+riodata.catalog(source="rio", ai=False)    # zonder AI-verrijking
 ```
 
 ---
 
-## Efficiënt queries schrijven
+## Efficiënt queries schrijven (RIO)
 
-RIO is een HATEOAS-API: resources zijn via UUID-links aan elkaar gekoppeld. De valkuil is dat
-je voor elke gerichte query eerst duizenden records ophaalt om een UUID te vinden. Hieronder
-de regels om dat te vermijden.
+RIO is een HATEOAS-API. De valkuil is duizenden records ophalen om een UUID te vinden.
 
-### Regel 1 — Gebruik altijd top-level `fetch()` met filters, niet traversal
-
-De meeste analyses zijn te beantwoorden door direct de juiste top-level resource op te halen
-met een filter. `client.related()` is zelden nodig voor bulkanalyses.
+### Regel 1 — Gebruik filters, niet traversal
 
 ```python
-# FOUT: 20.700 records ophalen om UUID te vinden, dan sub-resource
-alle = client.fetch("organisatorische-eenheden")
+# FOUT: 20.700 records ophalen om UUID te vinden
+alle = fetch("organisatorische-eenheden")
 uuid = next(i["id"] for i in alle if "ROC" in i.get("naam", ""))
-aanbod = client.related("organisatorische-eenheden", uuid, "aangeboden-opleidingen")
 
-# GOED: aangeboden-opleidingen direct ophalen met organisatorischeEenheidcode (BRIN)
-aanbod = client.fetch("aangeboden-opleidingen", organisatorischeEenheidcode="25LH")
+# GOED: direct filteren via BRIN-code
+aanbod = fetch("aangeboden-opleidingen", organisatorischeEenheidcode="25LH")
 ```
 
 ### Regel 2 — Beschikbare filters per resource
 
-Gebruik deze filters om de dataset te verkleinen vóórdat je gaat filteren in pandas.
-
 | Resource | Nuttige filters |
 |---|---|
 | `organisatorische-eenheden` | `organisatorischeEenheidType` (`ONDERWIJSINSTELLING` / `ONDERWIJSBESTUUR` / `ONDERWIJSAANBIEDER`) |
-| `aangeboden-opleidingen` | `organisatorischeEenheidcode` (BRIN), `onderwijslocatieId` (UUID), `type`, `opleidingseenheidcode` |
-| `onderwijslocatiegebruiken` | `onderwijslocatieId` (UUID), `onderwijsbestuurId` (UUID) |
-| `onderwijslocaties` | `aangebodenOpleidingId` (UUID) |
+| `aangeboden-opleidingen` | `organisatorischeEenheidcode` (BRIN), `onderwijslocatieId`, `type`, `opleidingseenheidcode` |
+| `onderwijslocatiegebruiken` | `onderwijslocatieId`, `onderwijsbestuurId` |
+| `onderwijslocaties` | `aangebodenOpleidingId` |
 | `erkenningen` | `volledigeNaam`, `plaatsnaam`, `erkenningtype` |
 | `opleidingserkenningen` | `erkendeopleidingscode`, `opleidingserkenningtype` |
-| Alle resources | `datumGeldigOp` (datum, bijv. `2024-01-01`) voor historische snapshots |
+| Alle resources | `datumGeldigOp` (bijv. `2024-01-01`) voor historische snapshots |
 
-### Regel 3 — Als UUID toch nodig is, filter eerst op type
-
-`organisatorische-eenheden` bevat ~20.700 records van drie typen. Filter op type om de
-zoekruimte te verkleinen voordat je een naam opzoekt:
+### Regel 3 — Filter op type als UUID toch nodig is
 
 ```python
 # Alleen instellingen (~2.000 i.p.v. 20.700)
-instellingen = client.fetch("organisatorische-eenheden",
-                             organisatorischeEenheidType="ONDERWIJSINSTELLING")
+instellingen = fetch("organisatorische-eenheden",
+                     organisatorischeEenheidType="ONDERWIJSINSTELLING")
 uuid = next(i["id"] for i in instellingen if "ROC van Amsterdam" in i.get("naam", ""))
 ```
 
-### Regel 4 — `client.related()` alleen voor één specifiek record
-
-`related()` is efficiënt als je al een UUID hebt en de gelinkte sub-data wil zien.
-Gebruik het niet in een loop over honderden records.
+### Regel 4 — `related()` alleen voor één specifiek record
 
 ```python
-# GOED: één instelling, UUID bekend, sub-resources ophalen
-cohorten = client.related("aangeboden-opleidingen", known_uuid, "aangeboden-opleiding-cohorten")
+# GOED
+cohorten = related("aangeboden-opleidingen", known_uuid, "aangeboden-opleiding-cohorten")
 
-# FOUT: related() in een loop — levert honderden losse API-calls
+# FOUT: related() in een loop
 for item in alle_opleidingen:
-    cohorten = client.related("aangeboden-opleidingen", item["id"], "aangeboden-opleiding-cohorten")
+    cohorten = related("aangeboden-opleidingen", item["id"], "aangeboden-opleiding-cohorten")
 ```
 
-### Regel 5 — Steekproef altijd vóór volledige fetch
-
-Grote resources (`organisatorische-eenheden` ~20.700, `onderwijslocaties` ~13.700,
-`aangeboden-opleidingen` variabel) kosten tijd. Verken de veldstructuur eerst:
+### Regel 5 — Steekproef vóór volledige fetch
 
 ```python
-sample = client.fetch("aangeboden-opleidingen", page=0, pageSize=5)
-print(sample[0].keys())  # Welke velden zijn er?
+sample = fetch("aangeboden-opleidingen", page=0, pageSize=5)
+print(sample[0].keys())
 ```
 
 ---
@@ -275,3 +327,4 @@ print(sample[0].keys())  # Welke velden zijn er?
 - Geen `docs/` handmatig aanpassen — de workflow regelt dat
 - Geen `docs/data.json` of `docs/voorbeelden.json` aanraken
 - Geen nieuwe dependencies toevoegen zonder `uv add`
+- `duo_resources.json` niet handmatig bewerken — regenereer via het generatiescript
