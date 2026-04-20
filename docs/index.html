@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>RIO Onderwijsdata Catalogus</title>
+  <title>Nederlandse Onderwijsdata Catalogus</title>
   <style>
     :root {
       --primary: #1a56db;
@@ -99,7 +99,26 @@
     .badge-aanbod        { background: #fef3c7; color: #92400e; }
     .badge-locaties      { background: #fce7f3; color: #9d174d; }
     .badge-licenties     { background: #e0f2fe; color: #075985; }
+    .badge-po            { background: #d1fae5; color: #065f46; }
+    .badge-vo            { background: #e0e7ff; color: #3730a3; }
+    .badge-mbo           { background: #fef9c3; color: #713f12; }
+    .badge-ho            { background: #ffe4e6; color: #9f1239; }
+    .badge-so            { background: #f0fdf4; color: #14532d; }
+    .badge-arbeidsmarkt  { background: #fff7ed; color: #7c2d12; }
     .badge-default       { background: #f3f4f6; color: #4b5563; }
+
+    .bron-pill {
+      display: inline-flex;
+      align-items: center;
+      padding: 0.15rem 0.5rem;
+      border-radius: 4px;
+      font-size: 0.65rem;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.06em;
+    }
+    .bron-rio { background: #1a3a5c; color: #93c5fd; }
+    .bron-duo { background: #065f46; color: #6ee7b7; }
 
     .card-doel { font-size: 0.84rem; color: #374151; line-height: 1.55; }
 
@@ -295,12 +314,16 @@
 <body>
 
 <header>
-  <h1>RIO Onderwijsdata Catalogus</h1>
-  <p>14 resources uit de RIO LOD API v2 — het dagelijks bijgewerkte register van Nederlandse onderwijsinstellingen en opleidingen.</p>
+  <h1>Nederlandse Onderwijsdata Catalogus</h1>
+  <p>RIO LOD API v2 (dagelijks bijgewerkt register) &amp; DUO Open Data (57 downloadbare datasets).</p>
 </header>
 
 <div class="controls">
   <input class="search" type="text" id="search" placeholder="Zoek op resource, beschrijving, voorbeeldvraag, tag…">
+  <div class="filter-row">
+    <span class="filter-label">Bron</span>
+    <div id="bron-filters" style="display:flex;flex-wrap:wrap;gap:0.4rem;"></div>
+  </div>
   <div class="filter-row">
     <span class="filter-label">Categorie</span>
     <div id="type-filters" style="display:flex;flex-wrap:wrap;gap:0.4rem;"></div>
@@ -340,21 +363,31 @@ const CAT_CLASS = {
   'Aanbod':                    'badge-aanbod',
   'Locaties':                  'badge-locaties',
   'Licenties en erkenningen':  'badge-licenties',
+  'PO':                        'badge-po',
+  'VO':                        'badge-vo',
+  'MBO':                       'badge-mbo',
+  'HO':                        'badge-ho',
+  'SO':                        'badge-so',
+  'Arbeidsmarkt':               'badge-arbeidsmarkt',
 };
 
 let data = [];
 let voorbeelden = [];
-let voorbeeldenByResource = {};   // _rio_resource → [voorbeeld, ...]
+let voorbeeldenByResource = {};   // resource-id → [voorbeeld, ...]
 let activeCategories = new Set();
 let activeTags = new Set();
+let activeBronnen = new Set();
 let query = '';
 
 async function init() {
-  const [dataRes, vbRes] = await Promise.all([
+  const [rioRes, duoRes, vbRes] = await Promise.all([
     fetch('data.json'),
+    fetch('duo_data.json').catch(() => null),
     fetch('voorbeelden.json').catch(() => null)
   ]);
-  data = await dataRes.json();
+  const rioData = await rioRes.json();
+  const duoData = duoRes?.ok ? await duoRes.json() : [];
+  data = [...rioData, ...duoData];
   if (vbRes?.ok) {
     voorbeelden = await vbRes.json();
     voorbeelden.forEach(vb => {
@@ -369,6 +402,12 @@ async function init() {
 }
 
 function buildFilters() {
+  const bronRow = document.getElementById('bron-filters');
+  ['RIO', 'DUO'].forEach(b => {
+    const btn = chip(b, () => toggle(activeBronnen, b, btn));
+    bronRow.appendChild(btn);
+  });
+
   const cats = [...new Set(data.map(d => d.categorie))].sort();
   const typeRow = document.getElementById('type-filters');
   cats.forEach(c => {
@@ -410,11 +449,12 @@ window.addTagFilter = function(tag) {
 };
 
 function matches(d) {
+  if (activeBronnen.size && !activeBronnen.has(d.leverancier)) return false;
   if (activeCategories.size && !activeCategories.has(d.categorie)) return false;
   if (activeTags.size && ![...activeTags].every(t => (d.tags || []).includes(t))) return false;
   if (query) {
     const q = query.toLowerCase();
-    const hay = [d.bron, d.doel, d.beschrijving, ...(d.tags||[]), ...(d.voorbeeldvragen||[]), d._thema, d._rio_resource].join(' ').toLowerCase();
+    const hay = [d.bron, d.doel, d.beschrijving, ...(d.tags||[]), ...(d.voorbeeldvragen||[]), d._thema, d._rio_resource, d._ckan_id].join(' ').toLowerCase();
     if (!hay.includes(q)) return false;
   }
   return true;
@@ -422,15 +462,18 @@ function matches(d) {
 
 function render() {
   const filtered = data.filter(matches);
-  document.getElementById('count').textContent = `${filtered.length} van ${data.length} resources`;
+  const bronLabel = activeBronnen.size === 1 ? [...activeBronnen][0] + ' — ' : '';
+  document.getElementById('count').textContent = `${bronLabel}${filtered.length} van ${data.length} resources`;
   const grid = document.getElementById('grid');
   if (!filtered.length) {
     grid.innerHTML = '<div class="empty">Geen resources gevonden voor deze zoekopdracht.</div>';
     return;
   }
   grid.innerHTML = filtered.map(d => {
+    const isDuo = d.leverancier === 'DUO';
     const catClass = CAT_CLASS[d.categorie] || 'badge-default';
     const badge = `<span class="badge ${catClass}">${d.categorie}</span>`;
+    const bronPill = `<span class="bron-pill ${isDuo ? 'bron-duo' : 'bron-rio'}">${d.leverancier}</span>`;
     const tags = (d.tags||[]).map(t =>
       `<span class="tag" onclick="addTagFilter('${t}')">${t}</span>`
     ).join('');
@@ -440,10 +483,15 @@ function render() {
         <ol>${d.voorbeeldvragen.map(v => `<li>${v}</li>`).join('')}</ol>
       </details>` : '';
 
-    const vbs = voorbeeldenByResource[d._rio_resource] || [];
+    const resourceId = isDuo ? d._ckan_id : d._rio_resource;
+    const vbs = voorbeeldenByResource[resourceId] || [];
     const vbBtns = vbs.map(vb =>
       `<button class="voorbeeld-btn" onclick="openModal('${vb.id}')">&#9654; Voorbeeld</button>`
     ).join('');
+
+    const footerLink = isDuo
+      ? `<a class="card-link" href="${d.documentatie.url}" target="_blank" rel="noopener">DUO Open Data &#8594;</a>`
+      : `<a class="card-link" href="${d.documentatie.url}" target="_blank" rel="noopener">RIO LOD API &#8594;</a>`;
 
     return `
       <div class="card">
@@ -451,14 +499,14 @@ function render() {
           <div class="card-title">${d.bron}</div>
           <div class="card-periode">${d.periode}</div>
         </div>
-        <div class="badges">${badge}</div>
+        <div class="badges">${bronPill}${badge}</div>
         <div class="card-doel">${d.doel || d.beschrijving}</div>
         ${vragen}
         ${vbBtns ? `<div style="display:flex;gap:0.4rem;flex-wrap:wrap;">${vbBtns}</div>` : ''}
         <div class="card-tags">${tags}</div>
         <div class="card-footer">
-          <span class="card-meta">${d.frequentie} &middot; ${d._rio_resource}</span>
-          <a class="card-link" href="${d.documentatie.url}" target="_blank" rel="noopener">RIO LOD API &#8594;</a>
+          <span class="card-meta">${d.frequentie} &middot; ${resourceId}</span>
+          ${footerLink}
         </div>
       </div>`;
   }).join('');

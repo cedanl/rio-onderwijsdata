@@ -5,6 +5,7 @@ on:
     branches: [main]
     paths:
       - data/02-prepared/rio_resources_ai.json
+      - src/riodata/data/duo_resources.json
       - voorbeelden/manifest.json
       - voorbeelden/output/**
 
@@ -17,7 +18,9 @@ jobs:
       - uses: actions/checkout@v4
 
       - name: Kopieer resources naar docs/
-        run: cp data/02-prepared/rio_resources_ai.json docs/data.json
+        run: |
+          cp data/02-prepared/rio_resources_ai.json docs/data.json
+          cp src/riodata/data/duo_resources.json docs/duo_data.json
 
       - name: Kopieer en flatten voorbeelden naar docs/voorbeelden/
         run: |
