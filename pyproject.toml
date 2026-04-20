@@ -9,8 +9,15 @@ requires-python = ">=3.11"
 dependencies = ["httpx"]
 
 [project.optional-dependencies]
-analyse = ["pandas", "matplotlib"]
+analyse = [
+    "pandas",
+    "matplotlib",
+    "openpyxl>=3.1.5",
+]
 catalogus = ["anthropic>=0.87.0"]
+duo = [
+    "openpyxl>=3.1.5",
+]
 
 [project.urls]
 Homepage = "https://cedanl.github.io/rio-onderwijsdata"
