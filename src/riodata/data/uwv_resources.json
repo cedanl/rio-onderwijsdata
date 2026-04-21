@@ -1,0 +1,49 @@
+[
+  {
+    "leverancier": "UWV",
+    "bron": "UWV Open Match Data",
+    "beschrijving": "Wekelijkse snapshots van vacatures en werkzoekenden per beroep, 4-cijferig postcodegebied en provincie. Inclusief uitsplitsing naar opleidingsniveau (AANT_OPLNIV_1 t/m 6), leeftijd, geslacht en werkloosheidsduur.",
+    "periode": "2019-11-26 t/m 2023-05-16 (wekelijkse snapshots)",
+    "onderwijstype": [
+      "Allen"
+    ],
+    "doel": "Koppeling arbeidsmarkt aan opleidingsniveau per regio. Geschikt voor analyse van vraag/aanbod per beroep en postcode.",
+    "frequentie": "Historisch — 181 wekelijkse snapshots, gestopt mei 2023",
+    "categorie": "Arbeidsmarkt",
+    "sectie": "UWV / data.overheid.nl",
+    "documentatie": {
+      "tekst": "UWV Open Match Data op data.overheid.nl",
+      "url": "https://data.overheid.nl/dataset/uwv-open-match-data"
+    },
+    "filters": [
+      "beroep",
+      "postcodegebied",
+      "provincie",
+      "rec_type"
+    ],
+    "sub_resources": [],
+    "voorbeeldvragen": [
+      "Hoeveel vacatures waren er per beroep in provincie Utrecht in 2022?",
+      "Wat is het opleidingsniveau van werkzoekenden in de zorg per regio?",
+      "Hoe verhoudt vraag (vacatures) zich tot aanbod (werkzoekenden) per beroep?"
+    ],
+    "tags": [
+      "uwv",
+      "vacatures",
+      "werkzoekenden",
+      "beroep",
+      "postcode",
+      "opleidingsniveau",
+      "arbeidsmarkt"
+    ],
+    "combineerbaar_met": [
+      "ROA AIS (arbeidsmarktprognoses per beroep)",
+      "CBS (beroepsbevolking naar opleiding)",
+      "RIO (onderwijslocaties per postcode)"
+    ],
+    "_rio_resource": null,
+    "_ckan_id": "uwv-open-match-data",
+    "_roa_id": null,
+    "_thema": "Arbeidsmarkt"
+  }
+]

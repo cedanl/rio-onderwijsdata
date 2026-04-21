@@ -30,10 +30,10 @@ def catalog(source: str = "rio", ai: bool = True, live: bool = False) -> list[di
         return json.loads(files("riodata.data").joinpath("duo_resources.json").read_text(encoding="utf-8"))
 
     def _roa():
-        return roa.catalog()
+        return json.loads(files("riodata.data").joinpath("roa_resources.json").read_text(encoding="utf-8"))
 
     def _uwv():
-        return uwv.catalog()
+        return json.loads(files("riodata.data").joinpath("uwv_resources.json").read_text(encoding="utf-8"))
 
     if source == "rio":
         return _rio()

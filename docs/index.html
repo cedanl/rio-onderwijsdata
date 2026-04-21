@@ -119,6 +119,8 @@
     }
     .bron-rio { background: #1a3a5c; color: #93c5fd; }
     .bron-duo { background: #065f46; color: #6ee7b7; }
+    .bron-roa { background: #581c87; color: #e9d5ff; }
+    .bron-uwv { background: #7c2d12; color: #fed7aa; }
 
     .card-doel { font-size: 0.84rem; color: #374151; line-height: 1.55; }
 
@@ -315,7 +317,7 @@
 
 <header>
   <h1>Nederlandse Onderwijsdata Catalogus</h1>
-  <p>RIO LOD API v2 (dagelijks bijgewerkt register) &amp; DUO Open Data (57 downloadbare datasets).</p>
+  <p>RIO · DUO · ROA · UWV — open Nederlandse onderwijs- en arbeidsmarktdata.</p>
 </header>
 
 <div class="controls">
@@ -380,14 +382,18 @@ let activeBronnen = new Set();
 let query = '';
 
 async function init() {
-  const [rioRes, duoRes, vbRes] = await Promise.all([
+  const [rioRes, duoRes, roaRes, uwvRes, vbRes] = await Promise.all([
     fetch('data.json'),
     fetch('duo_data.json').catch(() => null),
+    fetch('roa_data.json').catch(() => null),
+    fetch('uwv_data.json').catch(() => null),
     fetch('voorbeelden.json').catch(() => null)
   ]);
   const rioData = await rioRes.json();
   const duoData = duoRes?.ok ? await duoRes.json() : [];
-  data = [...rioData, ...duoData];
+  const roaData = roaRes?.ok ? await roaRes.json() : [];
+  const uwvData = uwvRes?.ok ? await uwvRes.json() : [];
+  data = [...rioData, ...duoData, ...roaData, ...uwvData];
   if (vbRes?.ok) {
     voorbeelden = await vbRes.json();
     voorbeelden.forEach(vb => {
@@ -403,7 +409,7 @@ async function init() {
 
 function buildFilters() {
   const bronRow = document.getElementById('bron-filters');
-  ['RIO', 'DUO'].forEach(b => {
+  ['RIO', 'DUO', 'ROA', 'UWV'].forEach(b => {
     const btn = chip(b, () => toggle(activeBronnen, b, btn));
     bronRow.appendChild(btn);
   });
@@ -470,10 +476,10 @@ function render() {
     return;
   }
   grid.innerHTML = filtered.map(d => {
-    const isDuo = d.leverancier === 'DUO';
+    const bronClass = { RIO: 'bron-rio', DUO: 'bron-duo', ROA: 'bron-roa', UWV: 'bron-uwv' }[d.leverancier] || 'bron-rio';
     const catClass = CAT_CLASS[d.categorie] || 'badge-default';
     const badge = `<span class="badge ${catClass}">${d.categorie}</span>`;
-    const bronPill = `<span class="bron-pill ${isDuo ? 'bron-duo' : 'bron-rio'}">${d.leverancier}</span>`;
+    const bronPill = `<span class="bron-pill ${bronClass}">${d.leverancier}</span>`;
     const tags = (d.tags||[]).map(t =>
       `<span class="tag" onclick="addTagFilter('${t}')">${t}</span>`
     ).join('');
@@ -483,15 +489,14 @@ function render() {
         <ol>${d.voorbeeldvragen.map(v => `<li>${v}</li>`).join('')}</ol>
       </details>` : '';
 
-    const resourceId = isDuo ? d._ckan_id : d._rio_resource;
+    const resourceId = d._ckan_id || d._rio_resource || d._roa_id || d.leverancier;
     const vbs = voorbeeldenByResource[resourceId] || [];
     const vbBtns = vbs.map(vb =>
       `<button class="voorbeeld-btn" onclick="openModal('${vb.id}')">&#9654; Voorbeeld</button>`
     ).join('');
 
-    const footerLink = isDuo
-      ? `<a class="card-link" href="${d.documentatie.url}" target="_blank" rel="noopener">DUO Open Data &#8594;</a>`
-      : `<a class="card-link" href="${d.documentatie.url}" target="_blank" rel="noopener">RIO LOD API &#8594;</a>`;
+    const footerLabels = { RIO: 'RIO LOD API', DUO: 'DUO Open Data', ROA: 'DataverseNL', UWV: 'data.overheid.nl' };
+    const footerLink = `<a class="card-link" href="${d.documentatie.url}" target="_blank" rel="noopener">${footerLabels[d.leverancier] || d.leverancier} &#8594;</a>`;
 
     return `
       <div class="card">

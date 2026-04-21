@@ -6,6 +6,8 @@ on:
     paths:
       - data/02-prepared/rio_resources_ai.json
       - src/riodata/data/duo_resources.json
+      - src/riodata/data/roa_resources.json
+      - src/riodata/data/uwv_resources.json
       - voorbeelden/manifest.json
       - voorbeelden/output/**
 
@@ -21,6 +23,8 @@ jobs:
         run: |
           cp data/02-prepared/rio_resources_ai.json docs/data.json
           cp src/riodata/data/duo_resources.json docs/duo_data.json
+          cp src/riodata/data/roa_resources.json docs/roa_data.json
+          cp src/riodata/data/uwv_resources.json docs/uwv_data.json
 
       - name: Kopieer en flatten voorbeelden naar docs/voorbeelden/
         run: |

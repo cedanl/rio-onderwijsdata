@@ -1,7 +1,7 @@
 [project]
 name = "riodata"
-version = "0.1.0"
-description = "Python client voor de RIO LOD API v2 — het Nederlandse register van onderwijsinstellingen en opleidingen"
+version = "0.2.0"
+description = "Python client voor open Nederlandse onderwijs- en arbeidsmarktdata: RIO, DUO, ROA en UWV"
 readme = "README.md"
 license = { text = "MIT" }
 authors = [{ name = "cedanl", email = "info@cedanl.nl" }]

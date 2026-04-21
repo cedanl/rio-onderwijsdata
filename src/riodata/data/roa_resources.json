@@ -1,0 +1,136 @@
+[
+  {
+    "leverancier": "ROA",
+    "bron": "AIS tot 2030",
+    "beschrijving": "ROA Arbeidsmarktinformatiesysteem: middellange-termijn arbeidsmarktprognoses per opleiding en beroep tot 2030, plus kerncijfers schoolverlatersonderzoeken.",
+    "periode": "Editie 2025",
+    "onderwijstype": [
+      "Allen"
+    ],
+    "doel": "Arbeidsmarktprognoses en schoolverlatersonderzoek per opleiding en beroep",
+    "frequentie": "Jaarlijks",
+    "categorie": "Arbeidsmarkt",
+    "sectie": "ROA / DataverseNL",
+    "documentatie": {
+      "tekst": "AIS tot 2030",
+      "url": "https://doi.org/10.34894/DVQTOG"
+    },
+    "filters": [
+      "opleiding",
+      "beroep",
+      "regio"
+    ],
+    "sub_resources": [],
+    "voorbeeldvragen": [
+      "Wat zijn de arbeidsmarktperspectieven voor MBO-gediplomeerden tot 2025?",
+      "Welke opleidingen hebben de beste arbeidsmarktkansen?",
+      "Hoe verhoudt de uitstroom van schoolverlaters zich tot de vraag per beroep?"
+    ],
+    "tags": [
+      "roa",
+      "arbeidsmarkt",
+      "prognose",
+      "schoolverlaters",
+      "opleiding",
+      "beroep"
+    ],
+    "combineerbaar_met": [
+      "DUO (diplomering per opleiding)",
+      "CBS (arbeidsdeelname naar onderwijsniveau)",
+      "RIO (aangeboden opleidingen)"
+    ],
+    "_rio_resource": null,
+    "_ckan_id": null,
+    "_roa_id": "ais2030",
+    "_resources": [
+      {
+        "naam": "arbeidsmarkt",
+        "file_id": 572235,
+        "url": "https://dataverse.nl/api/access/datafile/572235"
+      },
+      {
+        "naam": "toelichting",
+        "file_id": 565548,
+        "url": "https://dataverse.nl/api/access/datafile/565548"
+      },
+      {
+        "naam": "uitkomsten",
+        "file_id": 566770,
+        "url": "https://dataverse.nl/api/access/datafile/566770"
+      },
+      {
+        "naam": "schoolverlaters",
+        "file_id": 565551,
+        "url": "https://dataverse.nl/api/access/datafile/565551"
+      }
+    ],
+    "_thema": "Arbeidsmarkt"
+  },
+  {
+    "leverancier": "ROA",
+    "bron": "AIS tot 2028",
+    "beschrijving": "ROA Arbeidsmarktinformatiesysteem editie 2023 en 2024: prognoses per opleiding en beroep tot 2028.",
+    "periode": "Editie 2024",
+    "onderwijstype": [
+      "Allen"
+    ],
+    "doel": "Arbeidsmarktprognoses en schoolverlatersonderzoek per opleiding en beroep",
+    "frequentie": "Jaarlijks",
+    "categorie": "Arbeidsmarkt",
+    "sectie": "ROA / DataverseNL",
+    "documentatie": {
+      "tekst": "AIS tot 2028",
+      "url": "https://doi.org/10.34894/UIQHCI"
+    },
+    "filters": [
+      "opleiding",
+      "beroep",
+      "regio"
+    ],
+    "sub_resources": [],
+    "voorbeeldvragen": [
+      "Wat zijn de arbeidsmarktperspectieven voor MBO-gediplomeerden tot 2024?",
+      "Welke opleidingen hebben de beste arbeidsmarktkansen?",
+      "Hoe verhoudt de uitstroom van schoolverlaters zich tot de vraag per beroep?"
+    ],
+    "tags": [
+      "roa",
+      "arbeidsmarkt",
+      "prognose",
+      "schoolverlaters",
+      "opleiding",
+      "beroep"
+    ],
+    "combineerbaar_met": [
+      "DUO (diplomering per opleiding)",
+      "CBS (arbeidsdeelname naar onderwijsniveau)",
+      "RIO (aangeboden opleidingen)"
+    ],
+    "_rio_resource": null,
+    "_ckan_id": null,
+    "_roa_id": "ais2028",
+    "_resources": [
+      {
+        "naam": "arbeidsmarkt_2023",
+        "file_id": 425745,
+        "url": "https://dataverse.nl/api/access/datafile/425745"
+      },
+      {
+        "naam": "arbeidsmarkt_2024",
+        "file_id": 425747,
+        "url": "https://dataverse.nl/api/access/datafile/425747"
+      },
+      {
+        "naam": "toelichting_2023",
+        "file_id": 425746,
+        "url": "https://dataverse.nl/api/access/datafile/425746"
+      },
+      {
+        "naam": "toelichting_2024",
+        "file_id": 425742,
+        "url": "https://dataverse.nl/api/access/datafile/425742"
+      }
+    ],
+    "_thema": "Arbeidsmarkt"
+  }
+]
