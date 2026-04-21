@@ -1,7 +1,7 @@
-__version__ = "0.1.0"
+__version__ = "0.2.0"
 
 from .client import fetch, get, related
-from . import duo
+from . import duo, roa, uwv
 
 
 def catalog(source: str = "rio", ai: bool = True, live: bool = False) -> list[dict]:
@@ -10,7 +10,9 @@ def catalog(source: str = "rio", ai: bool = True, live: bool = False) -> list[di
     Args:
         source: "rio"  — alleen RIO LOD API resources (lokale JSON, snel)
                 "duo"  — alleen DUO datasets (lokale snapshot)
-                "all"  — RIO + DUO gecombineerd
+                "roa"  — alleen ROA arbeidsmarktdata
+                "uwv"  — alleen UWV Open Match Data
+                "all"  — alles gecombineerd
         ai:     Bij source="rio"/"all": gebruik AI-verrijkte beschrijvingen (default True).
         live:   Bij source="duo"/"all": haal DUO-records live op van CKAN i.p.v. lokale
                 snapshot (default False). Vereist internetverbinding.
@@ -27,13 +29,23 @@ def catalog(source: str = "rio", ai: bool = True, live: bool = False) -> list[di
             return duo.catalog()
         return json.loads(files("riodata.data").joinpath("duo_resources.json").read_text(encoding="utf-8"))
 
+    def _roa():
+        return roa.catalog()
+
+    def _uwv():
+        return uwv.catalog()
+
     if source == "rio":
         return _rio()
     if source == "duo":
         return _duo()
+    if source == "roa":
+        return _roa()
+    if source == "uwv":
+        return _uwv()
     if source == "all":
-        return _rio() + _duo()
-    raise ValueError(f"Ongeldige source '{source}'. Kies 'rio', 'duo' of 'all'.")
+        return _rio() + _duo() + _roa() + _uwv()
+    raise ValueError(f"Ongeldige source '{source}'. Kies 'rio', 'duo', 'roa', 'uwv' of 'all'.")
 
 
-__all__ = ["fetch", "get", "related", "catalog", "duo", "__version__"]
+__all__ = ["fetch", "get", "related", "catalog", "duo", "roa", "uwv", "__version__"]
