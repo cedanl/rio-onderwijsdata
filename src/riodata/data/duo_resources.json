@@ -793,6 +793,12 @@
         "url": "https://onderwijsdata.duo.nl/dataset/87dc92dd-11a2-4630-ad5a-1e051644c5f3/resource/91238c04-3ad3-4b3f-982d-e150e15f6ca1/download/duo_sci_opendata_wi2021.csv",
         "format": "CSV",
         "id": "91238c04-3ad3-4b3f-982d-e150e15f6ca1"
+      },
+      {
+        "naam": "controlebestand",
+        "url": "https://onderwijsdata.duo.nl/datastore/dump/82c05792-a40c-49cc-9e7d-791e95f359cf",
+        "format": "CSV",
+        "id": "82c05792-a40c-49cc-9e7d-791e95f359cf"
       }
     ],
     "_kolommen": [
@@ -1578,7 +1584,7 @@
     "_resources": [
       {
         "naam": "Het toegestane voortgezet onderwijs per schoolvestiging en leerjaar.",
-        "url": "https://beheer-ggm-ckan-prd.apps.prd.duo.rijksapps.nl/dataset/3be5930b-46f2-41f2-a82e-293bb7e051c5/resource/7f13f0b3-6fba-4211-ae7f-da95b6ff9bb8/download/vo_onderwijslicenties.csv",
+        "url": "https://onderwijsdata.duo.nl/datastore/dump/7f13f0b3-6fba-4211-ae7f-da95b6ff9bb8",
         "format": "CSV",
         "id": "7f13f0b3-6fba-4211-ae7f-da95b6ff9bb8"
       }
@@ -2894,7 +2900,7 @@
     "_resources": [
       {
         "naam": "Leerlingen bo per vestiging naar gewicht",
-        "url": "https://beheer-ggm-ckan-prd.apps.prd.duo.rijksapps.nl/dataset/ee0b0510-d3fb-4c7f-b534-54e1aebbf954/resource/ed4c4738-9315-4a5c-8c65-2a0353ae7611/download/brin6_gewicht.csv",
+        "url": "https://onderwijsdata.duo.nl/datastore/dump/ed4c4738-9315-4a5c-8c65-2a0353ae7611",
         "format": "CSV",
         "id": "ed4c4738-9315-4a5c-8c65-2a0353ae7611"
       }
@@ -3329,7 +3335,7 @@
     "_resources": [
       {
         "naam": "Schoolgewicht per schoolvestiging",
-        "url": "https://beheer-ggm-ckan-prd.apps.prd.duo.rijksapps.nl/dataset/c8a7aa23-893b-4119-9cf9-205eb580a006/resource/59383f9c-2b0b-4aae-97f9-dab8d92cd873/download/brin6_schoolgewicht.csv",
+        "url": "https://onderwijsdata.duo.nl/datastore/dump/59383f9c-2b0b-4aae-97f9-dab8d92cd873",
         "format": "CSV",
         "id": "59383f9c-2b0b-4aae-97f9-dab8d92cd873"
       }
@@ -4074,13 +4080,13 @@
     "_resources": [
       {
         "naam": "Kwaliteitsoordelen po, so en vso",
-        "url": "https://beheer-ggm-ckan-prd.apps.prd.duo.rijksapps.nl/dataset/31da72f2-2858-4bc3-848e-dfe4875ba669/resource/b48d6835-0534-4008-82c8-1754b9080113/download/oordeel_po_so_vo.csv",
+        "url": "https://onderwijsdata.duo.nl/datastore/dump/b48d6835-0534-4008-82c8-1754b9080113",
         "format": "CSV",
         "id": "b48d6835-0534-4008-82c8-1754b9080113"
       },
       {
         "naam": "Kwaliteitsoordelen bevoegd gezag",
-        "url": "https://beheer-ggm-ckan-prd.apps.prd.duo.rijksapps.nl/dataset/31da72f2-2858-4bc3-848e-dfe4875ba669/resource/754124e9-4cc4-479c-b1ee-2d94f077335c/download/___",
+        "url": "https://onderwijsdata.duo.nl/datastore/dump/754124e9-4cc4-479c-b1ee-2d94f077335c",
         "format": "CSV",
         "id": "754124e9-4cc4-479c-b1ee-2d94f077335c"
       }
@@ -4389,7 +4395,7 @@
     "_resources": [
       {
         "naam": "Aantal afgenomen examens en gemiddelde examencijfers per vak per vestiging.",
-        "url": "https://beheer-ggm-ckan-prd.apps.prd.duo.rijksapps.nl/dataset/30ac7a0a-b848-4bf0-8b1d-40b54c7cad1b/resource/1d9cc55f-ac27-44a7-8269-9cc3a998c5ed/download/04_voex.csv",
+        "url": "https://onderwijsdata.duo.nl/datastore/dump/1d9cc55f-ac27-44a7-8269-9cc3a998c5ed",
         "format": "CSV",
         "id": "1d9cc55f-ac27-44a7-8269-9cc3a998c5ed"
       }
@@ -4560,7 +4566,7 @@
     "_resources": [
       {
         "naam": "Slagingspercentages en gemiddelde examencijfers per vestiging",
-        "url": "https://beheer-ggm-ckan-prd.apps.prd.duo.rijksapps.nl/dataset/9ac19d12-2781-4e61-a26e-7122631dabb6/resource/0423457d-c69e-4950-a12c-51912fc48faf/download/03_voex.csv",
+        "url": "https://onderwijsdata.duo.nl/datastore/dump/0423457d-c69e-4950-a12c-51912fc48faf",
         "format": "CSV",
         "id": "0423457d-c69e-4950-a12c-51912fc48faf"
       }
@@ -4607,7 +4613,7 @@
     "_resources": [
       {
         "naam": "VO-leerlingen en leerjaar naar postcode, plaats en gemeente.",
-        "url": "https://beheer-ggm-ckan-prd.apps.prd.duo.rijksapps.nl/dataset/19c81dcb-a7c5-4410-8122-145f0996d082/resource/a0ca4915-9aae-4826-bf5b-6825ce95b8b4/download/02voins.csv",
+        "url": "https://onderwijsdata.duo.nl/datastore/dump/a0ca4915-9aae-4826-bf5b-6825ce95b8b4",
         "format": "CSV",
         "id": "a0ca4915-9aae-4826-bf5b-6825ce95b8b4"
       }
@@ -4653,7 +4659,7 @@
     "_resources": [
       {
         "naam": "VO-leerlingen per vestiging naar onderwijstype, sector en afdeling.",
-        "url": "https://beheer-ggm-ckan-prd.apps.prd.duo.rijksapps.nl/dataset/173cbf21-1567-464a-bccd-518cd7a46bd0/resource/d49219cc-2f36-4c2d-8007-b385ba44ec8d/download/01voins.csv",
+        "url": "https://onderwijsdata.duo.nl/datastore/dump/d49219cc-2f36-4c2d-8007-b385ba44ec8d",
         "format": "CSV",
         "id": "d49219cc-2f36-4c2d-8007-b385ba44ec8d"
       }

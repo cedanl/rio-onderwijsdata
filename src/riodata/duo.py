@@ -58,7 +58,7 @@ def resources(dataset_id: str) -> list[dict]:
     return [
         {
             "naam": r.get("name", ""),
-            "url": r.get("url", ""),
+            "url": _public_url(r),
             "format": r.get("format", "").upper(),
             "id": r.get("id", ""),
         }
@@ -131,6 +131,13 @@ def _ckan(endpoint: str, **params) -> dict:
     return body["result"]
 
 
+def _public_url(r: dict) -> str:
+    url = r.get("url", "")
+    if "beheer-ggm-ckan-prd" in url:
+        return f"{PORTAL_BASE}/datastore/dump/{r['id']}"
+    return url
+
+
 def _pkg_to_record(pkg: dict) -> dict:
     groups = [g["name"] for g in pkg.get("groups", [])]
     onderwijstypen = [_GROUP_TO_ONDERWIJSTYPE.get(g, g) for g in groups]
@@ -143,7 +150,7 @@ def _pkg_to_record(pkg: dict) -> dict:
     res_list = [
         {
             "naam": r.get("name", ""),
-            "url": r.get("url", ""),
+            "url": _public_url(r),
             "format": r.get("format", "").upper(),
             "id": r.get("id", ""),
         }
