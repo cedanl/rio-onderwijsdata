@@ -3,7 +3,7 @@
     "leverancier": "DUO",
     "bron": "Functiemix",
     "beschrijving": "De functiemixbestanden bestaan uit vier deelbestanden: een instellingenbestand, een bestuursbestand, een bestand met gemiddelden en een bestand met maatwerkafspraken.",
-    "periode": "Jaarlijks bijgewerkt (zie dataset voor peilmoment)",
+    "periode": "2006-2023",
     "onderwijstype": [
       "Arbeidsmarkt"
     ],
@@ -59,66 +59,198 @@
         "id": "724cca30-1e1d-461d-a107-ec9f309a4e28"
       }
     ],
-    "_kolommen": [
-      "ONDERWIJSSECTOR",
-      "JAAR",
-      "BEVOEGD_GEZAGNUMMER",
-      "BEVOEGD_GEZAGNAAM",
-      "POSTCODE_BEVOEGD_GEZAG",
-      "EENPITTER",
-      "AANTAL_LEERLINGEN",
-      "CATEGORIE_BESTUUROMVANG",
-      "AANTAL_GEWICHTLEERLINGEN",
-      "GEMIDDELD_LEERLINGGEWICHT",
-      "AANDEEL_APCG_LEERLINGEN",
-      "AANDEEL_LWOO_LEERLINGEN",
-      "AANTAL_VOLTIJDLEERLINGEN",
-      "AANTAL_DEELTIJDLEERLINGEN",
-      "AANTAL_LEERLINGEN_VBO_GROEN",
-      "AANTAL_BOL_LEERLINGEN",
-      "AANTAL_BOL_DEELTIJDLEERLINGEN",
-      "AANTAL_BBL_LEERLINGEN",
-      "AANDEEL_LEERLINGEN_RANDSTAD",
-      "OMVANG_FORMATIE_TOTAAL",
-      "OMVANG_FORMATIE_MANAGER",
-      "OMVANG_FORMATIE_OP",
-      "OMVANG_FORMATIE_LIO",
-      "OMVANG_FORMATIE_OOP_OBP",
-      "OMVANG_FORMATIE_ONBEKEND",
-      "LEERLING_LERAAR_RATIO",
-      "GEWOGEN_DEELNEMER_LERAAR_RATIO",
-      "OMVANG_FORMATIE_OP_LA",
-      "OMVANG_FORMATIE_OP_LB",
-      "OMVANG_FORMATIE_OP_LC",
-      "OMVANG_FORMATIE_OP_LD",
-      "OMVANG_FORMATIE_OP_LE",
-      "OMVANG_FORMATIE_OP_OVERIG",
-      "AANDEEL_FORMATIE_OP_LA",
-      "AANDEEL_FORMATIE_OP_LB",
-      "AANDEEL_FORMATIE_OP_LC",
-      "AANDEEL_FORMATIE_OP_LD",
-      "AANDEEL_FORMATIE_OP_LE",
-      "AANDEEL_FORMATIE_OP_OVERIG",
-      "STREEFPERCENTAGE_FORMATIE_OP_LA",
-      "STREEFPERCENTAGE_FORMATIE_OP_LB",
-      "STREEFPERCENTAGE_FORMATIE_OP_LC",
-      "STREEFPERCENTAGE_FORMATIE_OP_LD",
-      "STREEFPERCENTAGE_FORMATIE_OP_LE",
-      "STREEFPERCENTAGE_FORMATIE_OP_OVERIG",
-      "AANDEEL_BAMA_HBOBA",
-      "AANDEEL_BAMA_WOBA",
-      "AANDEEL_BAMA_HBOMA",
-      "AANDEEL_BAMA_WOMA",
-      "AANDEEL_BAMA_OVERIG",
-      "AANDEEL_BAMA_HBOBA_excloverig",
-      "AANDEEL_BAMA_WOBA_excloverig",
-      "AANDEEL_BAMA_HBOMA_excloverig",
-      "AANDEEL_BAMA_WOMA_excloverig",
-      "OMVANG_FORMATIE_OP_BRUTSAL",
-      "LOONSOM_OP_BRUTSAL",
-      "GEMIDDELDE_LOONSOM_OP_BRUTSAL"
-    ],
-    "_thema": "Arbeidsmarkt"
+    "_kolommen": {
+      "Functiemix besturen": [
+        "ONDERWIJSSECTOR",
+        "JAAR",
+        "BEVOEGD_GEZAGNUMMER",
+        "BEVOEGD_GEZAGNAAM",
+        "POSTCODE_BEVOEGD_GEZAG",
+        "EENPITTER",
+        "AANTAL_LEERLINGEN",
+        "CATEGORIE_BESTUUROMVANG",
+        "AANTAL_GEWICHTLEERLINGEN",
+        "GEMIDDELD_LEERLINGGEWICHT",
+        "AANDEEL_APCG_LEERLINGEN",
+        "AANDEEL_LWOO_LEERLINGEN",
+        "AANTAL_VOLTIJDLEERLINGEN",
+        "AANTAL_DEELTIJDLEERLINGEN",
+        "AANTAL_LEERLINGEN_VBO_GROEN",
+        "AANTAL_BOL_LEERLINGEN",
+        "AANTAL_BOL_DEELTIJDLEERLINGEN",
+        "AANTAL_BBL_LEERLINGEN",
+        "AANDEEL_LEERLINGEN_RANDSTAD",
+        "OMVANG_FORMATIE_TOTAAL",
+        "OMVANG_FORMATIE_MANAGER",
+        "OMVANG_FORMATIE_OP",
+        "OMVANG_FORMATIE_LIO",
+        "OMVANG_FORMATIE_OOP_OBP",
+        "OMVANG_FORMATIE_ONBEKEND",
+        "LEERLING_LERAAR_RATIO",
+        "GEWOGEN_DEELNEMER_LERAAR_RATIO",
+        "OMVANG_FORMATIE_OP_LA",
+        "OMVANG_FORMATIE_OP_LB",
+        "OMVANG_FORMATIE_OP_LC",
+        "OMVANG_FORMATIE_OP_LD",
+        "OMVANG_FORMATIE_OP_LE",
+        "OMVANG_FORMATIE_OP_OVERIG",
+        "AANDEEL_FORMATIE_OP_LA",
+        "AANDEEL_FORMATIE_OP_LB",
+        "AANDEEL_FORMATIE_OP_LC",
+        "AANDEEL_FORMATIE_OP_LD",
+        "AANDEEL_FORMATIE_OP_LE",
+        "AANDEEL_FORMATIE_OP_OVERIG",
+        "STREEFPERCENTAGE_FORMATIE_OP_LA",
+        "STREEFPERCENTAGE_FORMATIE_OP_LB",
+        "STREEFPERCENTAGE_FORMATIE_OP_LC",
+        "STREEFPERCENTAGE_FORMATIE_OP_LD",
+        "STREEFPERCENTAGE_FORMATIE_OP_LE",
+        "STREEFPERCENTAGE_FORMATIE_OP_OVERIG",
+        "AANDEEL_BAMA_HBOBA",
+        "AANDEEL_BAMA_WOBA",
+        "AANDEEL_BAMA_HBOMA",
+        "AANDEEL_BAMA_WOMA",
+        "AANDEEL_BAMA_OVERIG",
+        "AANDEEL_BAMA_HBOBA_excloverig",
+        "AANDEEL_BAMA_WOBA_excloverig",
+        "AANDEEL_BAMA_HBOMA_excloverig",
+        "AANDEEL_BAMA_WOMA_excloverig",
+        "OMVANG_FORMATIE_OP_BRUTSAL",
+        "LOONSOM_OP_BRUTSAL",
+        "GEMIDDELDE_LOONSOM_OP_BRUTSAL"
+      ],
+      "Functiemix gemiddelden": [
+        "ONDERWIJSSECTOR",
+        "JAAR",
+        "SCHOOLTYPE",
+        "RPA_GEBIEDCODE",
+        "AMRCODE",
+        "RANDSTAD",
+        "CATEGORIE_SCHOOLOMVANG",
+        "CATEGORIE_BESTUUROMVANG",
+        "AANTAL_LEERLINGEN",
+        "OMVANG_FORMATIE_TOTAAL",
+        "OMVANG_FORMATIE_MANAGER",
+        "OMVANG_FORMATIE_OP",
+        "OMVANG_FORMATIE_LIO",
+        "OMVANG_FORMATIE_OOP_OBP",
+        "OMVANG_FORMATIE_ONBEKEND",
+        "LEERLING_LERAAR_RATIO",
+        "OMVANG_FORMATIE_OP_LA",
+        "OMVANG_FORMATIE_OP_LB",
+        "OMVANG_FORMATIE_OP_LC",
+        "OMVANG_FORMATIE_OP_LD",
+        "OMVANG_FORMATIE_OP_LE",
+        "OMVANG_FORMATIE_OP_OVERIG",
+        "AANDEEL_FORMATIE_OP_LA",
+        "AANDEEL_FORMATIE_OP_LB",
+        "AANDEEL_FORMATIE_OP_LC",
+        "AANDEEL_FORMATIE_OP_LD",
+        "AANDEEL_FORMATIE_OP_LE",
+        "AANDEEL_FORMATIE_OP_OVERIG",
+        "STREEFPERCENTAGE_FORMATIE_OP_LA",
+        "STREEFPERCENTAGE_FORMATIE_OP_LB",
+        "STREEFPERCENTAGE_FORMATIE_OP_LC",
+        "STREEFPERCENTAGE_FORMATIE_OP_LD",
+        "STREEFPERCENTAGE_FORMATIE_OP_LE",
+        "STREEFPERCENTAGE_FORMATIE_OP_OVERIG",
+        "AANDEEL_BAMA_HBOBA",
+        "AANDEEL_BAMA_WOBA",
+        "AANDEEL_BAMA_HBOMA",
+        "AANDEEL_BAMA_WOMA",
+        "AANDEEL_BAMA_OVERIG",
+        "AANDEEL_BAMA_HBOBA_excloverig",
+        "AANDEEL_BAMA_WOBA_excloverig",
+        "AANDEEL_BAMA_HBOMA_excloverig",
+        "AANDEEL_BAMA_WOMA_excloverig"
+      ],
+      "Functiemix instellingen": [
+        "ONDERWIJSSECTOR",
+        "JAAR",
+        "BRIN_NUMMER",
+        "INSTELLINGSNAAM",
+        "POSTCODE_SCHOOL",
+        "RPA_GEBIEDCODE",
+        "AMRCODE",
+        "AMRNAAM",
+        "RANDSTAD",
+        "GEMEENTENAAM",
+        "SCHOOLTYPE",
+        "SCHOOLSOORT",
+        "VERTICALE_SCHOLENGEMEENSCHAP",
+        "BEVOEGD_GEZAGNUMMER",
+        "BEVOEGD_GEZAGNAAM",
+        "POSTCODE_BEVOEGD_GEZAG",
+        "EENPITTER",
+        "AANTAL_LEERLINGEN",
+        "CATEGORIE_SCHOOLOMVANG",
+        "AANTAL_GEWICHTLEERLINGEN",
+        "GEMIDDELD_LEERLINGGEWICHT",
+        "AANDEEL_APCG_LEERLINGEN",
+        "AANDEEL_LWOO_LEERLINGEN",
+        "AANTAL_VOLTIJDLEERLINGEN",
+        "AANTAL_DEELTIJDLEERLINGEN",
+        "AANTAL_LEERLINGEN_VBO_GROEN",
+        "AANTAL_BOL_LEERLINGEN",
+        "AANTAL_BOL_DEELTIJDLEERLINGEN",
+        "AANTAL_BBL_LEERLINGEN",
+        "AANDEEL_LEERLINGEN_RANDSTAD",
+        "OMVANG_FORMATIE_TOTAAL",
+        "OMVANG_FORMATIE_MANAGER",
+        "OMVANG_FORMATIE_OP",
+        "OMVANG_FORMATIE_LIO",
+        "OMVANG_FORMATIE_OOP_OBP",
+        "OMVANG_FORMATIE_ONBEKEND",
+        "LEERLING_LERAAR_RATIO",
+        "GEWOGEN_DEELNEMER_LERAAR_RATIO",
+        "OMVANG_FORMATIE_OP_LA",
+        "OMVANG_FORMATIE_OP_LB",
+        "OMVANG_FORMATIE_OP_LC",
+        "OMVANG_FORMATIE_OP_LD",
+        "OMVANG_FORMATIE_OP_LE",
+        "OMVANG_FORMATIE_OP_OVERIG",
+        "AANDEEL_FORMATIE_OP_LA",
+        "AANDEEL_FORMATIE_OP_LB",
+        "AANDEEL_FORMATIE_OP_LC",
+        "AANDEEL_FORMATIE_OP_LD",
+        "AANDEEL_FORMATIE_OP_LE",
+        "AANDEEL_FORMATIE_OP_OVERIG",
+        "STREEFPERCENTAGE_FORMATIE_OP_LA",
+        "STREEFPERCENTAGE_FORMATIE_OP_LB",
+        "STREEFPERCENTAGE_FORMATIE_OP_LC",
+        "STREEFPERCENTAGE_FORMATIE_OP_LD",
+        "STREEFPERCENTAGE_FORMATIE_OP_LE",
+        "STREEFPERCENTAGE_FORMATIE_OP_OVERIG",
+        "AANDEEL_BAMA_HBOBA",
+        "AANDEEL_BAMA_WOBA",
+        "AANDEEL_BAMA_HBOMA",
+        "AANDEEL_BAMA_WOMA",
+        "AANDEEL_BAMA_OVERIG",
+        "AANDEEL_BAMA_HBOBA_excloverig",
+        "AANDEEL_BAMA_WOBA_excloverig",
+        "AANDEEL_BAMA_HBOMA_excloverig",
+        "AANDEEL_BAMA_WOMA_excloverig",
+        "OMVANG_FORMATIE_OP_BRUTSAL",
+        "LOONSOM_OP_BRUTSAL",
+        "GEMIDDELDE_LOONSOM_OP_BRUTSAL"
+      ],
+      "Functiemix maatwerkafspraken": [
+        "ONDERWIJSSECTOR",
+        "JAAR",
+        "BRIN_NUMMER",
+        "INSTELLINGSNAAM",
+        "MAATWERKAFSPRAAK_FORMATIE_OP_LA",
+        "MAATWERKAFSPRAAK_FORMATIE_OP_LB",
+        "MAATWERKAFSPRAAK_FORMATIE_OP_LC",
+        "MAATWERKAFSPRAAK_FORMATIE_OP_LD",
+        "MAATWERKAFSPRAAK_FORMATIE_OP_LE",
+        "MAATWERKAFSPRAAK_FORMATIE_OP_OVERIG",
+        "DATUM_MAATWERKAFSPRAAK",
+        "TOELICHTING_MAATWERKAFSPRAAK"
+      ]
+    },
+    "_thema": "Arbeidsmarkt",
+    "_geo_niveau": []
   },
   {
     "leverancier": "DUO",
@@ -147,7 +279,8 @@
       "scholen en adressen",
       "duo",
       "open-data",
-      "ho"
+      "ho",
+      "gemeente"
     ],
     "combineerbaar_met": [
       "RIO organisatorische-eenheden (via BRIN-code)",
@@ -170,33 +303,70 @@
         "id": "bf1da9c6-c688-4873-91b1-b12c9ac2c132"
       }
     ],
-    "_kolommen": [
-      "SOORT HO",
-      "BEVOEGD GEZAG NUMMER",
-      "BEVOEGD GEZAG NAAM",
-      "STRAATNAAM",
-      "HUISNUMMER-TOEVOEGING",
-      "POSTCODE",
-      "PLAATSNAAM",
-      "GEMEENTENUMMER",
-      "GEMEENTENAAM",
-      "DENOMINATIE",
-      "TELEFOONNUMMER",
-      "INTERNETADRES",
-      "STRAATNAAM CORRESPONDENTIEADRES",
-      "HUISNUMMER-TOEVOEGING CORRESPONDENTIEADRES",
-      "POSTCODE CORRESPONDENTIEADRES",
-      "PLAATSNAAM CORRESPONDENTIEADRES",
-      "ADMINISTRATIEKANTOORNUMMER",
-      "KVK-NUMMER"
-    ],
-    "_thema": "HO"
+    "_kolommen": {
+      "Adressen van besturen in het hoger onderwijs": [
+        "SOORT HO",
+        "BEVOEGD GEZAG NUMMER",
+        "BEVOEGD GEZAG NAAM",
+        "STRAATNAAM",
+        "HUISNUMMER-TOEVOEGING",
+        "POSTCODE",
+        "PLAATSNAAM",
+        "GEMEENTENUMMER",
+        "GEMEENTENAAM",
+        "DENOMINATIE",
+        "TELEFOONNUMMER",
+        "INTERNETADRES",
+        "STRAATNAAM CORRESPONDENTIEADRES",
+        "HUISNUMMER-TOEVOEGING CORRESPONDENTIEADRES",
+        "POSTCODE CORRESPONDENTIEADRES",
+        "PLAATSNAAM CORRESPONDENTIEADRES",
+        "ADMINISTRATIEKANTOORNUMMER",
+        "KVK-NUMMER"
+      ],
+      "Adressen van instellingen in het hoger onderwijs": [
+        "SOORT HO",
+        "PROVINCIE",
+        "BEVOEGD GEZAG NUMMER",
+        "INSTELLINGSCODE",
+        "INSTELLINGSNAAM",
+        "STRAATNAAM",
+        "HUISNUMMER-TOEVOEGING",
+        "POSTCODE",
+        "PLAATSNAAM",
+        "GEMEENTENUMMER",
+        "GEMEENTENAAM",
+        "DENOMINATIE",
+        "TELEFOONNUMMER",
+        "INTERNETADRES",
+        "STRAATNAAM CORRESPONDENTIEADRES",
+        "HUISNUMMER-TOEVOEGING CORRESPONDENTIEADRES",
+        "POSTCODE CORRESPONDENTIEADRES",
+        "PLAATSNAAM CORRESPONDENTIEADRES",
+        "NODAAL GEBIED CODE",
+        "NODAAL GEBIED NAAM",
+        "RPA-GEBIED CODE",
+        "RPA-GEBIED NAAM",
+        "WGR-GEBIED CODE",
+        "WGR-GEBIED NAAM",
+        "COROPGEBIED CODE",
+        "COROPGEBIED NAAM",
+        "ONDERWIJSGEBIED CODE",
+        "ONDERWIJSGEBIED NAAM",
+        "RMC-REGIO CODE",
+        "RMC-REGIO NAAM"
+      ]
+    },
+    "_thema": "HO",
+    "_geo_niveau": [
+      "gemeente"
+    ]
   },
   {
     "leverancier": "DUO",
     "bron": "Eerstejaars ingeschrevenen hoger onderwijs in het domein hoger onderwijs",
     "beschrijving": "Het hoger beroepsonderwijs (hbo) en het wetenschappelijk onderwijs (wo) vormen samen het hoger onderwijs (ho).",
-    "periode": "Jaarlijks bijgewerkt (zie dataset voor peilmoment)",
+    "periode": "2021/'22-2025/'26",
     "onderwijstype": [
       "HO"
     ],
@@ -219,7 +389,9 @@
       "ingeschrevenen",
       "duo",
       "open-data",
-      "ho"
+      "ho",
+      "gemeente",
+      "provincie"
     ],
     "combineerbaar_met": [
       "RIO organisatorische-eenheden (via BRIN-code)",
@@ -266,27 +438,105 @@
         "id": "1a67316d-db9f-415c-8057-8c47bee19d44"
       }
     ],
-    "_kolommen": [
-      "STUDIEJAAR",
-      "PROVINCIENAAM",
-      "GEMEENTENUMMER",
-      "GEMEENTENAAM",
-      "SOORT_INSTELLING",
-      "TYPE_HOGER_ONDERWIJS",
-      "INSTELLINGSCODE_ACTUEEL",
-      "INSTELLINGSNAAM_ACTUEEL",
-      "ONDERDEEL",
-      "SUBONDERDEEL",
-      "GESLACHT",
-      "AANTAL_EERSTEJAARS_INGESCHREVENEN"
-    ],
-    "_thema": "HO"
+    "_kolommen": {
+      "Eerstejaarsingeschrevenen hoger beroepsonderwijs inclusief geslacht in het domein hoger onderwijs": [
+        "STUDIEJAAR",
+        "PROVINCIENAAM",
+        "GEMEENTENUMMER",
+        "GEMEENTENAAM",
+        "SOORT_INSTELLING",
+        "TYPE_HOGER_ONDERWIJS",
+        "INSTELLINGSCODE_ACTUEEL",
+        "INSTELLINGSNAAM_ACTUEEL",
+        "ONDERDEEL",
+        "SUBONDERDEEL",
+        "GESLACHT",
+        "AANTAL_EERSTEJAARS_INGESCHREVENEN"
+      ],
+      "Eerstejaarsingeschrevenen wetenschappelijk onderwijs inclusief geslacht in het domein hoger onderwijs": [
+        "STUDIEJAAR",
+        "PROVINCIENAAM",
+        "GEMEENTENUMMER",
+        "GEMEENTENAAM",
+        "SOORT_INSTELLING",
+        "TYPE_HOGER_ONDERWIJS",
+        "INSTELLINGSCODE_ACTUEEL",
+        "INSTELLINGSNAAM_ACTUEEL",
+        "ONDERDEEL",
+        "SUBONDERDEEL",
+        "GESLACHT",
+        "AANTAL_EERSTEJAARS_INGESCHREVENEN"
+      ],
+      "Eerstejaarsingeschrevenen hoger beroepsonderwijs niveau opleiding in het domein hoger onderwijs": [
+        "STUDIEJAAR",
+        "PROVINCIENAAM",
+        "GEMEENTENUMMER",
+        "GEMEENTENAAM",
+        "SOORT_INSTELLING",
+        "TYPE_HOGER_ONDERWIJS",
+        "INSTELLINGSCODE_ACTUEEL",
+        "INSTELLINGSNAAM_ACTUEEL",
+        "ONDERDEEL",
+        "SUBONDERDEEL",
+        "OPLEIDINGSCODE_ACTUEEL",
+        "OPLEIDINGSNAAM_ACTUEEL",
+        "AANTAL_EERSTEJAARS_INGESCHREVENEN"
+      ],
+      "Eerstejaarsingeschrevenen hoger beroepsonderwijs inclusief opleidingsvorm in het domein hoger onderwijs": [
+        "STUDIEJAAR",
+        "PROVINCIENAAM",
+        "GEMEENTENUMMER",
+        "GEMEENTENAAM",
+        "SOORT_INSTELLING",
+        "TYPE_HOGER_ONDERWIJS",
+        "INSTELLINGSCODE_ACTUEEL",
+        "INSTELLINGSNAAM_ACTUEEL",
+        "ONDERDEEL",
+        "SUBONDERDEEL",
+        "OPLEIDINGSVORM",
+        "AANTAL_EERSTEJAARS_INGESCHREVENEN"
+      ],
+      "Eerstejaarsingeschrevenen wetenschappelijk onderwijs inclusief opleidingsvorm in het domein hoger onderwijs": [
+        "STUDIEJAAR",
+        "PROVINCIENAAM",
+        "GEMEENTENUMMER",
+        "GEMEENTENAAM",
+        "SOORT_INSTELLING",
+        "TYPE_HOGER_ONDERWIJS",
+        "INSTELLINGSCODE_ACTUEEL",
+        "INSTELLINGSNAAM_ACTUEEL",
+        "ONDERDEEL",
+        "SUBONDERDEEL",
+        "OPLEIDINGSVORM",
+        "AANTAL_EERSTEJAARS_INGESCHREVENEN"
+      ],
+      "Eerstejaarsingeschrevenen wetenschappelijk onderwijs niveau opleiding in het domein hoger onderwijs": [
+        "STUDIEJAAR",
+        "PROVINCIENAAM",
+        "GEMEENTENUMMER",
+        "GEMEENTENAAM",
+        "SOORT_INSTELLING",
+        "TYPE_HOGER_ONDERWIJS",
+        "INSTELLINGSCODE_ACTUEEL",
+        "INSTELLINGSNAAM_ACTUEEL",
+        "ONDERDEEL",
+        "SUBONDERDEEL",
+        "OPLEIDINGSCODE_ACTUEEL",
+        "OPLEIDINGSNAAM_ACTUEEL",
+        "AANTAL_EERSTEJAARS_INGESCHREVENEN"
+      ]
+    },
+    "_thema": "HO",
+    "_geo_niveau": [
+      "gemeente",
+      "provincie"
+    ]
   },
   {
     "leverancier": "DUO",
     "bron": "Gediplomeerden in het hoger onderwijs in het domein soort diploma soort hoger onderwijs",
     "beschrijving": "Het hoger beroepsonderwijs (hbo) en het wetenschappelijk onderwijs (wo) vormen samen het hoger onderwijs (ho).",
-    "periode": "Jaarlijks bijgewerkt (zie dataset voor peilmoment)",
+    "periode": "2020/'21-2024/'25",
     "onderwijstype": [
       "HO"
     ],
@@ -309,7 +559,9 @@
       "gediplomeerden",
       "duo",
       "open-data",
-      "ho"
+      "ho",
+      "gemeente",
+      "provincie"
     ],
     "combineerbaar_met": [
       "RIO organisatorische-eenheden (via BRIN-code)",
@@ -356,27 +608,105 @@
         "id": "b74aeac5-ea8c-4697-a909-3aaae7e25f09"
       }
     ],
-    "_kolommen": [
-      "DIPLOMAJAAR",
-      "PROVINCIENAAM",
-      "GEMEENTENUMMER",
-      "GEMEENTENAAM",
-      "SOORT_INSTELLING",
-      "INSTELLINGSCODE_ACTUEEL",
-      "INSTELLINGSNAAM_ACTUEEL",
-      "ONDERDEEL",
-      "SUBONDERDEEL",
-      "SOORT_DIPLOMA",
-      "GESLACHT",
-      "AANTAL_GEDIPLOMEERDEN"
-    ],
-    "_thema": "HO"
+    "_kolommen": {
+      "Gediplomeerden hoger beroepsonderwijs inclusief geslacht": [
+        "DIPLOMAJAAR",
+        "PROVINCIENAAM",
+        "GEMEENTENUMMER",
+        "GEMEENTENAAM",
+        "SOORT_INSTELLING",
+        "INSTELLINGSCODE_ACTUEEL",
+        "INSTELLINGSNAAM_ACTUEEL",
+        "ONDERDEEL",
+        "SUBONDERDEEL",
+        "SOORT_DIPLOMA",
+        "GESLACHT",
+        "AANTAL_GEDIPLOMEERDEN"
+      ],
+      "Gediplomeerden wetenschappelijk onderwijs inclusief geslacht": [
+        "DIPLOMAJAAR",
+        "PROVINCIENAAM",
+        "GEMEENTENUMMER",
+        "GEMEENTENAAM",
+        "SOORT_INSTELLING",
+        "INSTELLINGSCODE_ACTUEEL",
+        "INSTELLINGSNAAM_ACTUEEL",
+        "ONDERDEEL",
+        "SUBONDERDEEL",
+        "SOORT_DIPLOMA",
+        "GESLACHT",
+        "AANTAL_GEDIPLOMEERDEN"
+      ],
+      "Gediplomeerden hoger beroepsonderwijs niveau opleiding": [
+        "DIPLOMAJAAR",
+        "PROVINCIENAAM",
+        "GEMEENTENUMMER",
+        "GEMEENTENAAM",
+        "SOORT_INSTELLING",
+        "INSTELLINGSCODE_ACTUEEL",
+        "INSTELLINGSNAAM_ACTUEEL",
+        "ONDERDEEL",
+        "SUBONDERDEEL",
+        "OPLEIDINGSCODE_ACTUEEL",
+        "OPLEIDINGSNAAM_ACTUEEL",
+        "SOORT_DIPLOMA",
+        "AANTAL_GEDIPLOMEERDEN"
+      ],
+      "Gediplomeerden hoger beroepsonderwijs inclusief opleidingsvorm": [
+        "DIPLOMAJAAR",
+        "PROVINCIENAAM",
+        "GEMEENTENUMMER",
+        "GEMEENTENAAM",
+        "SOORT_INSTELLING",
+        "INSTELLINGSCODE_ACTUEEL",
+        "INSTELLINGSNAAM_ACTUEEL",
+        "ONDERDEEL",
+        "SUBONDERDEEL",
+        "SOORT_DIPLOMA",
+        "OPLEIDINGSVORM",
+        "AANTAL_GEDIPLOMEERDEN"
+      ],
+      "Gediplomeerden wetenschappelijk onderwijs inclusief opleidingsvorm in het domein hoger onderwijs": [
+        "DIPLOMAJAAR",
+        "PROVINCIENAAM",
+        "GEMEENTENUMMER",
+        "GEMEENTENAAM",
+        "SOORT_INSTELLING",
+        "INSTELLINGSCODE_ACTUEEL",
+        "INSTELLINGSNAAM_ACTUEEL",
+        "ONDERDEEL",
+        "SUBONDERDEEL",
+        "SOORT_DIPLOMA",
+        "OPLEIDINGSVORM",
+        "AANTAL_GEDIPLOMEERDEN"
+      ],
+      "Gediplomeerden wetenschappelijk onderwijs niveau opleiding": [
+        "DIPLOMAJAAR",
+        "PROVINCIENAAM",
+        "GEMEENTENUMMER",
+        "GEMEENTENAAM",
+        "SOORT_INSTELLING",
+        "INSTELLINGSCODE_ACTUEEL",
+        "INSTELLINGSNAAM_ACTUEEL",
+        "ONDERDEEL",
+        "SUBONDERDEEL",
+        "OPLEIDINGSCODE_ACTUEEL",
+        "OPLEIDINGSNAAM_ACTUEEL",
+        "SOORT_DIPLOMA",
+        "AANTAL_GEDIPLOMEERDEN"
+      ]
+    },
+    "_thema": "HO",
+    "_geo_niveau": [
+      "gemeente",
+      "provincie"
+    ]
   },
   {
     "leverancier": "DUO",
     "bron": "HO Opleidingsoverzicht",
     "beschrijving": "Het ho opleidingsoverzicht bevat informatie over bekostigde, actuele en toekomstige opleidingen in het hoger onderwijs.",
-    "periode": "Jaarlijks bijgewerkt (zie dataset voor peilmoment)",
+    "periode": "2002-2023",
     "onderwijstype": [
       "HO"
     ],
@@ -420,59 +750,63 @@
         "id": "ba907450-e4c4-44aa-93ed-6b177eeade88"
       }
     ],
-    "_kolommen": [
-      "ONDERWIJSBESTUURID",
-      "ONDERWIJSBESTUUR_NAAM",
-      "ONDERWIJSAANBIEDERID",
-      "ONDERWIJSAANBIEDER_NAAM",
-      "SOORT",
-      "OPLEIDINGSEENHEIDCODE",
-      "ERKENDEOPLEIDINGSCODE",
-      "VARIANT_VAN",
-      "ERKENNER",
-      "NAAM_LANG",
-      "INTERNATIONALE_NAAM",
-      "BEGINDATUM",
-      "EINDDATUM",
-      "NIVEAU",
-      "GRAAD",
-      "STUDIELAST",
-      "EQF",
-      "ISCED",
-      "NLQF",
-      "WAARDEDOCUMENTSOORT",
-      "PENVOERDER",
-      "EIGENNAAM",
-      "EIGENNAAM_DUITS",
-      "EIGENNAAM_ENGELS",
-      "VORM",
-      "VOERTAAL",
-      "AANGEBODEN_OPLEIDING_BEGINDATUM",
-      "AANGEBODEN_OPLEIDING_EINDDATUM",
-      "EERSTE_INSTROOMDATUM",
-      "LAATSTE_INSTROOMDATUM",
-      "WEBSITE",
-      "SAMENWERKEND_MET",
-      "BUITENLANDSEPARTNER",
-      "DEFICIENTIE",
-      "EISEN_WERKZAAMHEDEN",
-      "PROPEDEUTISCHE_FASE",
-      "STUDIEKEUZECHECK",
-      "VERSNELD_TRAJECT",
-      "AANGEBODEN_OPLEIDINGCODE",
-      "EIGEN_AANGEBODEN_OPLEIDINGSLEUTEL",
-      "ONDERWIJSLOCATIECODE",
-      "ONDERWIJSLOCATIESTRAAT",
-      "ONDERWIJSLOCATIEPLAATS",
-      "OMSCHRIJVING"
-    ],
-    "_thema": "HO"
+    "_kolommen": {
+      "ho_opleidingsoverzicht": [
+        "ONDERWIJSBESTUURID",
+        "ONDERWIJSBESTUUR_NAAM",
+        "ONDERWIJSAANBIEDERID",
+        "ONDERWIJSAANBIEDER_NAAM",
+        "SOORT",
+        "OPLEIDINGSEENHEIDCODE",
+        "ERKENDEOPLEIDINGSCODE",
+        "VARIANT_VAN",
+        "ERKENNER",
+        "NAAM_LANG",
+        "INTERNATIONALE_NAAM",
+        "BEGINDATUM",
+        "EINDDATUM",
+        "NIVEAU",
+        "GRAAD",
+        "STUDIELAST",
+        "EQF",
+        "ISCED",
+        "NLQF",
+        "WAARDEDOCUMENTSOORT",
+        "PENVOERDER",
+        "EIGENNAAM",
+        "EIGENNAAM_DUITS",
+        "EIGENNAAM_ENGELS",
+        "VORM",
+        "VOERTAAL",
+        "AANGEBODEN_OPLEIDING_BEGINDATUM",
+        "AANGEBODEN_OPLEIDING_EINDDATUM",
+        "EERSTE_INSTROOMDATUM",
+        "LAATSTE_INSTROOMDATUM",
+        "WEBSITE",
+        "SAMENWERKEND_MET",
+        "BUITENLANDSEPARTNER",
+        "DEFICIENTIE",
+        "EISEN_WERKZAAMHEDEN",
+        "PROPEDEUTISCHE_FASE",
+        "STUDIEKEUZECHECK",
+        "VERSNELD_TRAJECT",
+        "AANGEBODEN_OPLEIDINGCODE",
+        "EIGEN_AANGEBODEN_OPLEIDINGSLEUTEL",
+        "ONDERWIJSLOCATIECODE",
+        "ONDERWIJSLOCATIESTRAAT",
+        "ONDERWIJSLOCATIEPLAATS",
+        "OMSCHRIJVING"
+      ],
+      "controlebestand": []
+    },
+    "_thema": "HO",
+    "_geo_niveau": []
   },
   {
     "leverancier": "DUO",
     "bron": "Ingeschrevenen hoger onderwijs in het domein hoger onderwijs",
     "beschrijving": "Het hoger beroepsonderwijs (hbo) en het wetenschappelijk onderwijs (wo) vormen samen het hoger onderwijs (ho).",
-    "periode": "Jaarlijks bijgewerkt (zie dataset voor peilmoment)",
+    "periode": "2021/'22-2025/'26",
     "onderwijstype": [
       "HO"
     ],
@@ -495,7 +829,9 @@
       "ingeschrevenen",
       "duo",
       "open-data",
-      "ho"
+      "ho",
+      "gemeente",
+      "provincie"
     ],
     "combineerbaar_met": [
       "RIO organisatorische-eenheden (via BRIN-code)",
@@ -542,27 +878,105 @@
         "id": "6a7e10c1-6ae8-4949-89da-b6e59151698c"
       }
     ],
-    "_kolommen": [
-      "STUDIEJAAR",
-      "PROVINCIENAAM",
-      "GEMEENTENUMMER",
-      "GEMEENTENAAM",
-      "SOORT_INSTELLING",
-      "TYPE_HOGER_ONDERWIJS",
-      "INSTELLINGSCODE_ACTUEEL",
-      "INSTELLINGSNAAM_ACTUEEL",
-      "ONDERDEEL",
-      "SUBONDERDEEL",
-      "GESLACHT",
-      "AANTAL_INGESCHREVENEN"
-    ],
-    "_thema": "HO"
+    "_kolommen": {
+      "Ingeschrevenen hoger beroepsonderwijs inclusief geslacht in het domein hoger onderwijs": [
+        "STUDIEJAAR",
+        "PROVINCIENAAM",
+        "GEMEENTENUMMER",
+        "GEMEENTENAAM",
+        "SOORT_INSTELLING",
+        "TYPE_HOGER_ONDERWIJS",
+        "INSTELLINGSCODE_ACTUEEL",
+        "INSTELLINGSNAAM_ACTUEEL",
+        "ONDERDEEL",
+        "SUBONDERDEEL",
+        "GESLACHT",
+        "AANTAL_INGESCHREVENEN"
+      ],
+      "Ingeschrevenen wetenschappelijk onderwijs inclusief geslacht in het domein hoger onderwijs": [
+        "STUDIEJAAR",
+        "PROVINCIENAAM",
+        "GEMEENTENUMMER",
+        "GEMEENTENAAM",
+        "SOORT_INSTELLING",
+        "TYPE_HOGER_ONDERWIJS",
+        "INSTELLINGSCODE_ACTUEEL",
+        "INSTELLINGSNAAM_ACTUEEL",
+        "ONDERDEEL",
+        "SUBONDERDEEL",
+        "GESLACHT",
+        "AANTAL_INGESCHREVENEN"
+      ],
+      "Ingeschrevenen hoger beroepsonderwijs niveau opleiding in het domein hoger onderwijs": [
+        "STUDIEJAAR",
+        "PROVINCIENAAM",
+        "GEMEENTENUMMER",
+        "GEMEENTENAAM",
+        "SOORT_INSTELLING",
+        "TYPE_HOGER_ONDERWIJS",
+        "INSTELLINGSCODE_ACTUEEL",
+        "INSTELLINGSNAAM_ACTUEEL",
+        "ONDERDEEL",
+        "SUBONDERDEEL",
+        "OPLEIDINGSCODE_ACTUEEL",
+        "OPLEIDINGSNAAM_ACTUEEL",
+        "AANTAL_INGESCHREVENEN"
+      ],
+      "Ingeschrevenen hoger beroepsonderwijs inclusief opleidingsvorm in het domein hoger onderwijs": [
+        "STUDIEJAAR",
+        "PROVINCIENAAM",
+        "GEMEENTENUMMER",
+        "GEMEENTENAAM",
+        "SOORT_INSTELLING",
+        "TYPE_HOGER_ONDERWIJS",
+        "INSTELLINGSCODE_ACTUEEL",
+        "INSTELLINGSNAAM_ACTUEEL",
+        "ONDERDEEL",
+        "SUBONDERDEEL",
+        "OPLEIDINGSVORM",
+        "AANTAL_INGESCHREVENEN"
+      ],
+      "Ingeschrevenen wetenschappelijk onderwijs inclusief opleidingsvorm in het domein hoger onderwijs": [
+        "STUDIEJAAR",
+        "PROVINCIENAAM",
+        "GEMEENTENUMMER",
+        "GEMEENTENAAM",
+        "SOORT_INSTELLING",
+        "TYPE_HOGER_ONDERWIJS",
+        "INSTELLINGSCODE_ACTUEEL",
+        "INSTELLINGSNAAM_ACTUEEL",
+        "ONDERDEEL",
+        "SUBONDERDEEL",
+        "OPLEIDINGSVORM",
+        "AANTAL_INGESCHREVENEN"
+      ],
+      "Ingeschrevenen wetenschappelijk onderwijs niveau opleiding in het domein hoger onderwijs": [
+        "STUDIEJAAR",
+        "PROVINCIENAAM",
+        "GEMEENTENUMMER",
+        "GEMEENTENAAM",
+        "SOORT_INSTELLING",
+        "TYPE_HOGER_ONDERWIJS",
+        "INSTELLINGSCODE_ACTUEEL",
+        "INSTELLINGSNAAM_ACTUEEL",
+        "ONDERDEEL",
+        "SUBONDERDEEL",
+        "OPLEIDINGSCODE_ACTUEEL",
+        "OPLEIDINGSNAAM_ACTUEEL",
+        "AANTAL_INGESCHREVENEN"
+      ]
+    },
+    "_thema": "HO",
+    "_geo_niveau": [
+      "gemeente",
+      "provincie"
+    ]
   },
   {
     "leverancier": "DUO",
     "bron": "Inschrijvingen in het hoger onderwijs",
     "beschrijving": "Het hoger beroepsonderwijs (hbo) en het wetenschappelijk onderwijs (wo) vormen samen het hoger onderwijs (ho).",
-    "periode": "Jaarlijks bijgewerkt (zie dataset voor peilmoment)",
+    "periode": "2021/'22-2025/'26",
     "onderwijstype": [
       "HO"
     ],
@@ -585,7 +999,9 @@
       "ingeschrevenen",
       "duo",
       "open-data",
-      "ho"
+      "ho",
+      "gemeente",
+      "provincie"
     ],
     "combineerbaar_met": [
       "RIO organisatorische-eenheden (via BRIN-code)",
@@ -632,27 +1048,105 @@
         "id": "84b7bec1-0774-4e0a-bcdf-1ac460f2fc2e"
       }
     ],
-    "_kolommen": [
-      "STUDIEJAAR",
-      "PROVINCIENAAM",
-      "GEMEENTENUMMER",
-      "GEMEENTENAAM",
-      "SOORT_INSTELLING",
-      "TYPE_HOGER_ONDERWIJS",
-      "INSTELLINGSCODE_ACTUEEL",
-      "INSTELLINGSNAAM_ACTUEEL",
-      "ONDERDEEL",
-      "SUBONDERDEEL",
-      "GESLACHT",
-      "AANTAL_INSCHRIJVINGEN"
-    ],
-    "_thema": "HO"
+    "_kolommen": {
+      "Inschrijvingen hoger beroepsonderwijs inclusief geslacht": [
+        "STUDIEJAAR",
+        "PROVINCIENAAM",
+        "GEMEENTENUMMER",
+        "GEMEENTENAAM",
+        "SOORT_INSTELLING",
+        "TYPE_HOGER_ONDERWIJS",
+        "INSTELLINGSCODE_ACTUEEL",
+        "INSTELLINGSNAAM_ACTUEEL",
+        "ONDERDEEL",
+        "SUBONDERDEEL",
+        "GESLACHT",
+        "AANTAL_INSCHRIJVINGEN"
+      ],
+      "Inschrijvingen wetenschappelijk onderwijs inclusief geslacht": [
+        "STUDIEJAAR",
+        "PROVINCIENAAM",
+        "GEMEENTENUMMER",
+        "GEMEENTENAAM",
+        "SOORT_INSTELLING",
+        "TYPE_HOGER_ONDERWIJS",
+        "INSTELLINGSCODE_ACTUEEL",
+        "INSTELLINGSNAAM_ACTUEEL",
+        "ONDERDEEL",
+        "SUBONDERDEEL",
+        "GESLACHT",
+        "AANTAL_INSCHRIJVINGEN"
+      ],
+      "Inschrijvingen hoger beroepsonderwijs niveau opleiding": [
+        "STUDIEJAAR",
+        "PROVINCIENAAM",
+        "GEMEENTENUMMER",
+        "GEMEENTENAAM",
+        "SOORT_INSTELLING",
+        "TYPE_HOGER_ONDERWIJS",
+        "INSTELLINGSCODE_ACTUEEL",
+        "INSTELLINGSNAAM_ACTUEEL",
+        "ONDERDEEL",
+        "SUBONDERDEEL",
+        "OPLEIDINGSCODE_ACTUEEL",
+        "OPLEIDINGSNAAM_ACTUEEL",
+        "AANTAL_INSCHRIJVINGEN"
+      ],
+      "Inschrijvingen hoger beroepsonderwijs inclusief opleidingsvorm": [
+        "STUDIEJAAR",
+        "PROVINCIENAAM",
+        "GEMEENTENUMMER",
+        "GEMEENTENAAM",
+        "SOORT_INSTELLING",
+        "TYPE_HOGER_ONDERWIJS",
+        "INSTELLINGSCODE_ACTUEEL",
+        "INSTELLINGSNAAM_ACTUEEL",
+        "ONDERDEEL",
+        "SUBONDERDEEL",
+        "OPLEIDINGSVORM",
+        "AANTAL_INSCHRIJVINGEN"
+      ],
+      "Inschrijvingen wetenschappelijk onderwijs inclusief opleidingsvorm in het domein hoger onderwijs": [
+        "STUDIEJAAR",
+        "PROVINCIENAAM",
+        "GEMEENTENUMMER",
+        "GEMEENTENAAM",
+        "SOORT_INSTELLING",
+        "TYPE_HOGER_ONDERWIJS",
+        "INSTELLINGSCODE_ACTUEEL",
+        "INSTELLINGSNAAM_ACTUEEL",
+        "ONDERDEEL",
+        "SUBONDERDEEL",
+        "OPLEIDINGSVORM",
+        "AANTAL_INSCHRIJVINGEN"
+      ],
+      "Inschrijvingen wetenschappelijk onderwijs niveau opleiding": [
+        "STUDIEJAAR",
+        "PROVINCIENAAM",
+        "GEMEENTENUMMER",
+        "GEMEENTENAAM",
+        "SOORT_INSTELLING",
+        "TYPE_HOGER_ONDERWIJS",
+        "INSTELLINGSCODE_ACTUEEL",
+        "INSTELLINGSNAAM_ACTUEEL",
+        "ONDERDEEL",
+        "SUBONDERDEEL",
+        "OPLEIDINGSCODE_ACTUEEL",
+        "OPLEIDINGSNAAM_ACTUEEL",
+        "AANTAL_INSCHRIJVINGEN"
+      ]
+    },
+    "_thema": "HO",
+    "_geo_niveau": [
+      "gemeente",
+      "provincie"
+    ]
   },
   {
     "leverancier": "DUO",
     "bron": "Overzicht Erkenningen ho",
     "beschrijving": "In het Overzicht Erkenningen ho staan de actuele gegevens van de OCW erkende instellingen en opleidingen in het hoger onderwijs.",
-    "periode": "Jaarlijks bijgewerkt (zie dataset voor peilmoment)",
+    "periode": "2012-2027",
     "onderwijstype": [
       "HO"
     ],
@@ -674,7 +1168,8 @@
       "ho",
       "rio",
       "duo",
-      "open-data"
+      "open-data",
+      "gemeente"
     ],
     "combineerbaar_met": [
       "RIO organisatorische-eenheden (via BRIN-code)",
@@ -703,61 +1198,68 @@
         "id": "d22f70ca-7d8a-4f97-9c65-73584c1c841d"
       }
     ],
-    "_kolommen": [
-      "BEVOEGD_GEZAG_CODE",
-      "BEVOEGD_GEZAG_NAAM",
-      "INSTELLINGSCODE",
-      "INSTELLINGSNAAM",
-      "VESTIGINGSCODE",
-      "VESTIGINGSNAAM",
-      "GEMEENTENAAM",
-      "PLAATSNAAM",
-      "ERKENDEOPLEIDINGSCODE",
-      "INSTROOM_EINDDATUM",
-      "OPLEIDINGSEENHEIDCODE",
-      "EIGEN_OPLEIDINGSEENHEIDSLEUTEL",
-      "OPLEIDINGSEENHEID_NAAM",
-      "OPLEIDINGSEENHEID_INTERNATIONALE_NAAM",
-      "OPLEIDINGSEENHEID_SOORT",
-      "STUDIELAST",
-      "STUDIELASTEENHEID",
-      "NIVEAU",
-      "GRAAD",
-      "GRAADTOEVOEGING",
-      "ISCED",
-      "NLQF",
-      "EQF",
-      "VORM",
-      "ONDERDEEL",
-      "SUBONDERDEEL",
-      "BEKOSTIGINGSNIVEAU",
-      "GRONDSLAG_STUDIELAST",
-      "BEROEPSEISEN",
-      "OPLEIDINGSERKENNINGSKADER",
-      "INTENSIEFPROGRAMMA",
-      "BEKOSTIGINGSCODE",
-      "AANVULLENDE_EISEN",
-      "BEKOSTIGINGSDUUR",
-      "VESTIGINGSLICENTIE_BEGINDATUM",
-      "VESTIGINGSLICENTIE_EINDDATUM",
-      "ACCREDITATIE_BESLUITDATUM",
-      "ACCREDITATIE_BEGINDATUM",
-      "ACCREDITATIE_VERVALDATUM",
-      "ACCREDITATIE_AFBOUWDATUM",
-      "ACCREDITATIE_INLEVERDATUM",
-      "ACCREDITATIE_VOORWAARDENDATUM",
-      "ACCREDITATIE_INTREKKINGSDATUM",
-      "ACCREDITATIE_UITSTELDATUM",
-      "ACCREDITATIE_UITSTELREDEN",
-      "SAMENWERKENDEINSTELLINGEN"
-    ],
-    "_thema": "HO"
+    "_kolommen": {
+      "HO_Erkenningen_RIO": [
+        "BEVOEGD_GEZAG_CODE",
+        "BEVOEGD_GEZAG_NAAM",
+        "INSTELLINGSCODE",
+        "INSTELLINGSNAAM",
+        "VESTIGINGSCODE",
+        "VESTIGINGSNAAM",
+        "GEMEENTENAAM",
+        "PLAATSNAAM",
+        "ERKENDEOPLEIDINGSCODE",
+        "INSTROOM_EINDDATUM",
+        "OPLEIDINGSEENHEIDCODE",
+        "EIGEN_OPLEIDINGSEENHEIDSLEUTEL",
+        "OPLEIDINGSEENHEID_NAAM",
+        "OPLEIDINGSEENHEID_INTERNATIONALE_NAAM",
+        "OPLEIDINGSEENHEID_SOORT",
+        "STUDIELAST",
+        "STUDIELASTEENHEID",
+        "NIVEAU",
+        "GRAAD",
+        "GRAADTOEVOEGING",
+        "ISCED",
+        "NLQF",
+        "EQF",
+        "VORM",
+        "ONDERDEEL",
+        "SUBONDERDEEL",
+        "BEKOSTIGINGSNIVEAU",
+        "GRONDSLAG_STUDIELAST",
+        "BEROEPSEISEN",
+        "OPLEIDINGSERKENNINGSKADER",
+        "INTENSIEFPROGRAMMA",
+        "BEKOSTIGINGSCODE",
+        "AANVULLENDE_EISEN",
+        "BEKOSTIGINGSDUUR",
+        "VESTIGINGSLICENTIE_BEGINDATUM",
+        "VESTIGINGSLICENTIE_EINDDATUM",
+        "ACCREDITATIE_BESLUITDATUM",
+        "ACCREDITATIE_BEGINDATUM",
+        "ACCREDITATIE_VERVALDATUM",
+        "ACCREDITATIE_AFBOUWDATUM",
+        "ACCREDITATIE_INLEVERDATUM",
+        "ACCREDITATIE_VOORWAARDENDATUM",
+        "ACCREDITATIE_INTREKKINGSDATUM",
+        "ACCREDITATIE_UITSTELDATUM",
+        "ACCREDITATIE_UITSTELREDEN",
+        "SAMENWERKENDEINSTELLINGEN"
+      ],
+      "Toelichting": [],
+      "controlebestand": []
+    },
+    "_thema": "HO",
+    "_geo_niveau": [
+      "gemeente"
+    ]
   },
   {
     "leverancier": "DUO",
     "bron": "WI 2021 Instroom, Uitstroom en Leerroute",
     "beschrijving": "In deze dataset vindt u de volledige Instroom en Uitstroom van inburgeraars onder de WI 2021 onderverdeeld naar verschillende aggregatieniveau's, waaronder Leerroute en Gemeente.",
-    "periode": "Jaarlijks bijgewerkt (zie dataset voor peilmoment)",
+    "periode": "2021-2026",
     "onderwijstype": [
       "Inburgering"
     ],
@@ -780,7 +1282,8 @@
       "wi 2021",
       "duo",
       "open-data",
-      "inburgering"
+      "inburgering",
+      "gemeente"
     ],
     "combineerbaar_met": [
       "RIO organisatorische-eenheden (via BRIN-code)"
@@ -801,20 +1304,33 @@
         "id": "82c05792-a40c-49cc-9e7d-791e95f359cf"
       }
     ],
-    "_kolommen": [
-      "WET",
-      "NUMMER",
-      "TOTAAL_VAN",
-      "COHORT",
-      "DOELGROEP",
-      "STATUS",
-      "REDEN_UITSTROOM",
-      "LEERROUTE",
-      "GEMEENTE_CODE",
-      "GEMEENTE_NAAM",
-      "AANTAL"
-    ],
-    "_thema": "Inburgering"
+    "_kolommen": {
+      "DUO_SCI_OPENDATA_WI2021.csv": [
+        "WET",
+        "NUMMER",
+        "TOTAAL_VAN",
+        "COHORT",
+        "DOELGROEP",
+        "STATUS",
+        "REDEN_UITSTROOM",
+        "LEERROUTE",
+        "GEMEENTE_CODE",
+        "GEMEENTE_NAAM",
+        "AANTAL"
+      ],
+      "controlebestand": [
+        "_id",
+        "naam",
+        "aantalCsv",
+        "aantalDataStore",
+        "gewijzigd",
+        "volledig"
+      ]
+    },
+    "_thema": "Inburgering",
+    "_geo_niveau": [
+      "gemeente"
+    ]
   },
   {
     "leverancier": "DUO",
@@ -843,7 +1359,8 @@
       "scholen en adressen",
       "duo",
       "open-data",
-      "mbo"
+      "mbo",
+      "gemeente"
     ],
     "combineerbaar_met": [
       "RIO organisatorische-eenheden (via BRIN-code)",
@@ -866,26 +1383,64 @@
         "id": "1a946297-a7ca-48d5-9ae8-19ad73bf8176"
       }
     ],
-    "_kolommen": [
-      "BEVOEGD GEZAG NUMMER",
-      "BEVOEGD GEZAG NAAM",
-      "STRAATNAAM",
-      "HUISNUMMER-TOEVOEGING",
-      "POSTCODE",
-      "PLAATSNAAM",
-      "GEMEENTENUMMER",
-      "GEMEENTENAAM",
-      "DENOMINATIE",
-      "TELEFOONNUMMER",
-      "INTERNETADRES",
-      "STRAATNAAM CORRESPONDENTIEADRES",
-      "HUISNUMMER-TOEVOEGING CORRESPONDENTIEADRES",
-      "POSTCODE CORRESPONDENTIEADRES",
-      "PLAATSNAAM CORRESPONDENTIEADRES",
-      "ADMINISTRATIEKANTOORNUMMER",
-      "KVK-NUMMER"
-    ],
-    "_thema": "MBO"
+    "_kolommen": {
+      "Adressen bevoegde gezagen mbo": [
+        "BEVOEGD GEZAG NUMMER",
+        "BEVOEGD GEZAG NAAM",
+        "STRAATNAAM",
+        "HUISNUMMER-TOEVOEGING",
+        "POSTCODE",
+        "PLAATSNAAM",
+        "GEMEENTENUMMER",
+        "GEMEENTENAAM",
+        "DENOMINATIE",
+        "TELEFOONNUMMER",
+        "INTERNETADRES",
+        "STRAATNAAM CORRESPONDENTIEADRES",
+        "HUISNUMMER-TOEVOEGING CORRESPONDENTIEADRES",
+        "POSTCODE CORRESPONDENTIEADRES",
+        "PLAATSNAAM CORRESPONDENTIEADRES",
+        "ADMINISTRATIEKANTOORNUMMER",
+        "KVK-NUMMER"
+      ],
+      "Adressen instellingen": [
+        "MBO INSTELLINGSSOORT - CODE",
+        "MBO INSTELLINGSSOORT - NAAM",
+        "PROVINCIE",
+        "BEVOEGD GEZAG NUMMER",
+        "INSTELLINGSCODE",
+        "INSTELLINGSNAAM",
+        "STRAATNAAM",
+        "HUISNUMMER-TOEVOEGING",
+        "POSTCODE",
+        "PLAATSNAAM",
+        "GEMEENTENUMMER",
+        "GEMEENTENAAM",
+        "DENOMINATIE",
+        "TELEFOONNUMMER",
+        "INTERNETADRES",
+        "STRAATNAAM CORRESPONDENTIEADRES",
+        "HUISNUMMER-TOEVOEGING CORRESPONDENTIEADRES",
+        "POSTCODE CORRESPONDENTIEADRES",
+        "PLAATSNAAM CORRESPONDENTIEADRES",
+        "NODAAL GEBIED CODE",
+        "NODAAL GEBIED NAAM",
+        "RPA-GEBIED CODE",
+        "RPA-GEBIED NAAM",
+        "WGR-GEBIED CODE",
+        "WGR-GEBIED NAAM",
+        "COROPGEBIED CODE",
+        "COROPGEBIED NAAM",
+        "ONDERWIJSGEBIED CODE",
+        "ONDERWIJSGEBIED NAAM",
+        "RMC-REGIO CODE",
+        "RMC-REGIO NAAM"
+      ]
+    },
+    "_thema": "MBO",
+    "_geo_niveau": [
+      "gemeente"
+    ]
   },
   {
     "leverancier": "DUO",
@@ -943,48 +1498,63 @@
         "id": "01bd5606-daa1-4107-8bac-03827ff742c7"
       }
     ],
-    "_kolommen": [
-      "OPLEIDINGSEENHEIDCODE",
-      "OPLEIDINGSEENHEID_TYPE",
-      "WAARDEDOCUMENTSOORT",
-      "OPLEIDINGSEENHEID_NIVEAU",
-      "OPLEIDINGSEENHEID_NAAM",
-      "OPLEIDINGSEENHEID_INTERNATIONALE_NAAM_ENGELS",
-      "STUDIELAST",
-      "STUDIELASTEENHEID",
-      "ERKENDEOPLEIDINGSCODE",
-      "ERKENDEOPLEIDINGSTYPE",
-      "ERKENDEOPLEIDINGSSTELSEL",
-      "KWALIFICATIEDOSSIER",
-      "DOMEIN",
-      "ONDERWIJSAANBIEDERID",
-      "NAAM",
-      "ONDERWIJSBESTUURID",
-      "KVK_NUMMER",
-      "ONDERWIJSLOCATIECODE",
-      "STRAATNAAM",
-      "HUISNUMMER",
-      "HUISNUMMERTOEVOEGING",
-      "POSTCODE",
-      "PLAATSNAAM",
-      "AANGEBODEN_OPLEIDINGCODE",
-      "AANGEBODEN_OPLEIDING_TYPE",
-      "AFWIJKENDE_OPLEIDINGSDUUROMVANG",
-      "AFWIJKENDE_OPLEIDINGSDUUREENHEID",
-      "EIGEN_AANGEBODEN_OPLEIDINGSLEUTEL",
-      "LEERTRAJECT",
-      "MBONIVEAU",
-      "VOERTAAL",
-      "EIGENNAAM",
-      "WEBSITE"
-    ],
-    "_thema": "MBO"
+    "_kolommen": {
+      "mbo_opleidingsaanbod": [
+        "OPLEIDINGSEENHEIDCODE",
+        "OPLEIDINGSEENHEID_TYPE",
+        "WAARDEDOCUMENTSOORT",
+        "OPLEIDINGSEENHEID_NIVEAU",
+        "OPLEIDINGSEENHEID_NAAM",
+        "OPLEIDINGSEENHEID_INTERNATIONALE_NAAM_ENGELS",
+        "STUDIELAST",
+        "STUDIELASTEENHEID",
+        "ERKENDEOPLEIDINGSCODE",
+        "ERKENDEOPLEIDINGSTYPE",
+        "ERKENDEOPLEIDINGSSTELSEL",
+        "KWALIFICATIEDOSSIER",
+        "DOMEIN",
+        "ONDERWIJSAANBIEDERID",
+        "NAAM",
+        "ONDERWIJSBESTUURID",
+        "KVK_NUMMER",
+        "ONDERWIJSLOCATIECODE",
+        "STRAATNAAM",
+        "HUISNUMMER",
+        "HUISNUMMERTOEVOEGING",
+        "POSTCODE",
+        "PLAATSNAAM",
+        "AANGEBODEN_OPLEIDINGCODE",
+        "AANGEBODEN_OPLEIDING_TYPE",
+        "AFWIJKENDE_OPLEIDINGSDUUROMVANG",
+        "AFWIJKENDE_OPLEIDINGSDUUREENHEID",
+        "EIGEN_AANGEBODEN_OPLEIDINGSLEUTEL",
+        "LEERTRAJECT",
+        "MBONIVEAU",
+        "VOERTAAL",
+        "EIGENNAAM",
+        "WEBSITE"
+      ],
+      "mbo_opleidingsaanbod_cohorten": [
+        "AANGEBODEN_OPLEIDINGCODE",
+        "AANGEBODEN_OPLEIDING_COHORTCODE",
+        "BEGIN_AANMELDPERIODE",
+        "EINDE_AANMELDPERIODE",
+        "INSTROOMMOMENT",
+        "BEGIN_INSTROOMPERIODE",
+        "EINDE_INSTROOMPERIODE",
+        "OPLEIDINGSEINDDATUM",
+        "OPLEIDINGSVORM"
+      ],
+      "controlebestand": []
+    },
+    "_thema": "MBO",
+    "_geo_niveau": []
   },
   {
     "leverancier": "DUO",
     "bron": "Studentprognoses mbo per instelling",
     "beschrijving": "De prognose van het aantal studenten in het middelbaar beroepsonderwijs (mbo) per jaar, instelling, gemeente, kwalificatieniveau, leeftijdscategorie, leerweg en mbo-sectorkamer.",
-    "periode": "Jaarlijks bijgewerkt (zie dataset voor peilmoment)",
+    "periode": "2021-2030",
     "onderwijstype": [
       "MBO"
     ],
@@ -1007,7 +1577,8 @@
       "prognoses",
       "duo",
       "open-data",
-      "mbo"
+      "mbo",
+      "gemeente"
     ],
     "combineerbaar_met": [
       "RIO organisatorische-eenheden (via BRIN-code)",
@@ -1228,15 +1799,297 @@
         "id": "f8c10a2d-9024-42ff-aa43-0ee1b2c6ceb7"
       }
     ],
-    "_kolommen": [
-      "Gemeentenaam",
-      "Leeftijdscategorie",
-      "Jaar",
-      "Aantal",
-      "Type",
-      "Versie"
-    ],
-    "_thema": "MBO"
+    "_kolommen": {
+      "mbo-studentenprognose_gemeente_leeftijdscategorie": [
+        "Gemeentenaam",
+        "Leeftijdscategorie",
+        "Jaar",
+        "Aantal",
+        "Type",
+        "Versie"
+      ],
+      "mbo-studentenprognose_gemeente_leerweg": [
+        "Gemeentenaam",
+        "Leerweg",
+        "Jaar",
+        "Aantal",
+        "Type",
+        "Versie"
+      ],
+      "mbo-studentenprognose_gemeente_sectorkamer": [
+        "Gemeentenaam",
+        "Sectorkamer",
+        "Jaar",
+        "Aantal",
+        "Type",
+        "Versie"
+      ],
+      "mbo-studentenprognose_instelling": [
+        "Instellingsnaam",
+        "Instellingscode",
+        "Jaar",
+        "Aantal",
+        "Type",
+        "Versie"
+      ],
+      "mbo-studentenprognose_kwalificatieniveau": [
+        "Kwalificatieniveau",
+        "Jaar",
+        "Aantal",
+        "Type",
+        "Versie"
+      ],
+      "mbo-studentenprognose_kwalificatieniveau_instelling": [
+        "Kwalificatieniveau",
+        "Instellingsnaam",
+        "Instellingscode",
+        "Jaar",
+        "Aantal",
+        "Type",
+        "Versie"
+      ],
+      "mbo-studentenprognose_leeftijdscategorie": [
+        "Leeftijdscategorie",
+        "Jaar",
+        "Aantal",
+        "Type",
+        "Versie"
+      ],
+      "mbo-studentenprognose_leeftijdscategorie_instelling": [
+        "Leeftijdscategorie",
+        "Instellingsnaam",
+        "Instellingscode",
+        "Jaar",
+        "Aantal",
+        "Type",
+        "Versie"
+      ],
+      "mbo-studentenprognose_leeftijdscategorie_kwalificatieniveau": [
+        "Leeftijdscategorie",
+        "Kwalificatieniveau",
+        "Jaar",
+        "Aantal",
+        "Type",
+        "Versie"
+      ],
+      "mbo-studentenprognose_leeftijdscategorie_leerweg": [
+        "Leeftijdscategorie",
+        "Leerweg",
+        "Jaar",
+        "Aantal",
+        "Type",
+        "Versie"
+      ],
+      "mbo-studentenprognose_leeftijdscategorie_sectorkamer": [
+        "Leeftijdscategorie",
+        "Sectorkamer",
+        "Jaar",
+        "Aantal",
+        "Type",
+        "Versie"
+      ],
+      "mbo-studentenprognose_leerweg": [
+        "Leerweg",
+        "Jaar",
+        "Aantal",
+        "Type",
+        "Versie"
+      ],
+      "mbo-studentenprognose_leerweg_instelling": [
+        "Leerweg",
+        "Instellingsnaam",
+        "Instellingscode",
+        "Jaar",
+        "Aantal",
+        "Type",
+        "Versie"
+      ],
+      "mbo-studentenprognose_leerweg_kwalificatieniveau": [
+        "Leerweg",
+        "Kwalificatieniveau",
+        "Jaar",
+        "Aantal",
+        "Type",
+        "Versie"
+      ],
+      "mbo-studentenprognose_sectorkamer": [
+        "Sectorkamer",
+        "Jaar",
+        "Aantal",
+        "Type",
+        "Versie"
+      ],
+      "mbo-studentenprognose_sectorkamer_instelling": [
+        "Sectorkamer",
+        "Instellingsnaam",
+        "Instellingscode",
+        "Jaar",
+        "Aantal",
+        "Type",
+        "Versie"
+      ],
+      "mbo-studentenprognose_sectorkamer_kwalificatieniveau": [
+        "Sectorkamer",
+        "Kwalificatieniveau",
+        "Jaar",
+        "Aantal",
+        "Type",
+        "Versie"
+      ],
+      "mbo-studentenprognose_sectorkamer_leerweg": [
+        "Sectorkamer",
+        "Leerweg",
+        "Jaar",
+        "Aantal",
+        "Type",
+        "Versie"
+      ],
+      "mbo-studentenprognose_gemeente_kwalificatieniveau": [
+        "Gemeentenaam",
+        "Kwalificatieniveau",
+        "Jaar",
+        "Aantal",
+        "Type",
+        "Versie"
+      ],
+      "mbo-studentenprognose_gemeente_instelling": [
+        "Gemeentenaam",
+        "Instellingsnaam",
+        "Instellingscode",
+        "Jaar",
+        "Aantal",
+        "Type",
+        "Versie"
+      ],
+      "mbo-studentenprognose_gemeente": [
+        "Gemeentenaam",
+        "Jaar",
+        "Aantal",
+        "Type",
+        "Versie"
+      ],
+      "mbo-studentenprognose_gemeente_onderwijslocatie": [
+        "Gemeentenaam",
+        "Instellingsnaam",
+        "Instellingscode",
+        "Onderwijslocatie",
+        "Jaar",
+        "Aantal",
+        "Type",
+        "Versie"
+      ],
+      "mbo-studentenprognose_kwalificatieniveau_onderwijslocatie": [
+        "Kwalificatieniveau",
+        "Instellingsnaam",
+        "Instellingscode",
+        "Onderwijslocatie",
+        "Jaar",
+        "Aantal",
+        "Type",
+        "Versie"
+      ],
+      "mbo-studentenprognose_leeftijdscategorie_onderwijslocatie": [
+        "Leeftijdscategorie",
+        "Instellingsnaam",
+        "Instellingscode",
+        "Onderwijslocatie",
+        "Jaar",
+        "Aantal",
+        "Type",
+        "Versie"
+      ],
+      "mbo-studentenprognose_leerweg_onderwijslocatie": [
+        "Leerweg",
+        "Instellingsnaam",
+        "Instellingscode",
+        "Onderwijslocatie",
+        "Jaar",
+        "Aantal",
+        "Type",
+        "Versie"
+      ],
+      "mbo-studentenprognose_onderwijslocatie": [
+        "Instellingsnaam",
+        "Instellingscode",
+        "Onderwijslocatie",
+        "Jaar",
+        "Aantal",
+        "Type",
+        "Versie"
+      ],
+      "mbo-studentenprognose_sectorkamer_onderwijslocatie": [
+        "Sectorkamer",
+        "Instellingsnaam",
+        "Instellingscode",
+        "Onderwijslocatie",
+        "Jaar",
+        "Aantal",
+        "Type",
+        "Versie"
+      ],
+      "mbo-studentenprognose_arbeidsmarktregio": [
+        "Arbeidsmarktregio",
+        "Jaar",
+        "Aantal",
+        "Type",
+        "Versie"
+      ],
+      "mbo-studentenprognose_arbeidsmarktregio_instelling": [
+        "Arbeidsmarktregio",
+        "Instellingsnaam",
+        "Instellingscode",
+        "Jaar",
+        "Aantal",
+        "Type",
+        "Versie"
+      ],
+      "mbo-studentenprognose_arbeidsmarktregio_kwalificatieniveau": [
+        "Arbeidsmarktregio",
+        "Kwalificatieniveau",
+        "Jaar",
+        "Aantal",
+        "Type",
+        "Versie"
+      ],
+      "mbo-studentenprognose_arbeidsmarktregio_leeftijdscategorie": [
+        "Arbeidsmarktregio",
+        "Leeftijdscategorie",
+        "Jaar",
+        "Aantal",
+        "Type",
+        "Versie"
+      ],
+      "mbo-studentenprognose_arbeidsmarktregio_leerweg": [
+        "Arbeidsmarktregio",
+        "Leerweg",
+        "Jaar",
+        "Aantal",
+        "Type",
+        "Versie"
+      ],
+      "mbo-studentenprognose_arbeidsmarktregio_onderwijslocatie": [
+        "Arbeidsmarktregio",
+        "Instellingsnaam",
+        "Instellingscode",
+        "Onderwijslocatie",
+        "Jaar",
+        "Aantal",
+        "Type",
+        "Versie"
+      ],
+      "mbo-studentenprognose_arbeidsmarktregio_sectorkamer": [
+        "Arbeidsmarktregio",
+        "Sectorkamer",
+        "Jaar",
+        "Aantal",
+        "Type",
+        "Versie"
+      ]
+    },
+    "_thema": "MBO",
+    "_geo_niveau": [
+      "gemeente"
+    ]
   },
   {
     "leverancier": "DUO",
@@ -1277,7 +2130,8 @@
       }
     ],
     "_kolommen": [],
-    "_thema": "Overig"
+    "_thema": "Overig",
+    "_geo_niveau": []
   },
   {
     "leverancier": "DUO",
@@ -1318,7 +2172,8 @@
       }
     ],
     "_kolommen": [],
-    "_thema": "Overig"
+    "_thema": "Overig",
+    "_geo_niveau": []
   },
   {
     "leverancier": "DUO",
@@ -1358,7 +2213,8 @@
       }
     ],
     "_kolommen": [],
-    "_thema": "Overig"
+    "_thema": "Overig",
+    "_geo_niveau": []
   },
   {
     "leverancier": "DUO",
@@ -1446,8 +2302,19 @@
         "id": "ffc142e9-4d8b-4a09-9105-831be2cd9b04"
       }
     ],
-    "_kolommen": [],
-    "_thema": "Overig"
+    "_kolommen": {
+      "changelog_rio_nfo_po_vo_vavo_mbo_ho v6.1.0": [],
+      "PVL aangebodenOpleidingen tbv RIO CSV bestanden generiek_specifiek (nfo, po, vo, vavo, mbo, ho) v4.0": [],
+      "PVL CSV RIO - Overkoepelend model (nfo, po, vo, vavo, mbo, ho)": [],
+      "PVL instellingserkenningen tbv RIO CSV bestanden generiek_specifiek (nfo, po, vo, vavo, mbo, ho) v4.1": [],
+      "PVL licenties tbv RIO CSV bestanden generiek_specifiek (nfo, po, vo, vavo, mbo, ho) v5.3": [],
+      "PVL onderwijslocaties tbv RIO CSV bestanden generiek_specifiek (nfo, po, vo, vavo, mbo, ho) v3.1": [],
+      "PVL opleidingseenheden tbv RIO CSV bestanden generiek_specifiek (nfo, po, vo, vavo, mbo, ho) v7.1": [],
+      "PVL opleidingserkenningen tbv RIO CSV bestanden generiek_specifiek (nfo, po, vo, vavo, mbo, ho) v5.4": [],
+      "PVL organisatorischeEenheden tbv RIO CSV bestanden generiek_specifiek (nfo, po, vo, vavo, mbo, ho) v3.3": []
+    },
+    "_thema": "Overig",
+    "_geo_niveau": []
   },
   {
     "leverancier": "DUO",
@@ -1488,7 +2355,8 @@
       }
     ],
     "_kolommen": [],
-    "_thema": "Overig"
+    "_thema": "Overig",
+    "_geo_niveau": []
   },
   {
     "leverancier": "DUO",
@@ -1548,13 +2416,14 @@
       "DIPMAN2025",
       "DIPVROUW2025"
     ],
-    "_thema": "Overig"
+    "_thema": "Overig",
+    "_geo_niveau": []
   },
   {
     "leverancier": "DUO",
     "bron": "Het toegestane voortgezet onderwijs per schoolvestiging en leerjaar.",
     "beschrijving": "Inzicht geven in het toegestane voortgezet onderwijs per VO-vestiging.",
-    "periode": "Jaarlijks bijgewerkt (zie dataset voor peilmoment)",
+    "periode": "1996-2029",
     "onderwijstype": [
       "Allen"
     ],
@@ -1590,7 +2459,8 @@
       }
     ],
     "_kolommen": [],
-    "_thema": "Overig"
+    "_thema": "Overig",
+    "_geo_niveau": []
   },
   {
     "leverancier": "DUO",
@@ -1685,29 +2555,181 @@
         "id": "9c9d219f-242a-4406-bf4d-60a8f76f34f5"
       }
     ],
-    "_kolommen": [
-      "VOOROPLEIDING VO",
-      "VOOROPLEIDING MBO",
-      "INDICATIE KLEINE OPLEIDING",
-      "INSTELLINGSCODE",
-      "INSTELLINGSNAAM",
-      "HOOFDGROEP CODE",
-      "HOOFDGROEP NAAM",
-      "NIVEAU",
-      "LEERWEG",
-      "BEROEPSOPLEIDING CODE",
-      "BEROEPSOPLEIDING NAAM",
-      "TOTAAL MBO",
-      "INSTROOM MBO",
-      "INSTROOM OPLEIDING"
-    ],
-    "_thema": "Overig"
+    "_kolommen": {
+      "2021 nieuw-instromende-studenten-per-instelling-hoofdgroep-leerweg-beroepsopleiding-niveau-vooropleiding": [
+        "VOOROPLEIDING VO",
+        "VOOROPLEIDING MBO",
+        "INDICATIE KLEINE OPLEIDING",
+        "INSTELLINGSCODE",
+        "INSTELLINGSNAAM",
+        "HOOFDGROEP CODE",
+        "HOOFDGROEP NAAM",
+        "NIVEAU",
+        "LEERWEG",
+        "BEROEPSOPLEIDING CODE",
+        "BEROEPSOPLEIDING NAAM",
+        "TOTAAL MBO",
+        "INSTROOM MBO",
+        "INSTROOM OPLEIDING"
+      ],
+      "2021 nieuw-instromende-studenten-per-instelling-niveau-leerweg-beroepsopleiding-met-soorten-instroom": [
+        "JAAR",
+        "INSTELLINGSCODE",
+        "NIVEAU",
+        "LEERWEG",
+        "BEROEPSOPLEIDING CODE",
+        "BEROEPSOPLEIDING NAAM",
+        "WIJZIGING IN INSTELLING",
+        "LAATSTE JAAR VO",
+        "VOOROPLEIDING VO",
+        "LAATSTE JAAR MBO",
+        "VOOROPLEIDING MBO",
+        "INSTROOM VO",
+        "INSTROOM MBO",
+        "INSTROOM OPLEIDING",
+        "AANTAL"
+      ],
+      "2022 nieuw-instromende-studenten-per-instelling-hoofdgroep-leerweg-beroepsopleiding-niveau-vooropleiding": [
+        "VOOROPLEIDING VO",
+        "VOOROPLEIDING MBO",
+        "INDICATIE KLEINE OPLEIDING",
+        "INSTELLINGSCODE",
+        "INSTELLINGSNAAM",
+        "HOOFDGROEP CODE",
+        "HOOFDGROEP NAAM",
+        "NIVEAU",
+        "LEERWEG",
+        "BEROEPSOPLEIDING CODE",
+        "BEROEPSOPLEIDING NAAM",
+        "TOTAAL MBO",
+        "INSTROOM MBO",
+        "INSTROOM OPLEIDING"
+      ],
+      "2022 nieuw-instromende-studenten-per-instelling-niveau-leerweg-beroepsopleiding-met-soorten-instroom": [
+        "JAAR",
+        "INSTELLINGSCODE",
+        "NIVEAU",
+        "LEERWEG",
+        "BEROEPSOPLEIDING CODE",
+        "BEROEPSOPLEIDING NAAM",
+        "WIJZIGING IN INSTELLING",
+        "LAATSTE JAAR VO",
+        "VOOROPLEIDING VO",
+        "LAATSTE JAAR MBO",
+        "VOOROPLEIDING MBO",
+        "INSTROOM VO",
+        "INSTROOM MBO",
+        "INSTROOM OPLEIDING",
+        "AANTAL"
+      ],
+      "2023 nieuw-instromende-studenten-per-instelling-hoofdgroep-leerweg-beroepsopleiding-niveau-vooropleiding": [
+        "VOOROPLEIDING VO",
+        "VOOROPLEIDING MBO",
+        "INDICATIE KLEINE OPLEIDING",
+        "INSTELLINGSCODE",
+        "INSTELLINGSNAAM",
+        "HOOFDGROEP CODE",
+        "HOOFDGROEP NAAM",
+        "NIVEAU",
+        "LEERWEG",
+        "BEROEPSOPLEIDING CODE",
+        "BEROEPSOPLEIDING NAAM",
+        "TOTAAL MBO",
+        "INSTROOM MBO",
+        "INSTROOM OPLEIDING"
+      ],
+      "2023 nieuw-instromende-studenten-per-instelling-niveau-leerweg-beroepsopleiding-met-soorten-instroom": [
+        "JAAR",
+        "INSTELLINGSCODE",
+        "NIVEAU",
+        "LEERWEG",
+        "BEROEPSOPLEIDING CODE",
+        "BEROEPSOPLEIDING NAAM",
+        "WIJZIGING IN INSTELLING",
+        "LAATSTE JAAR VO",
+        "VOOROPLEIDING VO",
+        "LAATSTE JAAR MBO",
+        "VOOROPLEIDING MBO",
+        "INSTROOM VO",
+        "INSTROOM MBO",
+        "INSTROOM OPLEIDING",
+        "AANTAL"
+      ],
+      "2024 nieuw-instromende-studenten-per-instelling-hoofdgroep-leerweg-beroepsopleiding-niveau-vooropleiding": [
+        "VOOROPLEIDING VO",
+        "VOOROPLEIDING MBO",
+        "INDICATIE KLEINE OPLEIDING",
+        "INSTELLINGSCODE",
+        "INSTELLINGSNAAM",
+        "HOOFDGROEP CODE",
+        "HOOFDGROEP NAAM",
+        "NIVEAU",
+        "LEERWEG",
+        "BEROEPSOPLEIDING CODE",
+        "BEROEPSOPLEIDING NAAM",
+        "TOTAAL MBO",
+        "INSTROOM MBO",
+        "INSTROOM OPLEIDING"
+      ],
+      "2024 nieuw-instromende-studenten-per-instelling-niveau-leerweg-beroepsopleiding-met-soorten-instroom": [
+        "JAAR",
+        "INSTELLINGSCODE",
+        "NIVEAU",
+        "LEERWEG",
+        "BEROEPSOPLEIDING CODE",
+        "BEROEPSOPLEIDING NAAM",
+        "WIJZIGING IN INSTELLING",
+        "LAATSTE JAAR VO",
+        "VOOROPLEIDING VO",
+        "LAATSTE JAAR MBO",
+        "VOOROPLEIDING MBO",
+        "INSTROOM VO",
+        "INSTROOM MBO",
+        "INSTROOM OPLEIDING",
+        "AANTAL"
+      ],
+      "2025 nieuw-instromende-studenten-per-instelling-hoofdgroep-leerweg-beroepsopleiding-niveau-vooropleiding": [
+        "VOOROPLEIDING VO",
+        "VOOROPLEIDING MBO",
+        "INDICATIE KLEINE OPLEIDING",
+        "INSTELLINGSCODE",
+        "INSTELLINGSNAAM",
+        "HOOFDGROEP CODE",
+        "HOOFDGROEP NAAM",
+        "NIVEAU",
+        "LEERWEG",
+        "BEROEPSOPLEIDING CODE",
+        "BEROEPSOPLEIDING NAAM",
+        "TOTAAL MBO",
+        "INSTROOM MBO",
+        "INSTROOM OPLEIDING"
+      ],
+      "2025 nieuw-instromende-studenten-per-instelling-niveau-leerweg-beroepsopleiding-met-soorten-instroom": [
+        "JAAR",
+        "INSTELLINGSCODE",
+        "NIVEAU",
+        "LEERWEG",
+        "BEROEPSOPLEIDING CODE",
+        "BEROEPSOPLEIDING NAAM",
+        "WIJZIGING IN INSTELLING",
+        "LAATSTE JAAR VO",
+        "VOOROPLEIDING VO",
+        "LAATSTE JAAR MBO",
+        "VOOROPLEIDING MBO",
+        "INSTROOM VO",
+        "INSTROOM MBO",
+        "INSTROOM OPLEIDING",
+        "AANTAL"
+      ]
+    },
+    "_thema": "Overig",
+    "_geo_niveau": []
   },
   {
     "leverancier": "DUO",
     "bron": "Mbo-studenten per instelling",
     "beschrijving": "Het aantal mbo-studenten per instelling in combinatie met verschillende variabelen.",
-    "periode": "Jaarlijks bijgewerkt (zie dataset voor peilmoment)",
+    "periode": "2021-2025",
     "onderwijstype": [
       "Allen"
     ],
@@ -1727,7 +2749,9 @@
     "tags": [
       "leerlingen",
       "duo",
-      "open-data"
+      "open-data",
+      "gemeente",
+      "provincie"
     ],
     "combineerbaar_met": [],
     "_rio_resource": null,
@@ -1770,21 +2794,120 @@
         "id": "99053b39-5852-4645-914c-d6d16421b266"
       }
     ],
-    "_kolommen": [
-      "JAAR",
-      "PROVINCIE INSTELLING",
-      "BEVOEGD GEZAG NUMMER",
-      "INSTELLINGSCODE",
-      "INSTELLINGSNAAM",
-      "PLAATSNAAM INSTELLING",
-      "GEMEENTENUMMER INSTELLING",
-      "GEMEENTE INSTELLING",
-      "BBL",
-      "BOLDT",
-      "BOLVT",
-      "EX"
-    ],
-    "_thema": "Overig"
+    "_kolommen": {
+      "Studenten per instelling bevoegd gezag plaats gemeente provincie van de instelling en leerweg": [
+        "JAAR",
+        "PROVINCIE INSTELLING",
+        "BEVOEGD GEZAG NUMMER",
+        "INSTELLINGSCODE",
+        "INSTELLINGSNAAM",
+        "PLAATSNAAM INSTELLING",
+        "GEMEENTENUMMER INSTELLING",
+        "GEMEENTE INSTELLING",
+        "BBL",
+        "BOLDT",
+        "BOLVT",
+        "EX"
+      ],
+      "Student per instelling bevoegd gezag plaats gemeente provincie van de instelling en sectorkamer": [
+        "JAAR",
+        "PROVINCIE INSTELLING",
+        "BEVOEGD GEZAG NUMMER",
+        "INSTELLINGSCODE",
+        "INSTELLINGSNAAM",
+        "PLAATSNAAM INSTELLING",
+        "GEMEENTENUMMER INSTELLING",
+        "GEMEENTE INSTELLING",
+        "BOVENSECTORAAL",
+        "ENTREE",
+        "SECTORKAMER_CREATIEVE_INDUSTRIE_EN_ICT",
+        "SECTORKAMER_HANDEL",
+        "SECTORKAMER_MOBILITEIT_TRANSPORT_LOGISTIEK_MARITIEM",
+        "SECTORKAMER_SPECIALISTISCH_VAKMANSCHAP",
+        "SECTORKAMER_TECHNIEK_EN_GEBOUWDE_OMGEVING",
+        "SECTORKAMER_VOEDSEL_GROEN_EN_GASTVRIJHEID",
+        "SECTORKAMER_ZAKELIJKE_DIENSTVERLENING_EN_VEILIGHEID",
+        "SECTORKAMER_ZORG_WELZIJN_EN_SPORT",
+        "NIET_GESPECIFICEERD_NAAR_SECTOR"
+      ],
+      "Studenten per instelling plaats van de instelling sectorkamer leerweg opleiding niveau geslacht": [
+        "INSTELLINGSCODE",
+        "INSTELLINGSNAAM",
+        "SOORT INSTELLING",
+        "PLAATSNAAM INSTELLING",
+        "LEERWEG",
+        "NIVEAU",
+        "ERKENDE OPLEIDING CODE",
+        "ERKENDE OPLEIDING NAAM",
+        "SECTORKAMER NAAM",
+        "HOOFDGROEP NAAM",
+        "MAN2021",
+        "VROUW2021",
+        "MAN2022",
+        "VROUW2022",
+        "MAN2023",
+        "VROUW2023",
+        "MAN2024",
+        "VROUW2024",
+        "MAN2025",
+        "VROUW2025"
+      ],
+      "Studenten per instelling bevoegd gezag gemeente instelling leerweg beroepsopleiding verblijfsjaar": [
+        "PROVINCIE INSTELLING",
+        "SECTORKAMER NAAM",
+        "HOOFDGROEP NAAM",
+        "BEVOEGD GEZAG NUMMER",
+        "INSTELLINGSCODE",
+        "INSTELLINGSNAAM",
+        "GEMEENTENUMMER INSTELLING",
+        "GEMEENTE INSTELLING",
+        "BEROEPSOPLEIDING CODE",
+        "BEROEPSOPLEIDING NAAM",
+        "LEERWEG",
+        "VERBLIJFSJAAR IN MBO",
+        "JAAR_2021",
+        "JAAR_2022",
+        "JAAR_2023",
+        "JAAR_2024",
+        "JAAR_2025"
+      ],
+      "Studenten per instelling plaats instelling leerweg woongemeente woonprovincie leeftijdscategorie": [
+        "INSTELLINGSCODE",
+        "INSTELLINGSNAAM",
+        "SOORT INSTELLING",
+        "PLAATSNAAM INSTELLING",
+        "WOONPROVINCIE",
+        "WOONGEMEENTE",
+        "LEEFTIJDSCATEGORIE",
+        "LEERWEG",
+        "JAAR_2021",
+        "JAAR_2022",
+        "JAAR_2023",
+        "JAAR_2024",
+        "JAAR_2025"
+      ],
+      "Studenten per instelling bevoegd gezag plaats van de instelling beroepsopleiding woonprovincie": [
+        "PROVINCIE INSTELLING",
+        "BEVOEGD GEZAG NUMMER",
+        "INSTELLINGSCODE",
+        "INSTELLINGSNAAM",
+        "PLAATSNAAM INSTELLING",
+        "BEROEPSOPLEIDING CODE",
+        "BEROEPSOPLEIDING NAAM",
+        "LEERWEG",
+        "WOONPROVINCIE",
+        "JAAR_2021",
+        "JAAR_2022",
+        "JAAR_2023",
+        "JAAR_2024",
+        "JAAR_2025"
+      ]
+    },
+    "_thema": "Overig",
+    "_geo_niveau": [
+      "gemeente",
+      "provincie"
+    ]
   },
   {
     "leverancier": "DUO",
@@ -1849,25 +2972,77 @@
         "id": "51bea174-cc7f-44aa-b1b8-a6cf0893c79a"
       }
     ],
-    "_kolommen": [
-      "SECTORKAMER NAAM",
-      "HOOFDGROEP NAAM",
-      "LEERWEG",
-      "NIVEAU",
-      "WOONPROVINCIE",
-      "JAAR_2021",
-      "JAAR_2022",
-      "JAAR_2023",
-      "JAAR_2024",
-      "JAAR_2025"
-    ],
-    "_thema": "Overig"
+    "_kolommen": {
+      "Studenten per sectorkamer leerweg niveau woonprovincie": [
+        "SECTORKAMER NAAM",
+        "HOOFDGROEP NAAM",
+        "LEERWEG",
+        "NIVEAU",
+        "WOONPROVINCIE",
+        "JAAR_2021",
+        "JAAR_2022",
+        "JAAR_2023",
+        "JAAR_2024",
+        "JAAR_2025"
+      ],
+      "Studenten per sectorkamer leerweg niveau woonprovincie leeftijdscategorie": [
+        "WOONPROVINCIE",
+        "HOOFDGROEP NAAM",
+        "SECTORKAMER NAAM",
+        "LEERWEG",
+        "NIVEAU",
+        "LEEFTIJDSCATEGORIE",
+        "JAAR_2021",
+        "JAAR_2022",
+        "JAAR_2023",
+        "JAAR_2024",
+        "JAAR_2025"
+      ],
+      "Studenten per sectorkamer leerweg niveau woongemeente woonprovincie": [
+        "SECTORKAMER NAAM",
+        "HOOFDGROEP NAAM",
+        "LEERWEG",
+        "NIVEAU",
+        "WOONPROVINCIE",
+        "WOONGEMEENTE",
+        "JAAR_2021",
+        "JAAR_2022",
+        "JAAR_2023",
+        "JAAR_2024",
+        "JAAR_2025"
+      ],
+      "Studenten per leerweg niveau woongemeente woonprovincie leeftijdscategorie": [
+        "WOONPROVINCIE",
+        "WOONGEMEENTE",
+        "LEERWEG",
+        "NIVEAU",
+        "LEEFTIJDSCATEGORIE",
+        "JAAR_2021",
+        "JAAR_2022",
+        "JAAR_2023",
+        "JAAR_2024",
+        "JAAR_2025"
+      ],
+      "Studenten per leerweg opleiding verblijfsjaar": [
+        "ERKENDE OPLEIDING CODE",
+        "ERKENDE OPLEIDING NAAM",
+        "LEERWEG",
+        "VERBLIJFSJAAR IN MBO",
+        "JAAR_2021",
+        "JAAR_2022",
+        "JAAR_2023",
+        "JAAR_2024",
+        "JAAR_2025"
+      ]
+    },
+    "_thema": "Overig",
+    "_geo_niveau": []
   },
   {
     "leverancier": "DUO",
     "bron": "RIO nfo, po, vo, vavo, mbo en ho",
     "beschrijving": "Op deze pagina vindt u de bestanden met betrekking tot de registratie instellingen en opleidingen (nfo, po, vo, vavo, mbo en ho).",
-    "periode": "Jaarlijks bijgewerkt (zie dataset voor peilmoment)",
+    "periode": "2007-2026",
     "onderwijstype": [
       "Allen"
     ],
@@ -2561,36 +3736,843 @@
         "id": "7837425d-5810-415b-88c6-25665add81ab"
       }
     ],
-    "_kolommen": [
-      "AANGEBODEN_OPLEIDINGCODE",
-      "OPLEIDINGSEENHEIDCODE",
-      "ONDERWIJSAANBIEDERID",
-      "ONDERWIJSLOCATIECODE",
-      "STARTDATUM",
-      "EINDDATUM",
-      "AFWIJKENDE_OPLEIDINGSDUUROMVANG",
-      "AFWIJKENDE_OPLEIDINGSDUUREENHEID",
-      "BASISONDERWIJSDOELGROEP",
-      "DOORLOPENDE_LEERLIJN_BO_VO",
-      "BIJZONDERE_INRICHTING",
-      "EERSTE_INSTROOMDATUM",
-      "LAATSTE_INSTROOMDATUM",
-      "EIGEN_AANGEBODEN_OPLEIDINGSLEUTEL",
-      "ONDERWIJSCONCEPT",
-      "BEGINDATUM_PERIODE",
-      "EINDDATUM_PERIODE",
-      "EIGENNAAM_ENGELS",
-      "EIGENNAAM",
-      "SAMENWERKENDE_ONDERWIJSAANBIEDERIDS",
-      "OMSCHRIJVING"
-    ],
-    "_thema": "Overig"
+    "_kolommen": {
+      "aangeboden_bo_opleidingen": [
+        "AANGEBODEN_OPLEIDINGCODE",
+        "OPLEIDINGSEENHEIDCODE",
+        "ONDERWIJSAANBIEDERID",
+        "ONDERWIJSLOCATIECODE",
+        "STARTDATUM",
+        "EINDDATUM",
+        "AFWIJKENDE_OPLEIDINGSDUUROMVANG",
+        "AFWIJKENDE_OPLEIDINGSDUUREENHEID",
+        "BASISONDERWIJSDOELGROEP",
+        "DOORLOPENDE_LEERLIJN_BO_VO",
+        "BIJZONDERE_INRICHTING",
+        "EERSTE_INSTROOMDATUM",
+        "LAATSTE_INSTROOMDATUM",
+        "EIGEN_AANGEBODEN_OPLEIDINGSLEUTEL",
+        "ONDERWIJSCONCEPT",
+        "BEGINDATUM_PERIODE",
+        "EINDDATUM_PERIODE",
+        "EIGENNAAM_ENGELS",
+        "EIGENNAAM",
+        "SAMENWERKENDE_ONDERWIJSAANBIEDERIDS",
+        "OMSCHRIJVING"
+      ],
+      "aangeboden_ho_opleidingen": [
+        "AANGEBODEN_OPLEIDINGCODE",
+        "OPLEIDINGSEENHEIDCODE",
+        "ONDERWIJSAANBIEDERID",
+        "ONDERWIJSLOCATIECODE",
+        "STARTDATUM",
+        "EINDDATUM",
+        "AFWIJKENDE_OPLEIDINGSDUUROMVANG",
+        "AFWIJKENDE_OPLEIDINGSDUUREENHEID",
+        "EERSTE_INSTROOMDATUM",
+        "LAATSTE_INSTROOMDATUM",
+        "EIGEN_AANGEBODEN_OPLEIDINGSLEUTEL",
+        "VOERTAAL",
+        "VORM",
+        "BEGINDATUM_PERIODE",
+        "EINDDATUM_PERIODE",
+        "BUITENLANDSE_PARTNER",
+        "DEFICIENTIE",
+        "EIGENNAAM_DUITS",
+        "EIGENNAAM_ENGELS",
+        "EIGENNAAM",
+        "EIGENNAAM_KORT",
+        "EISEN_WERKZAAMHEDEN",
+        "PROPEDEUTISCHE_FASE",
+        "SAMENWERKENDE_ONDERWIJSAANBIEDERIDS",
+        "STUDIEKEUZECHECK",
+        "VERSNELD_TRAJECT",
+        "WEBSITE",
+        "OMSCHRIJVING"
+      ],
+      "aangeboden_ho_opleidingsonderdeel_cohorten": [
+        "AANGEBODEN_OPLEIDING_COHORTCODE",
+        "AANGEBODEN_OPLEIDINGCODE",
+        "BEGIN_AANMELDPERIODE",
+        "EINDE_AANMELDPERIODE",
+        "INSTROOMMOMENT",
+        "BEGIN_INSTROOMPERIODE",
+        "EINDE_INSTROOMPERIODE",
+        "DEELNEMERSPLAATSEN",
+        "OPLEIDINGSEINDDATUM",
+        "OPLEIDINGSVORM",
+        "STATUS",
+        "TOELICHTING_VEREISTE_TOESTEMMING",
+        "TOESTEMMING_VEREIST_VOOR_AANMELDING"
+      ],
+      "aangeboden_ho_opleidingsonderdelen": [
+        "AANGEBODEN_OPLEIDINGCODE",
+        "OPLEIDINGSEENHEIDCODE",
+        "ONDERWIJSAANBIEDERID",
+        "ONDERWIJSLOCATIECODE",
+        "STARTDATUM",
+        "EINDDATUM",
+        "AFWIJKENDE_OPLEIDINGSDUUROMVANG",
+        "AFWIJKENDE_OPLEIDINGSDUUREENHEID",
+        "EERSTE_INSTROOMDATUM",
+        "LAATSTE_INSTROOMDATUM",
+        "EIGEN_AANGEBODEN_OPLEIDINGSLEUTEL",
+        "VOERTAAL",
+        "VORM",
+        "BEGINDATUM_PERIODE",
+        "EINDDATUM_PERIODE",
+        "BUITENLANDSE_PARTNER",
+        "EIGENNAAM_ENGELS",
+        "EIGENNAAM",
+        "EIGENNAAM_KORT",
+        "SAMENWERKENDE_ONDERWIJSAANBIEDERIDS",
+        "WEBSITE",
+        "OMSCHRIJVING"
+      ],
+      "aangeboden_ho_opleiding_cohorten": [
+        "AANGEBODEN_OPLEIDING_COHORTCODE",
+        "AANGEBODEN_OPLEIDINGCODE",
+        "BEGIN_AANMELDPERIODE",
+        "EINDE_AANMELDPERIODE",
+        "INSTROOMMOMENT",
+        "BEGIN_INSTROOMPERIODE",
+        "EINDE_INSTROOMPERIODE",
+        "DEELNEMERSPLAATSEN",
+        "OPLEIDINGSEINDDATUM",
+        "OPLEIDINGSVORM",
+        "STATUS",
+        "TOELICHTING_VEREISTE_TOESTEMMING",
+        "TOESTEMMING_VEREIST_VOOR_AANMELDING"
+      ],
+      "aangeboden_mbo_opleidingen": [
+        "AANGEBODEN_OPLEIDINGCODE",
+        "OPLEIDINGSEENHEIDCODE",
+        "ONDERWIJSAANBIEDERID",
+        "ONDERWIJSLOCATIECODE",
+        "STARTDATUM",
+        "EINDDATUM",
+        "AFWIJKENDE_OPLEIDINGSDUUROMVANG",
+        "AFWIJKENDE_OPLEIDINGSDUUREENHEID",
+        "DOORLOPENDE_LEERLIJN_VMBO_MBO",
+        "EERSTE_INSTROOMDATUM",
+        "LAATSTE_INSTROOMDATUM",
+        "EIGEN_AANGEBODEN_OPLEIDINGSLEUTEL",
+        "LEERTRAJECT",
+        "MBONIVEAU",
+        "TOEGANKELIJKHEID",
+        "TOELATINGSEISEN",
+        "VOERTAAL",
+        "BEGINDATUM_PERIODE",
+        "EINDDATUM_PERIODE",
+        "EIGENNAAM_ENGELS",
+        "EIGENNAAM",
+        "SAMENWERKENDE_ONDERWIJSAANBIEDERIDS",
+        "WEBSITE",
+        "OMSCHRIJVING"
+      ],
+      "aangeboden_mbo_opleidingsonderdeel_cohorten": [
+        "AANGEBODEN_OPLEIDING_COHORTCODE",
+        "AANGEBODEN_OPLEIDINGCODE",
+        "BEGIN_AANMELDPERIODE",
+        "EINDE_AANMELDPERIODE",
+        "INSTROOMMOMENT",
+        "BEGIN_INSTROOMPERIODE",
+        "EINDE_INSTROOMPERIODE",
+        "DEELNEMERSPLAATSEN",
+        "OPLEIDINGSEINDDATUM",
+        "OPLEIDINGSVORM",
+        "STATUS",
+        "TOELICHTING_VEREISTE_TOESTEMMING",
+        "TOESTEMMING_VEREIST_VOOR_AANMELDING"
+      ],
+      "aangeboden_mbo_opleidingsonderdelen": [
+        "AANGEBODEN_OPLEIDINGCODE",
+        "OPLEIDINGSEENHEIDCODE",
+        "ONDERWIJSAANBIEDERID",
+        "ONDERWIJSLOCATIECODE",
+        "STARTDATUM",
+        "EINDDATUM",
+        "AFWIJKENDE_OPLEIDINGSDUUROMVANG",
+        "AFWIJKENDE_OPLEIDINGSDUUREENHEID",
+        "EERSTE_INSTROOMDATUM",
+        "LAATSTE_INSTROOMDATUM",
+        "EIGEN_AANGEBODEN_OPLEIDINGSLEUTEL",
+        "MBONIVEAU",
+        "TOEGANKELIJKHEID",
+        "TOELATINGSEISEN",
+        "VOERTAAL",
+        "BEGINDATUM_PERIODE",
+        "EINDDATUM_PERIODE",
+        "EIGENNAAM_ENGELS",
+        "EIGENNAAM",
+        "SAMENWERKENDE_ONDERWIJSAANBIEDERIDS",
+        "WEBSITE",
+        "OMSCHRIJVING"
+      ],
+      "aangeboden_mbo_opleiding_cohorten": [
+        "AANGEBODEN_OPLEIDING_COHORTCODE",
+        "AANGEBODEN_OPLEIDINGCODE",
+        "TOEGANGSCODE_COHORT",
+        "BEGIN_AANMELDPERIODE",
+        "EINDE_AANMELDPERIODE",
+        "INSTROOMMOMENT",
+        "BEGIN_INSTROOMPERIODE",
+        "EINDE_INSTROOMPERIODE",
+        "DEELNEMERSPLAATSEN",
+        "OPLEIDINGSEINDDATUM",
+        "OPLEIDINGSVORM",
+        "STATUS",
+        "TOELICHTING_VEREISTE_TOESTEMMING",
+        "TOESTEMMING_VEREIST_VOOR_AANMELDING"
+      ],
+      "aangeboden_nfo_opleidingen": [
+        "AANGEBODEN_OPLEIDINGCODE",
+        "OPLEIDINGSEENHEIDCODE",
+        "ONDERWIJSAANBIEDERID",
+        "ONDERWIJSLOCATIECODE",
+        "STARTDATUM",
+        "EINDDATUM",
+        "AFWIJKENDE_OPLEIDINGSDUUROMVANG",
+        "AFWIJKENDE_OPLEIDINGSDUUREENHEID",
+        "EERSTE_INSTROOMDATUM",
+        "LAATSTE_INSTROOMDATUM",
+        "EIGEN_AANGEBODEN_OPLEIDINGSLEUTEL",
+        "NIVEAU",
+        "VOERTAAL",
+        "BEGINDATUM_PERIODE",
+        "EINDDATUM_PERIODE",
+        "EIGENNAAM_ENGELS",
+        "EIGENNAAM",
+        "SAMENWERKENDE_ONDERWIJSAANBIEDERIDS",
+        "WEBSITE",
+        "OMSCHRIJVING"
+      ],
+      "aangeboden_nfo_opleiding_cohorten": [
+        "AANGEBODEN_OPLEIDING_COHORTCODE",
+        "AANGEBODEN_OPLEIDINGCODE",
+        "BEGIN_AANMELDPERIODE",
+        "EINDE_AANMELDPERIODE",
+        "INSTROOMMOMENT",
+        "BEGIN_INSTROOMPERIODE",
+        "EINDE_INSTROOMPERIODE",
+        "DEELNEMERSPLAATSEN",
+        "OPLEIDINGSEINDDATUM",
+        "OPLEIDINGSVORM",
+        "STATUS",
+        "TOELICHTING_VEREISTE_TOESTEMMING",
+        "TOESTEMMING_VEREIST_VOOR_AANMELDING"
+      ],
+      "aangeboden_so_opleidingen": [
+        "AANGEBODEN_OPLEIDINGCODE",
+        "OPLEIDINGSEENHEIDCODE",
+        "ONDERWIJSAANBIEDERID",
+        "ONDERWIJSLOCATIECODE",
+        "STARTDATUM",
+        "EINDDATUM",
+        "AFWIJKENDE_OPLEIDINGSDUUROMVANG",
+        "AFWIJKENDE_OPLEIDINGSDUUREENHEID",
+        "DOELGROEPONDERWIJS",
+        "DOORLOPENDE_LEERLIJN_BO_VO",
+        "BIJZONDERE_INRICHTING",
+        "EERSTE_INSTROOMDATUM",
+        "LAATSTE_INSTROOMDATUM",
+        "EIGEN_AANGEBODEN_OPLEIDINGSLEUTEL",
+        "ONDERWIJSCONCEPT",
+        "BEGINDATUM_PERIODE",
+        "EINDDATUM_PERIODE",
+        "EIGENNAAM_ENGELS",
+        "EIGENNAAM",
+        "SAMENWERKENDE_ONDERWIJSAANBIEDERIDS",
+        "OMSCHRIJVING"
+      ],
+      "aangeboden_vavo_opleidingen": [
+        "AANGEBODEN_OPLEIDINGCODE",
+        "OPLEIDINGSEENHEIDCODE",
+        "ONDERWIJSAANBIEDERID",
+        "ONDERWIJSLOCATIECODE",
+        "STARTDATUM",
+        "EINDDATUM",
+        "AFWIJKENDE_OPLEIDINGSDUUROMVANG",
+        "AFWIJKENDE_OPLEIDINGSDUUREENHEID",
+        "EERSTE_INSTROOMDATUM",
+        "LAATSTE_INSTROOMDATUM",
+        "EIGEN_AANGEBODEN_OPLEIDINGSLEUTEL",
+        "TOEGANKELIJKHEID",
+        "TOELATINGSEISEN",
+        "BEGINDATUM_PERIODE",
+        "EINDDATUM_PERIODE",
+        "EIGENNAAM_ENGELS",
+        "EIGENNAAM",
+        "SAMENWERKENDE_ONDERWIJSAANBIEDERIDS",
+        "OMSCHRIJVING"
+      ],
+      "aangeboden_vavo_opleiding_cohorten": [
+        "AANGEBODEN_OPLEIDING_COHORTCODE",
+        "AANGEBODEN_OPLEIDINGCODE",
+        "TOEGANGSCODE_COHORT",
+        "BEGIN_AANMELDPERIODE",
+        "EINDE_AANMELDPERIODE",
+        "INSTROOMMOMENT",
+        "BEGIN_INSTROOMPERIODE",
+        "EINDE_INSTROOMPERIODE",
+        "DEELNEMERSPLAATSEN",
+        "OPLEIDINGSEINDDATUM",
+        "STATUS",
+        "TOELICHTING_VEREISTE_TOESTEMMING",
+        "TOESTEMMING_VEREIST_VOOR_AANMELDING"
+      ],
+      "aangeboden_vso_opleidingen": [
+        "AANGEBODEN_OPLEIDINGCODE",
+        "OPLEIDINGSEENHEIDCODE",
+        "ONDERWIJSAANBIEDERID",
+        "ONDERWIJSLOCATIECODE",
+        "STARTDATUM",
+        "EINDDATUM",
+        "AFWIJKENDE_OPLEIDINGSDUUROMVANG",
+        "AFWIJKENDE_OPLEIDINGSDUUREENHEID",
+        "DOELGROEPONDERWIJS",
+        "DOORLOPENDE_LEERLIJN_VMBO_MBO",
+        "BIJZONDERE_INRICHTING",
+        "EERSTE_INSTROOMDATUM",
+        "LAATSTE_INSTROOMDATUM",
+        "EIGEN_AANGEBODEN_OPLEIDINGSLEUTEL",
+        "ONDERWIJSCONCEPT",
+        "BEGINDATUM_PERIODE",
+        "EINDDATUM_PERIODE",
+        "EIGENNAAM_ENGELS",
+        "EIGENNAAM",
+        "SAMENWERKENDE_ONDERWIJSAANBIEDERIDS",
+        "OMSCHRIJVING"
+      ],
+      "bevoegd_gezag_erkenningen": [
+        "BGE_CODE",
+        "BEGINDATUM",
+        "EINDDATUM",
+        "STICHTINGSDATUM",
+        "IN_BEDRIJFDATUM",
+        "UIT_BEDRIJFDATUM",
+        "ERKENNERCODE",
+        "ERKENNER",
+        "BEGINDATUM_PERIODE",
+        "EINDDATUM_PERIODE",
+        "BEKOSTIGINGSCODE",
+        "SOORT",
+        "VERKORTE_NAAM",
+        "VOLLEDIGE_NAAM",
+        "WET"
+      ],
+      "bo_onderwijslicenties": [
+        "LICENTIECODE",
+        "OIE_CODE",
+        "ERKENDEOPLEIDINGSCODE",
+        "OPLEIDINGSSTELSEL",
+        "BEGINDATUM",
+        "EINDDATUM",
+        "BEKOSTIGD",
+        "ERKEND_OPLEIDINGSKENMERK",
+        "HERKOMST",
+        "STADIUM"
+      ],
+      "contactadressen": [
+        "ONDERWIJSBESTUURID",
+        "ONDERWIJSAANBIEDERID",
+        "ONDERWIJSAANBIEDERGROEPID",
+        "ONDERWIJSBEGELEIDINGSAANBIEDERID",
+        "BEGINDATUM",
+        "EINDDATUM",
+        "CONTEXT",
+        "SUBCONTEXT_NUMMER",
+        "SUBCONTEXT",
+        "CONTACTNAAM",
+        "EMAILADRES",
+        "FAXNUMMER",
+        "TELEFOONNUMMER",
+        "WEBADRES",
+        "BEZOEKNL_STRAATNAAM",
+        "BEZOEKNL_HUISNUMMER",
+        "BEZOEKNL_HUISNUMMERTOEVOEGING",
+        "BEZOEKNL_POSTCODE",
+        "BEZOEKNL_PLAATSNAAM",
+        "POSTNL_STRAATNAAM",
+        "POSTNL_HUISNUMMER",
+        "POSTNL_HUISNUMMERTOEVOEGING",
+        "POSTNL_POSTCODE",
+        "POSTNL_PLAATSNAAM",
+        "BEZOEKBTL_ADRESREGEL_EEN",
+        "BEZOEKBTL_ADRESREGEL_TWEE",
+        "BEZOEKBTL_ADRESREGEL_DRIE",
+        "BEZOEKBTL_LANDNAAM",
+        "POSTBTL_ADRESREGEL_EEN",
+        "POSTBTL_ADRESREGEL_TWEE",
+        "POSTBTL_ADRESREGEL_DRIE",
+        "POSTBTL_LANDNAAM"
+      ],
+      "examenlicenties": [
+        "LICENTIECODE",
+        "OIE_CODE",
+        "VESTIGINGSCODE",
+        "ERKENDEOPLEIDINGSCODE",
+        "OPLEIDINGSSTELSEL",
+        "BEGINDATUM",
+        "EINDDATUM",
+        "HERKOMST",
+        "STADIUM"
+      ],
+      "formele_instellingsadressen": [
+        "OIE_CODE",
+        "VESTIGINGSCODE",
+        "BEGINDATUM",
+        "EINDDATUM",
+        "STRAATNAAM",
+        "HUISNUMMER",
+        "HUISNUMMERTOEVOEGING",
+        "POSTCODE",
+        "PLAATSNAAM",
+        "GEMEENTENAAM",
+        "ADRESREGEL_BUITENLAND_EEN",
+        "ADRESREGEL_BUITENLAND_TWEE",
+        "ADRESREGEL_BUITENLAND_DRIE",
+        "LANDNAAM",
+        "BAG_ID",
+        "RIJKSDRIEHOEK_X",
+        "RIJKSDRIEHOEK_Y"
+      ],
+      "ho_opleidingen": [
+        "OPLEIDINGSEENHEIDCODE",
+        "BEGINDATUM",
+        "EINDDATUM",
+        "EIGEN_OPLEIDINGSEENHEIDSLEUTEL",
+        "OPLEIDINGSHERKOMST",
+        "SOORT",
+        "WAARDEDOCUMENTSOORT",
+        "NIVEAU",
+        "GRAAD",
+        "EQF",
+        "ISCED",
+        "NLQF",
+        "BEGINDATUM_PERIODE",
+        "EINDDATUM_PERIODE",
+        "AFKORTING",
+        "EIGENAAR",
+        "INTERNATIONALE_NAAM_ENGELS",
+        "KORTE_NAAM",
+        "VOLLEDIGE_NAAM",
+        "STUDIELAST",
+        "STUDIELASTEENHEID",
+        "OMSCHRIJVING"
+      ],
+      "ho_opleidingsonderdelen": [
+        "OPLEIDINGSEENHEIDCODE",
+        "TYPE",
+        "BEGINDATUM",
+        "EINDDATUM",
+        "EIGEN_OPLEIDINGSEENHEIDSLEUTEL",
+        "OPLEIDINGSHERKOMST",
+        "SOORT",
+        "ISCED",
+        "BEGINDATUM_PERIODE",
+        "EINDDATUM_PERIODE",
+        "AFKORTING",
+        "EIGENAAR",
+        "INTERNATIONALE_NAAM_ENGELS",
+        "KORTE_NAAM",
+        "VOLLEDIGE_NAAM",
+        "STUDIELAST",
+        "STUDIELASTEENHEID",
+        "WAARDEDOCUMENTSOORT",
+        "OMSCHRIJVING"
+      ],
+      "ho_relaties_opleidingseenheden": [
+        "VAN_OPLEIDINGSEENHEIDCODE",
+        "VAN_OPLEIDINGSEENHEIDTYPE",
+        "RELATIESOORT",
+        "NAAR_OPLEIDINGSEENHEIDCODE",
+        "NAAR_OPLEIDINGSEENHEIDTYPE",
+        "BEGINDATUM",
+        "EINDDATUM"
+      ],
+      "ho_relaties_opleidingseenheden_erkenningen": [
+        "OPLEIDINGSEENHEIDCODE",
+        "ERKENDEOPLEIDINGSCODE",
+        "UNIEKE_ERKENDEOPLEIDINGSCODE"
+      ],
+      "mbo_generieke_examen_onderdeelerkenningen": [
+        "ERKENDEOPLEIDINGSCODE",
+        "OPLEIDINGSSTELSEL",
+        "INGANGSDATUM",
+        "EINDDATUM",
+        "ERKENNERCODE",
+        "ERKENNER",
+        "MINISTERIE",
+        "BEGINDATUM_PERIODE",
+        "EINDDATUM_PERIODE",
+        "AANLEVERING_EINDRESULTAAT",
+        "AANLEVERING_RESULTAAT_CENTRAAL_EXAMEN",
+        "AANLEVERING_RESULTAAT_INSTELLINGSEXAMEN",
+        "WET",
+        "LICENTIEERWIJZE"
+      ],
+      "mbo_groepen": [
+        "OPLEIDINGSEENHEIDCODE",
+        "TYPE",
+        "BEGINDATUM",
+        "EINDDATUM",
+        "EIGEN_OPLEIDINGSEENHEIDSLEUTEL",
+        "OPLEIDINGSHERKOMST",
+        "BEGINDATUM_PERIODE",
+        "EINDDATUM_PERIODE",
+        "AFKORTING",
+        "INTERNATIONALE_NAAM_ENGELS",
+        "KORTE_NAAM",
+        "VOLLEDIGE_NAAM",
+        "OMSCHRIJVING"
+      ],
+      "mbo_onderwijslicenties": [
+        "LICENTIECODE",
+        "OIE_CODE",
+        "ERKENDEOPLEIDINGSCODE",
+        "OPLEIDINGSSTELSEL",
+        "BEGINDATUM",
+        "EINDDATUM",
+        "BEKOSTIGD",
+        "HERKOMST",
+        "LEERWEG",
+        "STADIUM"
+      ],
+      "mbo_opleidingen": [
+        "OPLEIDINGSEENHEIDCODE",
+        "TYPE",
+        "BEGINDATUM",
+        "EINDDATUM",
+        "EIGEN_OPLEIDINGSEENHEIDSLEUTEL",
+        "OPLEIDINGSHERKOMST",
+        "OPLEIDINGSSOORT",
+        "WAARDEDOCUMENTSOORT",
+        "NIVEAU",
+        "EQF",
+        "ISCED",
+        "NLQF",
+        "BEGINDATUM_PERIODE",
+        "EINDDATUM_PERIODE",
+        "AFKORTING",
+        "INTERNATIONALE_NAAM_ENGELS",
+        "KORTE_NAAM",
+        "VOLLEDIGE_NAAM",
+        "STUDIELAST",
+        "STUDIELASTEENHEID",
+        "WET_EISEND_MINISTERIE",
+        "OMSCHRIJVING"
+      ],
+      "mbo_opleidingserkenningen": [
+        "ERKENDEOPLEIDINGSCODE",
+        "OPLEIDINGSSTELSEL",
+        "INGANGSDATUM",
+        "EINDDATUM",
+        "ERKENNERCODE",
+        "ERKENNER",
+        "INSTROOMEINDDATUM",
+        "MINISTERIE",
+        "BEGINDATUM_PERIODE",
+        "EINDDATUM_PERIODE",
+        "PRIJSFACTOR_BEKOSTIGING",
+        "TOEGESTANE_LEERWEG",
+        "WET",
+        "LICENTIEERWIJZE"
+      ],
+      "mbo_opleidingsonderdelen": [
+        "OPLEIDINGSEENHEIDCODE",
+        "TYPE",
+        "BEGINDATUM",
+        "EINDDATUM",
+        "EIGEN_OPLEIDINGSEENHEIDSLEUTEL",
+        "OPLEIDINGSHERKOMST",
+        "BEGINDATUM_PERIODE",
+        "EINDDATUM_PERIODE",
+        "AFKORTING",
+        "INTERNATIONALE_NAAM_ENGELS",
+        "KORTE_NAAM",
+        "VOLLEDIGE_NAAM",
+        "STUDIELAST",
+        "STUDIELASTEENHEID",
+        "WAARDEDOCUMENTSOORT",
+        "OMSCHRIJVING"
+      ],
+      "mbo_relaties_opleidingseenheden": [
+        "VAN_OPLEIDINGSEENHEIDCODE",
+        "VAN_OPLEIDINGSEENHEIDTYPE",
+        "RELATIESOORT",
+        "NAAR_OPLEIDINGSEENHEIDCODE",
+        "NAAR_OPLEIDINGSEENHEIDTYPE",
+        "BEGINDATUM",
+        "EINDDATUM"
+      ],
+      "mbo_relaties_opleidingseenheden_erkenningen": [
+        "OPLEIDINGSEENHEIDCODE",
+        "ERKENDEOPLEIDINGSCODE",
+        "OPLEIDINGSSTELSEL"
+      ],
+      "mbo_sancties": [
+        "LICENTIECODE",
+        "BEGINDATUM",
+        "AANVRAAGVERBODEINDDATUM"
+      ],
+      "mbo_structuren": [
+        "OPLEIDINGSEENHEIDCODE",
+        "STELSEL",
+        "BEGINDATUM",
+        "EINDDATUM"
+      ],
+      "nfo_opleidingen": [
+        "OPLEIDINGSEENHEIDCODE",
+        "BEGINDATUM",
+        "EINDDATUM",
+        "CATEGORIE",
+        "EIGEN_OPLEIDINGSEENHEIDSLEUTEL",
+        "OPLEIDINGSHERKOMST",
+        "WAARDEDOCUMENTSOORT",
+        "NIVEAU",
+        "BEGINDATUM_PERIODE",
+        "EINDDATUM_PERIODE",
+        "AFKORTING",
+        "EIGENAAR",
+        "INTERNATIONALE_NAAM_ENGELS",
+        "KORTE_NAAM",
+        "VOLLEDIGE_NAAM",
+        "STUDIELAST",
+        "STUDIELASTEENHEID",
+        "OMSCHRIJVING"
+      ],
+      "nfo_relaties_opleidingseenheden_erkenningen": [
+        "OPLEIDINGSEENHEIDCODE",
+        "ERKENDEOPLEIDINGSCODE",
+        "OPLEIDINGSSTELSEL"
+      ],
+      "onderwijsaanbieders": [
+        "ONDERWIJSAANBIEDERID",
+        "INBEDRIJFDATUM",
+        "UITBEDRIJFDATUM",
+        "EIGEN_ONDERWIJSAANBIEDERSLEUTEL",
+        "BEGINDATUM_PERIODE",
+        "EINDDATUM_PERIODE",
+        "INTERNATIONALE_NAAM",
+        "NAAM"
+      ],
+      "onderwijsaanbiedersgroepen": [
+        "ONDERWIJSAANBIEDERGROEPID",
+        "INBEDRIJFDATUM",
+        "UITBEDRIJFDATUM",
+        "BEGINDATUM_PERIODE",
+        "EINDDATUM_PERIODE",
+        "INTERNATIONALE_NAAM",
+        "NAAM"
+      ],
+      "onderwijsbesturen": [
+        "ONDERWIJSBESTUURID",
+        "INBEDRIJFDATUM",
+        "UITBEDRIJFDATUM",
+        "KVK_NUMMER",
+        "RSIN",
+        "BEGINDATUM_PERIODE",
+        "EINDDATUM_PERIODE",
+        "INTERNATIONALE_NAAM",
+        "NAAM"
+      ],
+      "onderwijslocatiegebruiken": [
+        "ONDERWIJSLOCATIECODE",
+        "ONDERWIJSBESTUURID",
+        "INBEDRIJFDATUM",
+        "UITBEDRIJFDATUM",
+        "EIGEN_ONDERWIJSLOCATIEGEBRUIK_SLEUTEL"
+      ],
+      "onderwijslocaties": [
+        "ONDERWIJSLOCATIECODE",
+        "BAG_ID",
+        "GPS_LATITUDE",
+        "GPS_LONGITUDE",
+        "STRAATNAAM",
+        "HUISNUMMER",
+        "HUISNUMMERTOEVOEGING",
+        "POSTCODE",
+        "PLAATSNAAM"
+      ],
+      "onderwijsondersteunerserkenningen": [
+        "ONDERWIJSONDERSTEUNERSERKENNINGSCODE",
+        "BEGINDATUM",
+        "EINDDATUM",
+        "STICHTINGSDATUM",
+        "IN_BEDRIJFDATUM",
+        "UIT_BEDRIJFDATUM",
+        "ERKENNERCODE",
+        "ERKENNER",
+        "BEGINDATUM_PERIODE",
+        "EINDDATUM_PERIODE",
+        "BEKOSTIGINGSCODE",
+        "GRONDSLAG",
+        "VRIJHEID_VAN_ONDERWIJS",
+        "RICHTINGEN",
+        "SOORT",
+        "VERKORTE_NAAM",
+        "VOLLEDIGE_NAAM",
+        "WET"
+      ],
+      "po_groepen": [
+        "OPLEIDINGSEENHEIDCODE",
+        "TYPE",
+        "BEGINDATUM",
+        "EINDDATUM",
+        "OPLEIDINGSHERKOMST",
+        "BEGINDATUM_PERIODE",
+        "EINDDATUM_PERIODE",
+        "AFKORTING",
+        "INTERNATIONALE_NAAM_ENGELS",
+        "KORTE_NAAM",
+        "VOLLEDIGE_NAAM",
+        "OMSCHRIJVING"
+      ],
+      "po_opleidingen": [
+        "OPLEIDINGSEENHEIDCODE",
+        "TYPE",
+        "BEGINDATUM",
+        "EINDDATUM",
+        "OPLEIDINGSHERKOMST",
+        "WAARDEDOCUMENTSOORT",
+        "NIVEAU",
+        "EQF",
+        "ISCED",
+        "NLQF",
+        "BEGINDATUM_PERIODE",
+        "EINDDATUM_PERIODE",
+        "AFKORTING",
+        "INTERNATIONALE_NAAM_ENGELS",
+        "KORTE_NAAM",
+        "VOLLEDIGE_NAAM",
+        "OMSCHRIJVING"
+      ],
+      "po_opleidingserkenningen": [
+        "ERKENDEOPLEIDINGSCODE",
+        "TYPE",
+        "OPLEIDINGSSTELSEL",
+        "INGANGSDATUM",
+        "EINDDATUM",
+        "ERKENNERCODE",
+        "ERKENNER",
+        "MINISTERIE",
+        "BEGINDATUM_PERIODE",
+        "EINDDATUM_PERIODE",
+        "WET",
+        "LICENTIEERWIJZE"
+      ],
+      "po_opleidingsfasen": [
+        "OPLEIDINGSEENHEIDCODE",
+        "TYPE",
+        "BEGINDATUM",
+        "EINDDATUM",
+        "OPLEIDINGSHERKOMST",
+        "NIVEAU",
+        "BEGINDATUM_PERIODE",
+        "EINDDATUM_PERIODE",
+        "AFKORTING",
+        "INTERNATIONALE_NAAM_ENGELS",
+        "KORTE_NAAM",
+        "VOLLEDIGE_NAAM",
+        "OMSCHRIJVING"
+      ],
+      "po_relaties_opleidingseenheden": [
+        "VAN_OPLEIDINGSEENHEIDCODE",
+        "VAN_OPLEIDINGSEENHEIDTYPE",
+        "RELATIESOORT",
+        "NAAR_OPLEIDINGSEENHEIDCODE",
+        "NAAR_OPLEIDINGSEENHEIDTYPE",
+        "BEGINDATUM",
+        "EINDDATUM"
+      ],
+      "po_relaties_opleidingseenheden_erkenningen": [
+        "OPLEIDINGSEENHEIDCODE",
+        "ERKENDEOPLEIDINGSCODE",
+        "OPLEIDINGSSTELSEL"
+      ],
+      "regio_erkende_samenwerkingen": [
+        "SAMENWERKINGSVERBANDNUMMER",
+        "BEGINDATUM",
+        "EINDDATUM",
+        "POSTCODECIJFERS"
+      ],
+      "relaties_bevoegdgezagerkenningen_onderwijsondersteunerserkenningen": [
+        "BGE_CODE",
+        "ONDERWIJSONDERSTEUNERSERKENNINGSCODE",
+        "BEGINDATUM",
+        "EINDDATUM"
+      ],
+      "relaties_bevoegdgezagerkenningen_samenwerkingserkenningen": [],
+      "relaties_onderwijsaanbiedersgroepen_onderwijsaanbieders": [],
+      "relaties_onderwijsaanbieders_onderwijsinstellingserkenningen": [],
+      "relaties_onderwijsbesturen_bevoegdgezagerkenningen": [],
+      "relaties_onderwijsbesturen_onderwijsaanbieders": [],
+      "relaties_onderwijsbesturen_onderwijsaanbiedersgroepen": [],
+      "relaties_onderwijsinstellingserkenningen_vestigingserkenningen": [],
+      "relaties_onderwijslocatiegebruiken_vestigingserkenningen": [],
+      "relaties_onderwijsondersteunerserkenningen_onderwijsinstellingserkenningen": [],
+      "relaties_onderwijsondersteunerserkenningen_vestigingserkenningen": [],
+      "relaties_samenwerkingserkenningen_onderwijsinstellingserkenningen": [],
+      "relaties_samenwerkingserkenningen_onderwijsondersteunerserkenningen": [],
+      "relaties_samenwerkingserkenningen_vestigingserkenningen": [],
+      "samenwerkingserkenningen": [],
+      "so_onderwijslicenties": [],
+      "vavo_groepen": [],
+      "vavo_onderwijslicenties": [],
+      "vavo_opleidingen": [],
+      "vavo_opleidingserkenningen": [],
+      "vavo_opleidingsfasen": [],
+      "vavo_relaties_opleidingseenheden": [],
+      "vavo_relaties_opleidingseenheden_erkenningen": [],
+      "vestigingserkenningen": [],
+      "vo_groepen": [],
+      "vo_groepserkenningen": [],
+      "vo_onderwijslicenties": [],
+      "vo_opleidingen": [],
+      "vo_opleidingserkenningen": [],
+      "vo_opleidingsfasen": [],
+      "vo_opleidingsonderdelen": [],
+      "vo_relaties_opleidingseenheden": [],
+      "vo_relaties_opleidingseenheden_erkenningen": [],
+      "vo_relaties_vakken_erkenningen": [],
+      "vo_vakerkenningen": [],
+      "vso_onderwijslicenties": [],
+      "ho_opleidingserkenningen": [],
+      "nfo_opleidingserkenningen": [],
+      "ho_onderwijsaccreditaties": [],
+      "ho_onderwijslicenties": [],
+      "ho_relaties_onderwijslicenties": [],
+      "nfo_onderwijslicenties": [],
+      "vestigingslicenties": [],
+      "overgangen": [],
+      "waarschuwingen": [],
+      "onderwijsbegeleidingsaanbieders": [],
+      "relaties_onderwijsbegeleidingsaanbieders_onderwijsinstellingserkenningen": [],
+      "relaties_onderwijsbesturen_onderwijsbegeleidingsaanbieders": [],
+      "educatie_relaties_opleidingseenheden_erkenningen": [],
+      "educatie_relaties_opleidingseenheden": [],
+      "educatie_opleidingserkenningen": [],
+      "educatie_opleidingen": [],
+      "educatie_onderwijslicenties": [],
+      "educatie_opleidingsonderdelen": [],
+      "relaties_bevoegdgezagerkenningen_onderwijsinstellingserkenningen": [],
+      "onderwijsinstellingserkenningen": [],
+      "aangeboden_vo_opleidingen": [],
+      "btl_opleidingen": [],
+      "btl_opleidingserkenningen": [],
+      "btl_relaties_opleidingseenheden_erkenningen": [],
+      "financieringsbesluiten": [],
+      "controlebestand": []
+    },
+    "_thema": "Overig",
+    "_geo_niveau": []
   },
   {
     "leverancier": "DUO",
     "bron": "Sectorale Ontwikkelpaden",
     "beschrijving": "In de dataset sectorale ontwikkelpaden staan de actuele of toekomstige ontwikkelpaden.",
-    "periode": "Jaarlijks bijgewerkt (zie dataset voor peilmoment)",
+    "periode": "2026",
     "onderwijstype": [
       "Allen"
     ],
@@ -2633,22 +4615,26 @@
         "id": "daf44846-0f6a-46a4-86b7-213559fa6e36"
       }
     ],
-    "_kolommen": [
-      "INGANGSDATUM_ONTWIKKELPAD",
-      "EINDDATUM_ONTWIKKELPAD",
-      "BRANCHE_NAAM",
-      "FUNCTIE_TITEL",
-      "SPECIALISATIE_TITEL",
-      "TYPE_OPLEIDING",
-      "ERKENDEOPLEIDINGSCODE",
-      "OPLEIDINGSSTELSEL",
-      "LEERWEG",
-      "VORM",
-      "OPLEIDINGSEENHEIDCODE",
-      "OPLEIDER_KVK_NUMMER",
-      "SUBSIDIABEL_SLIMREGELING"
-    ],
-    "_thema": "Overig"
+    "_kolommen": {
+      "sectorale_ontwikkelpaden": [
+        "INGANGSDATUM_ONTWIKKELPAD",
+        "EINDDATUM_ONTWIKKELPAD",
+        "BRANCHE_NAAM",
+        "FUNCTIE_TITEL",
+        "SPECIALISATIE_TITEL",
+        "TYPE_OPLEIDING",
+        "ERKENDEOPLEIDINGSCODE",
+        "OPLEIDINGSSTELSEL",
+        "LEERWEG",
+        "VORM",
+        "OPLEIDINGSEENHEIDCODE",
+        "OPLEIDER_KVK_NUMMER",
+        "SUBSIDIABEL_SLIMREGELING"
+      ],
+      "controlebestand": []
+    },
+    "_thema": "Overig",
+    "_geo_niveau": []
   },
   {
     "leverancier": "DUO",
@@ -2677,7 +4663,8 @@
       "scholen en adressen",
       "duo",
       "open-data",
-      "po"
+      "po",
+      "gemeente"
     ],
     "combineerbaar_met": [
       "RIO organisatorische-eenheden (via BRIN-code)",
@@ -2705,32 +4692,101 @@
         "id": "dcc9c9a5-6d01-410b-967f-810557588ba4"
       }
     ],
-    "_kolommen": [
-      "BEVOEGD GEZAG NUMMER",
-      "BEVOEGD GEZAG NAAM",
-      "STRAATNAAM",
-      "HUISNUMMER-TOEVOEGING",
-      "POSTCODE",
-      "PLAATSNAAM",
-      "GEMEENTENUMMER",
-      "GEMEENTENAAM",
-      "DENOMINATIE",
-      "TELEFOONNUMMER",
-      "INTERNETADRES",
-      "STRAATNAAM CORRESPONDENTIEADRES",
-      "HUISNUMMER-TOEVOEGING CORRESPONDENTIEADRES",
-      "POSTCODE CORRESPONDENTIEADRES",
-      "PLAATSNAAM CORRESPONDENTIEADRES",
-      "KVK-NUMMER",
-      "ADMINISTRATIEKANTOORNUMMER"
-    ],
-    "_thema": "PO"
+    "_kolommen": {
+      "Adressen bevoegde gezagen basisonderwijs": [
+        "BEVOEGD GEZAG NUMMER",
+        "BEVOEGD GEZAG NAAM",
+        "STRAATNAAM",
+        "HUISNUMMER-TOEVOEGING",
+        "POSTCODE",
+        "PLAATSNAAM",
+        "GEMEENTENUMMER",
+        "GEMEENTENAAM",
+        "DENOMINATIE",
+        "TELEFOONNUMMER",
+        "INTERNETADRES",
+        "STRAATNAAM CORRESPONDENTIEADRES",
+        "HUISNUMMER-TOEVOEGING CORRESPONDENTIEADRES",
+        "POSTCODE CORRESPONDENTIEADRES",
+        "PLAATSNAAM CORRESPONDENTIEADRES",
+        "KVK-NUMMER",
+        "ADMINISTRATIEKANTOORNUMMER"
+      ],
+      "Adresgegevens van hoofdvestingen in het basisonderwijs": [
+        "PROVINCIE",
+        "BEVOEGD GEZAG NUMMER",
+        "INSTELLINGSCODE",
+        "INSTELLINGSNAAM",
+        "STRAATNAAM",
+        "HUISNUMMER-TOEVOEGING",
+        "POSTCODE",
+        "PLAATSNAAM",
+        "GEMEENTENUMMER",
+        "GEMEENTENAAM",
+        "DENOMINATIE",
+        "TELEFOONNUMMER",
+        "INTERNETADRES",
+        "STRAATNAAM CORRESPONDENTIEADRES",
+        "HUISNUMMER-TOEVOEGING CORRESPONDENTIEADRES",
+        "POSTCODE CORRESPONDENTIEADRES",
+        "PLAATSNAAM CORRESPONDENTIEADRES",
+        "NODAAL GEBIED CODE",
+        "NODAAL GEBIED NAAM",
+        "RPA-GEBIED CODE",
+        "RPA-GEBIED NAAM",
+        "WGR-GEBIED CODE",
+        "WGR-GEBIED NAAM",
+        "COROPGEBIED CODE",
+        "COROPGEBIED NAAM",
+        "ONDERWIJSGEBIED CODE",
+        "ONDERWIJSGEBIED NAAM",
+        "RMC-REGIO CODE",
+        "RMC-REGIO NAAM"
+      ],
+      "Alle vestigingen in het basisonderwijs": [
+        "PROVINCIE",
+        "BEVOEGD GEZAG NUMMER",
+        "INSTELLINGSCODE",
+        "VESTIGINGSCODE",
+        "VESTIGINGSNAAM",
+        "STRAATNAAM",
+        "HUISNUMMER-TOEVOEGING",
+        "POSTCODE",
+        "PLAATSNAAM",
+        "GEMEENTENUMMER",
+        "GEMEENTENAAM",
+        "DENOMINATIE",
+        "TELEFOONNUMMER",
+        "INTERNETADRES",
+        "STRAATNAAM CORRESPONDENTIEADRES",
+        "HUISNUMMER-TOEVOEGING CORRESPONDENTIEADRES",
+        "POSTCODE CORRESPONDENTIEADRES",
+        "PLAATSNAAM CORRESPONDENTIEADRES",
+        "NODAAL GEBIED CODE",
+        "NODAAL GEBIED NAAM",
+        "RPA-GEBIED CODE",
+        "RPA-GEBIED NAAM",
+        "WGR-GEBIED CODE",
+        "WGR-GEBIED NAAM",
+        "COROPGEBIED CODE",
+        "COROPGEBIED NAAM",
+        "ONDERWIJSGEBIED CODE",
+        "ONDERWIJSGEBIED NAAM",
+        "RMC-REGIO CODE",
+        "RMC-REGIO NAAM",
+        "VAKANTIEREGIO"
+      ]
+    },
+    "_thema": "PO",
+    "_geo_niveau": [
+      "gemeente"
+    ]
   },
   {
     "leverancier": "DUO",
     "bron": "Leerlingen bo per vestiging naar gewicht",
     "beschrijving": "Deze bestanden bevatten informatie over het aantal leerlingen in het basisonderwijs (bo) per schoolvestiging, jaar en gewicht uit de gewichtenregeling.",
-    "periode": "Jaarlijks bijgewerkt (zie dataset voor peilmoment)",
+    "periode": "2010-2018",
     "onderwijstype": [
       "PO"
     ],
@@ -2770,13 +4826,14 @@
       }
     ],
     "_kolommen": [],
-    "_thema": "PO"
+    "_thema": "PO",
+    "_geo_niveau": []
   },
   {
     "leverancier": "DUO",
     "bron": "Leerlingen po per bevoegd gezag",
     "beschrijving": "Dit document beschrijft de bestanden over leerlingen in het primair onderwijs die via een API (Application Programming Interface) via de website van DUO wordt aangeboden.",
-    "periode": "Jaarlijks bijgewerkt (zie dataset voor peilmoment)",
+    "periode": "2010-2025",
     "onderwijstype": [
       "PO"
     ],
@@ -2833,20 +4890,43 @@
         "id": "20849983-7ebb-47f5-a4b8-a216c07c7833"
       }
     ],
-    "_kolommen": [
-      "BEVOEGD_GEZAGNUMMER",
-      "TYPE_PO",
-      "PEILJAAR",
-      "GESLACHT",
-      "AANTAL_LEERLINGEN"
-    ],
-    "_thema": "PO"
+    "_kolommen": {
+      "Leerlingen po per bevoegd gezag naar geslacht": [
+        "BEVOEGD_GEZAGNUMMER",
+        "TYPE_PO",
+        "PEILJAAR",
+        "GESLACHT",
+        "AANTAL_LEERLINGEN"
+      ],
+      "Leerlingen po per bevoegd gezag naar postcode4": [
+        "BEVOEGD_GEZAGNUMMER",
+        "TYPE_PO",
+        "PEILJAAR",
+        "POSTCODE4_DEELNEMER",
+        "AANTAL_LEERLINGEN"
+      ],
+      "Leerlingen po per bevoegd gezag naar leeftijd": [
+        "BEVOEGD_GEZAGNUMMER",
+        "TYPE_PO",
+        "PEILJAAR",
+        "LEEFTIJD",
+        "AANTAL_LEERLINGEN"
+      ],
+      "Leerlingen po per bevoegd gezag": [
+        "BEVOEGD_GEZAGNUMMER",
+        "TYPE_PO",
+        "PEILJAAR",
+        "AANTAL_LEERLINGEN"
+      ]
+    },
+    "_thema": "PO",
+    "_geo_niveau": []
   },
   {
     "leverancier": "DUO",
     "bron": "Leerlingen po per vestiging",
     "beschrijving": "Dit document beschrijft de bestanden over leerlingen in het primair onderwijs die via een API (Application Programming Interface) via de website van DUO wordt aangeboden.",
-    "periode": "Jaarlijks bijgewerkt (zie dataset voor peilmoment)",
+    "periode": "2010-2025",
     "onderwijstype": [
       "PO"
     ],
@@ -2892,13 +4972,14 @@
       "PEILJAAR",
       "AANTAL_LEERLINGEN"
     ],
-    "_thema": "PO"
+    "_thema": "PO",
+    "_geo_niveau": []
   },
   {
     "leverancier": "DUO",
     "bron": "Leerlingen po per vestiging naar geslacht",
     "beschrijving": "Dit document beschrijft de bestanden over leerlingen in het primair onderwijs die via een API (Application Programming Interface) via de website van DUO wordt aangeboden.",
-    "periode": "Jaarlijks bijgewerkt (zie dataset voor peilmoment)",
+    "periode": "2010-2025",
     "onderwijstype": [
       "PO"
     ],
@@ -2945,13 +5026,14 @@
       "GESLACHT",
       "AANTAL_LEERLINGEN"
     ],
-    "_thema": "PO"
+    "_thema": "PO",
+    "_geo_niveau": []
   },
   {
     "leverancier": "DUO",
     "bron": "Leerlingen po per vestiging naar impulsgebied",
     "beschrijving": "Dit document beschrijft de bestanden over leerlingen in het primair onderwijs die als API-bestand (Application Programming Interface) via de website van DUO wordt aangeboden.",
-    "periode": "Jaarlijks bijgewerkt (zie dataset voor peilmoment)",
+    "periode": "2010-2021",
     "onderwijstype": [
       "PO"
     ],
@@ -2997,13 +5079,14 @@
       "IMPULSGEBIED",
       "AANTAL_LEERLINGEN"
     ],
-    "_thema": "PO"
+    "_thema": "PO",
+    "_geo_niveau": []
   },
   {
     "leverancier": "DUO",
     "bron": "Leerlingen po per vestiging naar leeftijd",
     "beschrijving": "4 Dit document beschrijft de bestanden over leerlingen in het primair onderwijs die via een API (Application Programming Interface) via de website van DUO wordt aangeboden.",
-    "periode": "Jaarlijks bijgewerkt (zie dataset voor peilmoment)",
+    "periode": "2010-2025",
     "onderwijstype": [
       "PO"
     ],
@@ -3050,13 +5133,14 @@
       "LEEFTIJD",
       "AANTAL_LEERLINGEN"
     ],
-    "_thema": "PO"
+    "_thema": "PO",
+    "_geo_niveau": []
   },
   {
     "leverancier": "DUO",
     "bron": "Leerlingen po per vestiging naar postcode4",
     "beschrijving": "Dit document beschrijft de bestanden over leerlingen in het primair onderwijs die via een API (Application Programming Interface) via de website van DUO wordt aangeboden.",
-    "periode": "Jaarlijks bijgewerkt (zie dataset voor peilmoment)",
+    "periode": "2010-2025",
     "onderwijstype": [
       "PO"
     ],
@@ -3105,13 +5189,14 @@
       "POSTCODE4_DEELNEMER",
       "AANTAL_LEERLINGEN"
     ],
-    "_thema": "PO"
+    "_thema": "PO",
+    "_geo_niveau": []
   },
   {
     "leverancier": "DUO",
     "bron": "Referentieniveau per toets en vestiging.",
     "beschrijving": "Dit document beschrijft de bestanden over leerlingen in het Primair Onderwijs die als API-bestand (Application Programming Interface) via de website van DUO wordt aangeboden.",
-    "periode": "Jaarlijks bijgewerkt (zie dataset voor peilmoment)",
+    "periode": "2015-2024",
     "onderwijstype": [
       "PO"
     ],
@@ -3159,13 +5244,14 @@
       "REFERENTIENIVEAU",
       "AANTAL_LEERLINGEN"
     ],
-    "_thema": "PO"
+    "_thema": "PO",
+    "_geo_niveau": []
   },
   {
     "leverancier": "DUO",
     "bron": "Schoolgewicht per schoolvestiging",
     "beschrijving": "In dit bestand is het schoolgewicht per schoolvestiging te zien.",
-    "periode": "Jaarlijks bijgewerkt (zie dataset voor peilmoment)",
+    "periode": "2010-2018",
     "onderwijstype": [
       "PO"
     ],
@@ -3205,13 +5291,14 @@
       }
     ],
     "_kolommen": [],
-    "_thema": "PO"
+    "_thema": "PO",
+    "_geo_niveau": []
   },
   {
     "leverancier": "DUO",
     "bron": "Adressen van instellingen, vestigingen en besturen in het speciaal onderwijs",
     "beschrijving": "Actuele stand van zaken in BRIN op het moment van aanmaak van de adreslevering.",
-    "periode": "Jaarlijks bijgewerkt (zie dataset voor peilmoment)",
+    "periode": "2018",
     "onderwijstype": [
       "PO",
       "SO"
@@ -3236,7 +5323,8 @@
       "duo",
       "open-data",
       "po",
-      "so"
+      "so",
+      "gemeente"
     ],
     "combineerbaar_met": [
       "RIO organisatorische-eenheden (via BRIN-code)",
@@ -3264,33 +5352,108 @@
         "id": "8f0f1639-712d-4adb-bb59-cabd43730dc8"
       }
     ],
-    "_kolommen": [
-      "SOORT PRIMAIR ONDERWIJS",
-      "BEVOEGD GEZAG NUMMER",
-      "BEVOEGD GEZAG NAAM",
-      "STRAATNAAM",
-      "HUISNUMMER-TOEVOEGING",
-      "POSTCODE",
-      "PLAATSNAAM",
-      "GEMEENTENUMMER",
-      "GEMEENTENAAM",
-      "DENOMINATIE",
-      "TELEFOONNUMMER",
-      "INTERNETADRES",
-      "STRAATNAAM CORRESPONDENTIEADRES",
-      "HUISNUMMER-TOEVOEGING CORRESPONDENTIEADRES",
-      "POSTCODE CORRESPONDENTIEADRES",
-      "PLAATSNAAM CORRESPONDENTIEADRES",
-      "ADMINISTRATIEKANTOORNUMMER",
-      "KVK-NUMMER"
-    ],
-    "_thema": "PO"
+    "_kolommen": {
+      "Adressen van besturen in het speciaal onderwijs": [
+        "SOORT PRIMAIR ONDERWIJS",
+        "BEVOEGD GEZAG NUMMER",
+        "BEVOEGD GEZAG NAAM",
+        "STRAATNAAM",
+        "HUISNUMMER-TOEVOEGING",
+        "POSTCODE",
+        "PLAATSNAAM",
+        "GEMEENTENUMMER",
+        "GEMEENTENAAM",
+        "DENOMINATIE",
+        "TELEFOONNUMMER",
+        "INTERNETADRES",
+        "STRAATNAAM CORRESPONDENTIEADRES",
+        "HUISNUMMER-TOEVOEGING CORRESPONDENTIEADRES",
+        "POSTCODE CORRESPONDENTIEADRES",
+        "PLAATSNAAM CORRESPONDENTIEADRES",
+        "ADMINISTRATIEKANTOORNUMMER",
+        "KVK-NUMMER"
+      ],
+      "Adressen van instellingen in het speciaal onderwijs": [
+        "SOORT PRIMAIR ONDERWIJS",
+        "PROVINCIE",
+        "BEVOEGD GEZAG NUMMER",
+        "INSTELLINGSCODE",
+        "INSTELLINGSNAAM",
+        "STRAATNAAM",
+        "HUISNUMMER-TOEVOEGING",
+        "POSTCODE",
+        "PLAATSNAAM",
+        "GEMEENTENUMMER",
+        "GEMEENTENAAM",
+        "DENOMINATIE",
+        "TELEFOONNUMMER",
+        "INTERNETADRES",
+        "CLUSTER",
+        "ONDERWIJS",
+        "STRAATNAAM CORRESPONDENTIEADRES",
+        "HUISNUMMER-TOEVOEGING CORRESPONDENTIEADRES",
+        "POSTCODE CORRESPONDENTIEADRES",
+        "PLAATSNAAM CORRESPONDENTIEADRES",
+        "NODAAL GEBIED CODE",
+        "NODAAL GEBIED NAAM",
+        "RPA-GEBIED CODE",
+        "RPA-GEBIED NAAM",
+        "WGR-GEBIED CODE",
+        "WGR-GEBIED NAAM",
+        "COROPGEBIED CODE",
+        "COROPGEBIED NAAM",
+        "ONDERWIJSGEBIED CODE",
+        "ONDERWIJSGEBIED NAAM",
+        "RMC-REGIO CODE",
+        "RMC-REGIO NAAM"
+      ],
+      "Adressen van vestigingen in het speciaal onderwijs": [
+        "SOORT PRIMAIR ONDERWIJS",
+        "PROVINCIE",
+        "BEVOEGD GEZAG NUMMER",
+        "INSTELLINGSCODE",
+        "VESTIGINGSCODE",
+        "VESTIGINGSNAAM",
+        "STRAATNAAM",
+        "HUISNUMMER-TOEVOEGING",
+        "POSTCODE",
+        "PLAATSNAAM",
+        "GEMEENTENUMMER",
+        "GEMEENTENAAM",
+        "DENOMINATIE",
+        "TELEFOONNUMMER",
+        "INTERNETADRES",
+        "CLUSTER",
+        "ONDERWIJS",
+        "STRAATNAAM CORRESPONDENTIEADRES",
+        "HUISNUMMER-TOEVOEGING CORRESPONDENTIEADRES",
+        "POSTCODE CORRESPONDENTIEADRES",
+        "PLAATSNAAM CORRESPONDENTIEADRES",
+        "NODAAL GEBIED CODE",
+        "NODAAL GEBIED NAAM",
+        "RPA-GEBIED CODE",
+        "RPA-GEBIED NAAM",
+        "WGR-GEBIED CODE",
+        "WGR-GEBIED NAAM",
+        "COROPGEBIED CODE",
+        "COROPGEBIED NAAM",
+        "ONDERWIJSGEBIED CODE",
+        "ONDERWIJSGEBIED NAAM",
+        "RMC-REGIO CODE",
+        "RMC-REGIO NAAM",
+        "VAKANTIEREGIO"
+      ]
+    },
+    "_thema": "PO",
+    "_geo_niveau": [
+      "gemeente"
+    ]
   },
   {
     "leverancier": "DUO",
     "bron": "Gemiddelde eindscores per vestiging bo en sbo",
     "beschrijving": "In dit bestand staat per schoolvestiging en geslacht de gemiddelde score voor de doorstroomtoets weergegeven.",
-    "periode": "Jaarlijks bijgewerkt (zie dataset voor peilmoment)",
+    "periode": "2010-2024",
     "onderwijstype": [
       "PO",
       "SO"
@@ -3342,13 +5505,14 @@
       "AANTAL_LEERLINGEN",
       "AANTAL_ONTHEFFINGEN"
     ],
-    "_thema": "PO"
+    "_thema": "PO",
+    "_geo_niveau": []
   },
   {
     "leverancier": "DUO",
     "bron": "Heroverwegingen en bijgestelde adviezen bo en sbo",
     "beschrijving": "In dit bestand staat het aantal leerlingen in het basisonderwijs (bo) en speciaal basisonderwijs (sbo) dat in aanmerking komt voor een bijstelling van het oorspronkelijke advies en het aantal leerlingen dat daadwerkelijk",
-    "periode": "Jaarlijks bijgewerkt (zie dataset voor peilmoment)",
+    "periode": "2014-2024",
     "onderwijstype": [
       "PO",
       "SO"
@@ -3397,13 +5561,14 @@
       "TOETSEN_EN_ADVIEZEN",
       "AANTAL_LEERLINGEN"
     ],
-    "_thema": "PO"
+    "_thema": "PO",
+    "_geo_niveau": []
   },
   {
     "leverancier": "DUO",
     "bron": "Historische leerlingenaantallen PO",
     "beschrijving": "In deze bestanden staan de historische leerlingenaantallen vanaf 1996 in het primair onderwijs (po) per onderwijssoort (bo, sbo, so, so/vso en vso).",
-    "periode": "Jaarlijks bijgewerkt (zie dataset voor peilmoment)",
+    "periode": "1996/'97-2002/'03",
     "onderwijstype": [
       "PO",
       "SO"
@@ -3451,25 +5616,37 @@
         "id": "947ecf4a-3744-4f59-ad98-6ce4107dafa2"
       }
     ],
-    "_kolommen": [
-      "INSTELLINGSCODE",
-      "VESTIGINGSCODE",
-      "NAAM_VESTIGING",
-      "SOORT_VESTIGING",
-      "DENOMINATIE_VESTIGING",
-      "BEVOEGD_GEZAG_NUMMER",
-      "GEMEENTECODE_VESTIGING",
-      "GEMEENTENAAM_VESTIGING",
-      "SCHOOLJAAR",
-      "AANTAL_LEERLINGEN"
-    ],
-    "_thema": "PO"
+    "_kolommen": {
+      "Historische leerlingentellingen PO vestigingen per jaar": [
+        "INSTELLINGSCODE",
+        "VESTIGINGSCODE",
+        "NAAM_VESTIGING",
+        "SOORT_VESTIGING",
+        "DENOMINATIE_VESTIGING",
+        "BEVOEGD_GEZAG_NUMMER",
+        "GEMEENTECODE_VESTIGING",
+        "GEMEENTENAAM_VESTIGING",
+        "SCHOOLJAAR",
+        "AANTAL_LEERLINGEN"
+      ],
+      "Historische leerlingentellingen PO gemeente per jaar": [
+        "GEMEENTECODE_VESTIGING",
+        "GEMEENTENAAM_VESTIGING",
+        "SOORT_VESTIGING",
+        "SCHOOLJAAR",
+        "AANTAL_LEERLINGEN"
+      ]
+    },
+    "_thema": "PO",
+    "_geo_niveau": [
+      "gemeente"
+    ]
   },
   {
     "leverancier": "DUO",
     "bron": "Leerlingen bo en sbo per vestiging naar advies",
     "beschrijving": "Dit document beschrijft de bestanden over leerlingen in het Primair Onderwijs die via een API (Application Programming Interface) via de website van DUO wordt aangeboden.",
-    "periode": "Jaarlijks bijgewerkt (zie dataset voor peilmoment)",
+    "periode": "2010-2024",
     "onderwijstype": [
       "PO",
       "SO"
@@ -3518,13 +5695,14 @@
       "ADVIES",
       "AANTAL_LEERLINGEN"
     ],
-    "_thema": "PO"
+    "_thema": "PO",
+    "_geo_niveau": []
   },
   {
     "leverancier": "DUO",
     "bron": "Leerlingen bo en sbo per vestiging naar leerjaar",
     "beschrijving": "Leerlingen in het bo en sbo naar leerjaar Dit document beschrijft de bestanden over leerlingen in het Primair Onderwijs die via een API (Application Programming Interface) via de website van DUO wordt aangeboden.",
-    "periode": "Jaarlijks bijgewerkt (zie dataset voor peilmoment)",
+    "periode": "2010-2025",
     "onderwijstype": [
       "PO",
       "SO"
@@ -3566,13 +5744,14 @@
       }
     ],
     "_kolommen": [],
-    "_thema": "PO"
+    "_thema": "PO",
+    "_geo_niveau": []
   },
   {
     "leverancier": "DUO",
     "bron": "Leerlingen po per vestiging naar achtergrond",
     "beschrijving": "Dit document beschrijft de bestanden over leerlingen in het primair onderwijs die via een API (Application Programming Interface) via de website van DUO wordt aangeboden.",
-    "periode": "Jaarlijks bijgewerkt (zie dataset voor peilmoment)",
+    "periode": "2010-2024",
     "onderwijstype": [
       "PO",
       "SO"
@@ -3619,21 +5798,32 @@
         "id": "2899e6a2-cfee-41a6-9250-43276db16e69"
       }
     ],
-    "_kolommen": [
-      "INSTELLINGSCODE",
-      "VESTIGINGSCODE",
-      "TYPE_PO",
-      "PEILJAAR",
-      "CUMI",
-      "AANTAL_LEERLINGEN"
-    ],
-    "_thema": "PO"
+    "_kolommen": {
+      "Leerlingen sbo, so en vso per vestiging naar cumi": [
+        "INSTELLINGSCODE",
+        "VESTIGINGSCODE",
+        "TYPE_PO",
+        "PEILJAAR",
+        "CUMI",
+        "AANTAL_LEERLINGEN"
+      ],
+      "Leerlingen bo per vestiging naar noat": [
+        "INSTELLINGSCODE",
+        "VESTIGINGSCODE",
+        "TYPE_PO",
+        "PEILJAAR",
+        "NOAT",
+        "AANTAL_LEERLINGEN"
+      ]
+    },
+    "_thema": "PO",
+    "_geo_niveau": []
   },
   {
     "leverancier": "DUO",
     "bron": "Materiele instandhouding bo en sbo",
     "beschrijving": "Materiële Instandhouding bo en sbo Dit document beschrijft de bestanden over materiële instandhouding in het basis- en speciaal basisonderwijs die via een API (Application Programming Interface) via de website van DUO wo",
-    "periode": "Jaarlijks bijgewerkt (zie dataset voor peilmoment)",
+    "periode": "2010-2021",
     "onderwijstype": [
       "PO",
       "SO"
@@ -3704,19 +5894,52 @@
         "id": "f5ad5df5-e800-45e8-b7e4-55fee0fcd02d"
       }
     ],
-    "_kolommen": [
-      "PEILJAAR",
-      "BRINNUMMER",
-      "SCHOOLKENMERKEN",
-      "WAARDE"
-    ],
-    "_thema": "PO"
+    "_kolommen": {
+      "Materi�le instandhouding bo schoolkenmerken per instelling": [
+        "PEILJAAR",
+        "BRINNUMMER",
+        "SCHOOLKENMERKEN",
+        "WAARDE"
+      ],
+      "Materi�le instandhouding bo leerlingkenmerken per instelling": [
+        "PEILJAAR",
+        "BRINNUMMER",
+        "LEERLINGKENMERKEN",
+        "AANTAL_LEERLINGEN"
+      ],
+      "Materi�le instandhouding bo bekostigingskenmerken per instelling": [
+        "PEILJAAR",
+        "BRINNUMMER",
+        "BEKOSTIGINGSKENMERKEN",
+        "BEDRAG"
+      ],
+      "Materi�le instandhouding sbo schoolkenmerken per instelling": [
+        "PEILJAAR",
+        "BRINNUMMER",
+        "SCHOOLKENMERKEN",
+        "WAARDE"
+      ],
+      "Materi�le instandhouding sbo leerlingkenmerken per instelling": [
+        "PEILJAAR",
+        "BRINNUMMER",
+        "LEERLINGKENMERKEN",
+        "AANTAL_LEERLINGEN"
+      ],
+      "Materi�le instandhouding sbo bekostigingskenmerken per instelling": [
+        "PEILJAAR",
+        "BRINNUMMER",
+        "BEKOSTIGINGSKENMERKEN",
+        "BEDRAG"
+      ]
+    },
+    "_thema": "PO",
+    "_geo_niveau": []
   },
   {
     "leverancier": "DUO",
     "bron": "Personele bekostiging bo en sbo",
     "beschrijving": "Dit document beschrijft de bestanden over personele bekostiging in het basis- en speciaal basisonderwijs die via een API (Application Programming Interface) via de website van DUO wordt aa",
-    "periode": "Jaarlijks bijgewerkt (zie dataset voor peilmoment)",
+    "periode": "2010-2020",
     "onderwijstype": [
       "PO",
       "SO"
@@ -3787,19 +6010,52 @@
         "id": "c0c3c327-e286-4558-94bb-05877e547cf8"
       }
     ],
-    "_kolommen": [
-      "PEILJAAR",
-      "BRINNUMMER",
-      "SCHOOLKENMERKEN",
-      "WAARDE"
-    ],
-    "_thema": "PO"
+    "_kolommen": {
+      "Personele Bekostiging bo schoolkenmerken per instelling": [
+        "PEILJAAR",
+        "BRINNUMMER",
+        "SCHOOLKENMERKEN",
+        "WAARDE"
+      ],
+      "Personele Bekostiging bo leerlingkenmerken per instelling": [
+        "PEILJAAR",
+        "BRINNUMMER",
+        "LEERLINGKENMERKEN",
+        "AANTAL_LEERLINGEN"
+      ],
+      "Personele Bekostiging bo bekostigingskenmerken per instelling": [
+        "PEILJAAR",
+        "BRINNUMMER",
+        "BEKOSTIGINGSKENMERKEN",
+        "BEDRAG"
+      ],
+      "Personele Bekostiging sbo schoolkenmerken per instelling": [
+        "PEILJAAR",
+        "BRINNUMMER",
+        "SCHOOLKENMERKEN",
+        "WAARDE"
+      ],
+      "Personele Bekostiging sbo leerlingkenmerken per instelling": [
+        "PEILJAAR",
+        "BRINNUMMER",
+        "LEERLINGKENMERKEN",
+        "AANTAL_LEERLINGEN"
+      ],
+      "Personele Bekostiging sbo bekostigingskenmerken per instelling": [
+        "PEILJAAR",
+        "BRINNUMMER",
+        "BEKOSTIGINGSKENMERKEN",
+        "BEDRAG"
+      ]
+    },
+    "_thema": "PO",
+    "_geo_niveau": []
   },
   {
     "leverancier": "DUO",
     "bron": "Prognoses bo en sbo per vestiging",
     "beschrijving": "Dit document beschrijft de bestanden over leerlingen in het Primair Onderwijs die via een API (Application Programming Interface) via de website van DUO wordt aangeboden.",
-    "periode": "Jaarlijks bijgewerkt (zie dataset voor peilmoment)",
+    "periode": "2026-2030",
     "onderwijstype": [
       "PO",
       "SO"
@@ -3846,13 +6102,14 @@
       "JAAR",
       "PROGNOSEAANTALLEN"
     ],
-    "_thema": "PO"
+    "_thema": "PO",
+    "_geo_niveau": []
   },
   {
     "leverancier": "DUO",
     "bron": "Zittenblijvers in het bo en sbo per vestiging",
     "beschrijving": "Dit document beschrijft de bestanden over leerlingen in het Primair Onderwijs die via een API (Application Programming Interface) via de website van DUO wordt aangeboden.",
-    "periode": "Jaarlijks bijgewerkt (zie dataset voor peilmoment)",
+    "periode": "2010-2025",
     "onderwijstype": [
       "PO",
       "SO"
@@ -3900,13 +6157,14 @@
       "PEILJAAR",
       "AANTAL_LEERLINGEN"
     ],
-    "_thema": "PO"
+    "_thema": "PO",
+    "_geo_niveau": []
   },
   {
     "leverancier": "DUO",
     "bron": "Kwaliteitsoordelen bevoegde gezagen, po, so en vo",
     "beschrijving": "De Inspectie van het Onderwijs beoordeelt de kwaliteit van het onderwijs op scholen.",
-    "periode": "Jaarlijks bijgewerkt (zie dataset voor peilmoment)",
+    "periode": "2015-2029",
     "onderwijstype": [
       "PO",
       "SO",
@@ -3955,14 +6213,49 @@
         "id": "754124e9-4cc4-479c-b1ee-2d94f077335c"
       }
     ],
-    "_kolommen": [],
-    "_thema": "PO"
+    "_kolommen": {
+      "Kwaliteitsoordelen po, so en vso": [
+        "_id",
+        "Peildatum",
+        "Sector",
+        "OVT",
+        "OVTNaam",
+        "Elementtype",
+        "EindoordeelKwaliteit",
+        "ToezichtarrangementVorigKader",
+        "Onderzoeksnummer",
+        "TypeOnderzoekCode",
+        "TypeOnderzoek",
+        "VaststellingsdatumEindoordeelKwaliteit",
+        "PublicatiedatumEindoordeelKwaliteit",
+        "Bestuursnummer",
+        "NaamBestuur",
+        "DUOinstellingstype",
+        "DenominatieInstelling",
+        "BetrokkenVestigingen",
+        "BRIN",
+        "Vestiging",
+        "Vestigingsnaam",
+        "Bezoekadres",
+        "Postcode",
+        "Plaats",
+        "Gemeente",
+        "Provincie",
+        "Land"
+      ],
+      "Kwaliteitsoordelen bevoegd gezag": [
+        "_id",
+        "<!doctype html>"
+      ]
+    },
+    "_thema": "PO",
+    "_geo_niveau": []
   },
   {
     "leverancier": "DUO",
     "bron": "Leerlingen po per gemeente",
     "beschrijving": "Dit document beschrijft de bestanden over leerlingen in het primair onderwijs die via een API (Application Programming Interface) via de website van DUO wordt aangeboden.",
-    "periode": "Jaarlijks bijgewerkt (zie dataset voor peilmoment)",
+    "periode": "2010-2025",
     "onderwijstype": [
       "PO",
       "SO",
@@ -4025,20 +6318,45 @@
         "id": "626f4408-767c-4971-aa43-aad310538648"
       }
     ],
-    "_kolommen": [
-      "GEMEENTENUMMER",
-      "TYPE_PO",
-      "PEILJAAR",
-      "GESLACHT",
-      "AANTAL_LEERLINGEN"
-    ],
-    "_thema": "PO"
+    "_kolommen": {
+      "Leerlingen po per gemeente naar geslacht": [
+        "GEMEENTENUMMER",
+        "TYPE_PO",
+        "PEILJAAR",
+        "GESLACHT",
+        "AANTAL_LEERLINGEN"
+      ],
+      "Leerlingen po per gemeente naar leeftijd": [
+        "GEMEENTENUMMER",
+        "TYPE_PO",
+        "PEILJAAR",
+        "LEEFTIJD",
+        "AANTAL_LEERLINGEN"
+      ],
+      "Leerlingen po per gemeente naar postcode4": [
+        "POSTCODE4_DEELNEMER",
+        "TYPE_PO",
+        "PEILJAAR",
+        "AANTAL_LEERLINGEN",
+        "GEMEENTENUMMER"
+      ],
+      "Leerlingen po per gemeente": [
+        "GEMEENTENUMMER",
+        "TYPE_PO",
+        "PEILJAAR",
+        "AANTAL_LEERLINGEN"
+      ]
+    },
+    "_thema": "PO",
+    "_geo_niveau": [
+      "gemeente"
+    ]
   },
   {
     "leverancier": "DUO",
     "bron": "Leerlingen po per samenwerkingsverband",
     "beschrijving": "Dit document beschrijft de bestanden over leerlingen in het primair onderwijs die via een API (Application Programming Interface) via de website van DUO wordt aangeboden.",
-    "periode": "Jaarlijks bijgewerkt (zie dataset voor peilmoment)",
+    "periode": "2014-2025",
     "onderwijstype": [
       "PO",
       "SO",
@@ -4099,20 +6417,43 @@
         "id": "dfdba065-478a-4ebb-80f3-36058a313dc8"
       }
     ],
-    "_kolommen": [
-      "SAMENWERKINGSVERBANDNUMMER",
-      "TYPE_PO",
-      "PEILJAAR",
-      "GESLACHT",
-      "AANTAL_LEERLINGEN"
-    ],
-    "_thema": "PO"
+    "_kolommen": {
+      "Leerlingen po per Samenwerkingsverband naar geslacht": [
+        "SAMENWERKINGSVERBANDNUMMER",
+        "TYPE_PO",
+        "PEILJAAR",
+        "GESLACHT",
+        "AANTAL_LEERLINGEN"
+      ],
+      "Leerlingen po per Samenwerkingsverband naar leeftijd": [
+        "SAMENWERKINGSVERBANDNUMMER",
+        "TYPE_PO",
+        "PEILJAAR",
+        "GESLACHT",
+        "AANTAL_LEERLINGEN"
+      ],
+      "Leerlingen po per Samenwerkingsverband naar postcode4": [
+        "SAMENWERKINGSVERBANDNUMMER",
+        "TYPE_PO",
+        "PEILJAAR",
+        "POSTCODE4_DEELNEMER",
+        "AANTAL_LEERLINGEN"
+      ],
+      "Leerlingen po per Samenwerkingsverband": [
+        "SAMENWERKINGSVERBANDNUMMER",
+        "TYPE_PO",
+        "PEILJAAR",
+        "AANTAL_LEERLINGEN"
+      ]
+    },
+    "_thema": "PO",
+    "_geo_niveau": []
   },
   {
     "leverancier": "DUO",
     "bron": "Aantal leerlingen per cluster per schoolvestiging",
     "beschrijving": "Dit document beschrijft de bestanden over leerlingen in het speciaal en voortgezet speciaal onderwijs die via een API (Application Programming Interface) via de website v",
-    "periode": "Jaarlijks bijgewerkt (zie dataset voor peilmoment)",
+    "periode": "2010-2025",
     "onderwijstype": [
       "SO",
       "VO"
@@ -4160,7 +6501,8 @@
       "CLUSTER",
       "AANTAL_LEERLINGEN"
     ],
-    "_thema": "SO"
+    "_thema": "SO",
+    "_geo_niveau": []
   },
   {
     "leverancier": "DUO",
@@ -4218,14 +6560,33 @@
         "id": "d1021ca3-8978-4659-bb59-4a8d896fb884"
       }
     ],
-    "_kolommen": [],
-    "_thema": "SO"
+    "_kolommen": {
+      "Leerlingen so en vso per samenwerkingsverband naar bekostigingscategorie": [
+        "<!doctype html>"
+      ],
+      "Leerlingen so en vso per samenwerkingsverband, residenti�le plaatsen": [
+        "SWV_BETALEND",
+        "TYPE_PO",
+        "PEILJAAR",
+        "RESIDENTIELE_PLAATS",
+        "AANTAL_LEERLINGEN"
+      ],
+      "Leerlingen so en vso per samenwerkingsverband naar uitstroomprofiel": [
+        "SWV_BETALEND",
+        "TYPE_PO",
+        "PEILJAAR",
+        "UITSTROOMPROFIEL",
+        "AANTAL_LEERLINGEN"
+      ]
+    },
+    "_thema": "SO",
+    "_geo_niveau": []
   },
   {
     "leverancier": "DUO",
     "bron": "Aantal afgenomen examens en gemiddelde examencijfers per vak per vestiging",
     "beschrijving": "Inzicht geven in de gemiddelde examencijfers per vak per VO-vestiging.",
-    "periode": "Jaarlijks bijgewerkt (zie dataset voor peilmoment)",
+    "periode": "2013/'14-2017/'18",
     "onderwijstype": [
       "VO"
     ],
@@ -4265,7 +6626,8 @@
       }
     ],
     "_kolommen": [],
-    "_thema": "VO"
+    "_thema": "VO",
+    "_geo_niveau": []
   },
   {
     "leverancier": "DUO",
@@ -4294,7 +6656,8 @@
       "scholen en adressen",
       "duo",
       "open-data",
-      "vo"
+      "vo",
+      "gemeente"
     ],
     "combineerbaar_met": [
       "RIO organisatorische-eenheden (via BRIN-code)",
@@ -4322,32 +6685,103 @@
         "id": "5187f8d5-ff9c-4284-8e06-4311f0354956"
       }
     ],
-    "_kolommen": [
-      "BEVOEGD GEZAG NUMMER",
-      "BEVOEGD GEZAG NAAM",
-      "STRAATNAAM",
-      "HUISNUMMER-TOEVOEGING",
-      "POSTCODE",
-      "PLAATSNAAM",
-      "GEMEENTENUMMER",
-      "GEMEENTENAAM",
-      "DENOMINATIE",
-      "TELEFOONNUMMER",
-      "INTERNETADRES",
-      "STRAATNAAM CORRESPONDENTIEADRES",
-      "HUISNUMMER-TOEVOEGING CORRESPONDENTIEADRES",
-      "POSTCODE CORRESPONDENTIEADRES",
-      "PLAATSNAAM CORRESPONDENTIEADRES",
-      "ADMINISTRATIEKANTOORNUMMER",
-      "KVK-NUMMER"
-    ],
-    "_thema": "VO"
+    "_kolommen": {
+      "Adressen van besturen in het voortgezet onderwijs": [
+        "BEVOEGD GEZAG NUMMER",
+        "BEVOEGD GEZAG NAAM",
+        "STRAATNAAM",
+        "HUISNUMMER-TOEVOEGING",
+        "POSTCODE",
+        "PLAATSNAAM",
+        "GEMEENTENUMMER",
+        "GEMEENTENAAM",
+        "DENOMINATIE",
+        "TELEFOONNUMMER",
+        "INTERNETADRES",
+        "STRAATNAAM CORRESPONDENTIEADRES",
+        "HUISNUMMER-TOEVOEGING CORRESPONDENTIEADRES",
+        "POSTCODE CORRESPONDENTIEADRES",
+        "PLAATSNAAM CORRESPONDENTIEADRES",
+        "ADMINISTRATIEKANTOORNUMMER",
+        "KVK-NUMMER"
+      ],
+      "Adressen van instellingen in het voortgezet onderwijs": [
+        "PROVINCIE",
+        "BEVOEGD GEZAG NUMMER",
+        "INSTELLINGSCODE",
+        "INSTELLINGSNAAM",
+        "STRAATNAAM",
+        "HUISNUMMER-TOEVOEGING",
+        "POSTCODE",
+        "PLAATSNAAM",
+        "GEMEENTENUMMER",
+        "GEMEENTENAAM",
+        "DENOMINATIE",
+        "TELEFOONNUMMER",
+        "INTERNETADRES",
+        "ONDERWIJSSTRUCTUUR",
+        "STRAATNAAM CORRESPONDENTIEADRES",
+        "HUISNUMMER-TOEVOEGING CORRESPONDENTIEADRES",
+        "POSTCODE CORRESPONDENTIEADRES",
+        "PLAATSNAAM CORRESPONDENTIEADRES",
+        "NODAAL GEBIED CODE",
+        "NODAAL GEBIED NAAM",
+        "RPA-GEBIED CODE",
+        "RPA-GEBIED NAAM",
+        "WGR-GEBIED CODE",
+        "WGR-GEBIED NAAM",
+        "COROPGEBIED CODE",
+        "COROPGEBIED NAAM",
+        "ONDERWIJSGEBIED CODE",
+        "ONDERWIJSGEBIED NAAM",
+        "RMC-REGIO CODE",
+        "RMC-REGIO NAAM"
+      ],
+      "Adressen van vestigingen in het voortgezet onderwijs": [
+        "PROVINCIE",
+        "BEVOEGD GEZAG NUMMER",
+        "INSTELLINGSCODE",
+        "VESTIGINGSCODE",
+        "VESTIGINGSNAAM",
+        "STRAATNAAM",
+        "HUISNUMMER-TOEVOEGING",
+        "POSTCODE",
+        "PLAATSNAAM",
+        "GEMEENTENUMMER",
+        "GEMEENTENAAM",
+        "DENOMINATIE",
+        "TELEFOONNUMMER",
+        "INTERNETADRES",
+        "ONDERWIJSSTRUCTUUR",
+        "STRAATNAAM CORRESPONDENTIEADRES",
+        "HUISNUMMER-TOEVOEGING CORRESPONDENTIEADRES",
+        "POSTCODE CORRESPONDENTIEADRES",
+        "PLAATSNAAM CORRESPONDENTIEADRES",
+        "NODAAL GEBIED CODE",
+        "NODAAL GEBIED NAAM",
+        "RPA-GEBIED CODE",
+        "RPA-GEBIED NAAM",
+        "WGR-GEBIED CODE",
+        "WGR-GEBIED NAAM",
+        "COROPGEBIED CODE",
+        "COROPGEBIED NAAM",
+        "ONDERWIJSGEBIED CODE",
+        "ONDERWIJSGEBIED NAAM",
+        "RMC-REGIO CODE",
+        "RMC-REGIO NAAM",
+        "VAKANTIEREGIO"
+      ]
+    },
+    "_thema": "VO",
+    "_geo_niveau": [
+      "gemeente"
+    ]
   },
   {
     "leverancier": "DUO",
     "bron": "Prognoses vo per instelling",
     "beschrijving": "Dit document beschrijft de bestanden over leerlingen in het Primair Onderwijs die via een API (Application Programming Interface) via de website van DUO wordt aangeboden.",
-    "periode": "Jaarlijks bijgewerkt (zie dataset voor peilmoment)",
+    "periode": "2024-2030",
     "onderwijstype": [
       "VO"
     ],
@@ -4390,13 +6824,14 @@
       "JAAR",
       "PROGNOSEAANTALLEN"
     ],
-    "_thema": "VO"
+    "_thema": "VO",
+    "_geo_niveau": []
   },
   {
     "leverancier": "DUO",
     "bron": "Slagingspercentages en gemiddelde examencijfers per vestiging",
     "beschrijving": "Examenkandidaten, geslaagden, gezakten, slagingspercentages en gemiddelde examencijfers per VO-vestiging.",
-    "periode": "Jaarlijks bijgewerkt (zie dataset voor peilmoment)",
+    "periode": "2013/'14-2017/'18",
     "onderwijstype": [
       "VO"
     ],
@@ -4436,13 +6871,14 @@
       }
     ],
     "_kolommen": [],
-    "_thema": "VO"
+    "_thema": "VO",
+    "_geo_niveau": []
   },
   {
     "leverancier": "DUO",
     "bron": "VO-leerlingen per vestiging en leerjaar naar postcode, plaats en gemeente.",
     "beschrijving": "Het ontsluiten van open data over het aantal leerlingen in het bekostigd voortgezet onderwijs.",
-    "periode": "Jaarlijks bijgewerkt (zie dataset voor peilmoment)",
+    "periode": "2014-2018",
     "onderwijstype": [
       "VO"
     ],
@@ -4483,13 +6919,14 @@
       }
     ],
     "_kolommen": [],
-    "_thema": "VO"
+    "_thema": "VO",
+    "_geo_niveau": []
   },
   {
     "leverancier": "DUO",
     "bron": "VO-leerlingen per vestiging naar onderwijstype, sector en afdeling.",
     "beschrijving": "Het ontsluiten van open data over het aantal leerlingen in het bekostigd voortgezet onderwijs",
-    "periode": "Jaarlijks bijgewerkt (zie dataset voor peilmoment)",
+    "periode": "2014/'15-2018/'19",
     "onderwijstype": [
       "VO"
     ],
@@ -4529,6 +6966,7 @@
       }
     ],
     "_kolommen": [],
-    "_thema": "VO"
+    "_thema": "VO",
+    "_geo_niveau": []
   }
 ]
