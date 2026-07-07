@@ -1197,7 +1197,32 @@
       }
     },
     "_thema": "Arbeidsmarkt",
-    "_geo_niveau": []
+    "_geo_niveau": [],
+    "_codes": {
+      "ONDERWIJSSECTOR": {
+        "1": "PO",
+        "2": "VO",
+        "3": "MBO",
+        "4": "HBO"
+      },
+      "EENPITTER": {
+        "0": "nee",
+        "1": "ja"
+      },
+      "RANDSTAD": {
+        "0": "nee",
+        "1": "ja"
+      },
+      "CATEGORIE_BESTUUROMVANG": {
+        "1": "klein",
+        "2": "middel",
+        "3": "groot"
+      },
+      "VERTICALE_SCHOLENGEMEENSCHAP": {
+        "0": "nee",
+        "1": "ja"
+      }
+    }
   },
   {
     "leverancier": "DUO",
@@ -8500,7 +8525,15 @@
       }
     },
     "_thema": "Overig",
-    "_geo_niveau": []
+    "_geo_niveau": [],
+    "_codes": {
+      "NIVEAU": {
+        "1": "Entreeopleiding",
+        "2": "Basisberoepsopleiding",
+        "3": "Vakberoepsopleiding",
+        "4": "Middenkaderopleiding/Specialistenopleiding"
+      }
+    }
   },
   {
     "leverancier": "DUO",
@@ -9204,7 +9237,15 @@
     "_geo_niveau": [
       "gemeente",
       "provincie"
-    ]
+    ],
+    "_codes": {
+      "NIVEAU": {
+        "1": "Entreeopleiding",
+        "2": "Basisberoepsopleiding",
+        "3": "Vakberoepsopleiding",
+        "4": "Middenkaderopleiding/Specialistenopleiding"
+      }
+    }
   },
   {
     "leverancier": "DUO",
@@ -9622,7 +9663,15 @@
       }
     },
     "_thema": "Overig",
-    "_geo_niveau": []
+    "_geo_niveau": [],
+    "_codes": {
+      "NIVEAU": {
+        "1": "Entreeopleiding",
+        "2": "Basisberoepsopleiding",
+        "3": "Vakberoepsopleiding",
+        "4": "Middenkaderopleiding/Specialistenopleiding"
+      }
+    }
   },
   {
     "leverancier": "DUO",
