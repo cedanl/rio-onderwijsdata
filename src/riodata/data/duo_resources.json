@@ -1198,7 +1198,32 @@
     },
     "_thema": "Arbeidsmarkt",
     "_geo_niveau": [],
-    "_meest_recent": "Functiemix maatwerkafspraken"
+    "_meest_recent": "Functiemix maatwerkafspraken",
+    "_codes": {
+      "ONDERWIJSSECTOR": {
+        "1": "PO",
+        "2": "VO",
+        "3": "MBO",
+        "4": "HBO"
+      },
+      "EENPITTER": {
+        "0": "nee",
+        "1": "ja"
+      },
+      "RANDSTAD": {
+        "0": "nee",
+        "1": "ja"
+      },
+      "CATEGORIE_BESTUUROMVANG": {
+        "1": "klein",
+        "2": "middel",
+        "3": "groot"
+      },
+      "VERTICALE_SCHOLENGEMEENSCHAP": {
+        "0": "nee",
+        "1": "ja"
+      }
+    }
   },
   {
     "leverancier": "DUO",
@@ -8514,7 +8539,15 @@
     },
     "_thema": "Overig",
     "_geo_niveau": [],
-    "_meest_recent": "2025 nieuw-instromende-studenten-per-instelling-hoofdgroep-leerweg-beroepsopleiding-niveau-vooropleiding"
+    "_meest_recent": "2025 nieuw-instromende-studenten-per-instelling-hoofdgroep-leerweg-beroepsopleiding-niveau-vooropleiding",
+    "_codes": {
+      "NIVEAU": {
+        "1": "Entreeopleiding",
+        "2": "Basisberoepsopleiding",
+        "3": "Vakberoepsopleiding",
+        "4": "Middenkaderopleiding/Specialistenopleiding"
+      }
+    }
   },
   {
     "leverancier": "DUO",
@@ -9219,7 +9252,15 @@
       "gemeente",
       "provincie"
     ],
-    "_meest_recent": "Studenten per instelling bevoegd gezag plaats van de instelling beroepsopleiding woonprovincie"
+    "_meest_recent": "Studenten per instelling bevoegd gezag plaats van de instelling beroepsopleiding woonprovincie",
+    "_codes": {
+      "NIVEAU": {
+        "1": "Entreeopleiding",
+        "2": "Basisberoepsopleiding",
+        "3": "Vakberoepsopleiding",
+        "4": "Middenkaderopleiding/Specialistenopleiding"
+      }
+    }
   },
   {
     "leverancier": "DUO",
@@ -9638,7 +9679,15 @@
     },
     "_thema": "Overig",
     "_geo_niveau": [],
-    "_meest_recent": "Studenten per leerweg opleiding verblijfsjaar"
+    "_meest_recent": "Studenten per leerweg opleiding verblijfsjaar",
+    "_codes": {
+      "NIVEAU": {
+        "1": "Entreeopleiding",
+        "2": "Basisberoepsopleiding",
+        "3": "Vakberoepsopleiding",
+        "4": "Middenkaderopleiding/Specialistenopleiding"
+      }
+    }
   },
   {
     "leverancier": "DUO",
