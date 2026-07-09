@@ -22,6 +22,46 @@ from __future__ import annotations
 import io
 import httpx
 
+DUO_COLUMN_GLOSSARY: dict[str, str] = {
+    "STUDIEJAAR": "Studiejaar in formaat YYYY/YYYY (bijv. 2023/2024). Loopt van 1 augustus t/m 31 juli.",
+    "BRIN_NUMMER": "Basisregistratie Instellingen-nummer: unieke code voor elke onderwijsinstelling.",
+    "INSTELLINGSCODE_ACTUEEL": "Actuele BRIN-code van de instelling (kan afwijken van historische code bij fusie of naamswijziging).",
+    "INSTELLINGSNAAM_ACTUEEL": "Actuele naam van de onderwijsinstelling zoals geregistreerd in de Basisregistratie Instellingen.",
+    "AANTAL_INGESCHREVENEN": "Aantal studenten ingeschreven op peildatum 1 oktober van het studiejaar.",
+    "INSTROOM": "Eerstejaars inschrijvingen: studenten die voor het eerst staan ingeschreven in een opleiding of instelling.",
+    "UITSTROOM": "Studenten die de opleiding verlaten, onderscheiden in gediplomeerd en niet-gediplomeerd uitstroom.",
+    "GEDIPLOMEERDEN": "Studenten die in het studiejaar een diploma of getuigschrift hebben behaald.",
+    "GESLACHT": "Geslacht van de student: MAN, VROUW of ONBEKEND.",
+    "LEERWEG": "Onderwijsvorm: VOLTIJD, DEELTIJD of DUAAL.",
+    "NIVEAU": "Opleidingsniveau (mbo: niveau 1 t/m 4; ho: associate degree, bachelor, master).",
+    "GEMEENTENUMMER": "CBS-gemeentecode (4 cijfers), conform de gemeentelijke indeling op de peildatum.",
+    "GEMEENTENAAM": "Naam van de gemeente conform CBS-gemeentelijke indeling.",
+    "PROVINCIENAAM": "Naam van de provincie.",
+    "ONDERDEEL": "Studierichting op hoofdniveau (bijv. TECHNIEK, ECONOMIE, GEZONDHEIDSZORG).",
+    "SUBONDERDEEL": "Verfijning van ONDERDEEL op een gedetailleerder niveau.",
+    "SOORT_INSTELLING": "Type instelling: reguliere instelling, bijzonder of openbaar.",
+    "TYPE_HOGER_ONDERWIJS": "Opleidingstype binnen het hoger onderwijs: bachelor, master, associate degree of anders.",
+    "OPLEIDINGSNAAM_ACTUEEL": "Actuele naam van de opleiding zoals geregistreerd in CROHO (ho) of CREBO (mbo).",
+    "CROHO_ONDERDEEL": "Hoofdcluster van de opleiding in het Centraal Register Opleidingen Hoger Onderwijs (CROHO).",
+    "CROHO_SUBONDERDEEL": "Subcluster van de opleiding in het CROHO.",
+    "CREBO_CODE": "Opleidingscode in het Centraal Register Beroepsopleidingen (CREBO) voor mbo-opleidingen.",
+    "CROHO_CODE": "Opleidingscode in het Centraal Register Opleidingen Hoger Onderwijs (CROHO) voor ho-opleidingen.",
+    "OPLEIDINGSCODE_ACTUEEL": "Actuele opleidingscode: CREBO-code voor mbo, CROHO-code voor ho.",
+    "HERKOMST": "Geografische herkomst van de student: Nederland, EU/EEA, of niet-EU/EEA.",
+    "NATIONALITEIT": "Nationaliteit van de student (bijv. Nederlandse, niet-Nederlandse).",
+    "LEEFTIJD": "Leeftijd van de student in jaren op 1 oktober van het studiejaar.",
+    "DIPLOMAJAAR": "Jaar waarin het vooropleidingsdiploma is behaald.",
+    "SOORT_DIPLOMA": "Type vooropleidingsdiploma van de student (bijv. HAVO, VWO, MBO niveau 4).",
+}
+
+
+def column_definitions(columns: list[str]) -> dict[str, str]:
+    """Geeft bekende definities terug voor kolomnamen uit DUO-datasets.
+
+    Returns dict met alleen de kolommen waarvoor een definitie bekend is.
+    """
+    return {col: DUO_COLUMN_GLOSSARY[col] for col in columns if col in DUO_COLUMN_GLOSSARY}
+
 CKAN_BASE = "https://onderwijsdata.duo.nl/api/3/action"
 PORTAL_BASE = "https://onderwijsdata.duo.nl"
 
