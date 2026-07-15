@@ -22,14 +22,25 @@ def catalog(source: str = "rio", ai: bool = True, live: bool = False) -> list[di
     import json
     from importlib.resources import files
 
+    data_dir = files("riodata.data")
+
     def _rio():
+        if ai:
+            try:
+                return json.loads(data_dir.joinpath("rio_resources_enriched.json").read_text(encoding="utf-8"))
+            except FileNotFoundError:
+                pass
         filename = "rio_resources_ai.json" if ai else "rio_resources.json"
-        return json.loads(files("riodata.data").joinpath(filename).read_text(encoding="utf-8"))
+        return json.loads(data_dir.joinpath(filename).read_text(encoding="utf-8"))
 
     def _duo():
         if live:
             return duo.catalog()
-        return json.loads(files("riodata.data").joinpath("duo_resources.json").read_text(encoding="utf-8"))
+        try:
+            return json.loads(data_dir.joinpath("duo_resources_enriched.json").read_text(encoding="utf-8"))
+        except FileNotFoundError:
+            pass
+        return json.loads(data_dir.joinpath("duo_resources.json").read_text(encoding="utf-8"))
 
     def _roa():
         return json.loads(files("riodata.data").joinpath("roa_resources.json").read_text(encoding="utf-8"))
