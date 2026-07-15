@@ -56,7 +56,8 @@ def enrich_duo_entry(entry: dict) -> dict:
 
     try:
         resources = _duo.resources(dataset_id)
-    except Exception:
+    except Exception as e:
+        print(f" WARN resources: {e}", end="")
         resources = []
 
     if not resources:
@@ -66,12 +67,13 @@ def enrich_duo_entry(entry: dict) -> dict:
     kolomtypes = {}
     last_df_columns = []
 
-    for res_idx, res in enumerate(resources[:3]):
+    for res_idx, res in enumerate(resources[:5]):
         res_naam = res.get("naam", f"resource_{res_idx}")
         try:
             df = _duo.load(dataset_id, res_idx, nrows=200)
             last_df_columns = list(df.columns)
-        except Exception:
+        except Exception as e:
+            print(f" WARN {res_naam}: {e}", end="")
             continue
 
         res_kolommen = {}
@@ -110,8 +112,8 @@ def enrich_duo_entry(entry: dict) -> dict:
         col_defs = _duo.column_definitions(last_df_columns) if last_df_columns else {}
         if col_defs:
             entry["_kolomdefinities"] = col_defs
-    except Exception:
-        pass
+    except Exception as e:
+        print(f" WARN defs: {e}", end="")
 
     return entry
 
