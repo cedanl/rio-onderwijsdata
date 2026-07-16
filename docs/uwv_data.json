@@ -3,6 +3,7 @@
     "leverancier": "UWV",
     "bron": "UWV Open Match Data",
     "beschrijving": "Wekelijkse snapshots van vacatures en werkzoekenden per beroep, 4-cijferig postcodegebied en provincie. Inclusief uitsplitsing naar opleidingsniveau (AANT_OPLNIV_1 t/m 6), leeftijd, geslacht en werkloosheidsduur.",
+    "samenvatting": "Historisch archief van UWV vacature- en werkzoekenden-data per beroepscluster en provincie (2019–2023). Dataset stopt mei 2023. Geschikt voor regionale arbeidsmarktanalyses per beroepencluster, niet voor actuele of opleidingsniveau-specifieke analyses (AANT_OPLNIV is altijd NaN in Vacature-records).",
     "periode": "2019-11-26 t/m 2023-05-16 (wekelijkse snapshots)",
     "onderwijstype": [
       "Allen"
@@ -24,18 +25,33 @@
     "sub_resources": [],
     "voorbeeldvragen": [
       "Hoeveel vacatures waren er per beroep in provincie Utrecht in 2022?",
-      "Wat is het opleidingsniveau van werkzoekenden in de zorg per regio?",
-      "Hoe verhoudt vraag (vacatures) zich tot aanbod (werkzoekenden) per beroep?"
+      "Welke beroepencluster had de meeste vacatures in Noord-Holland in 2023?",
+      "Hoeveel werkzoekenden waren er in de zorg per provincie in 2022?",
+      "Hoe verhoudt vraag (vacatures) zich tot aanbod (werkzoekenden) per beroep?",
+      "Welke provincies hadden de meeste ICT-vacatures?"
     ],
     "tags": [
       "uwv",
       "vacatures",
       "werkzoekenden",
       "beroep",
+      "beroepencluster",
       "postcode",
-      "opleidingsniveau",
-      "arbeidsmarkt"
+      "provincie",
+      "arbeidsmarkt",
+      "regionaal"
     ],
+    "niet_geschikt_voor": "Actuele vacaturedata — de dataset stopt in mei 2023 en wordt niet meer bijgewerkt. Niet geschikt voor vragen over het huidige arbeidsmarktaanbod. Ook niet geschikt voor uitsplitsing naar opleidingsniveau bij vacatures: de kolom AANT_OPLNIV is altijd NaN in Vacature-records (rec_type='Vacature'). Opleidingsniveau-filtering werkt alleen voor Werkzoekenden-records (rec_type='Werkzoekende').",
+    "kolomtoelichting": {
+      "PROVINCIE": "Naam van de provincie, bijv. 'Utrecht', 'Noord-Holland'",
+      "PC4": "4-cijferig postcodegebied",
+      "BEROEPENCLUSTER": "Naam van het beroepencluster, bijv. 'Programmeurs en softwareontwikkelaars', 'Verpleegkundigen'",
+      "BEROEPSGROEP": "Specifiekere beroepsgroep binnen het cluster",
+      "ANTAL": "Aantal vacatures of werkzoekenden voor dit beroep/postcode/periode",
+      "AANT_OPLNIV": "Opleidingsniveau — ALTIJD NaN voor rec_type='Vacature'. Alleen gevuld voor rec_type='Werkzoekende'.",
+      "rec_type": "Type record: 'Vacature' (openstaande vacatures) of 'Werkzoekende' (geregistreerde werkzoekenden)",
+      "PEILDATUM": "Peildatum van de snapshot, bijv. '2023-05-16'"
+    },
     "combineerbaar_met": [
       "ROA AIS (arbeidsmarktprognoses per beroep)",
       "CBS (beroepsbevolking naar opleiding)",
