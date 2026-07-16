@@ -3,6 +3,7 @@
     "leverancier": "ROA",
     "bron": "AIS tot 2030",
     "beschrijving": "ROA Arbeidsmarktinformatiesysteem: middellange-termijn arbeidsmarktprognoses per opleiding en beroep tot 2030, plus kerncijfers schoolverlatersonderzoeken.",
+    "samenvatting": "Nationale arbeidsmarktprognoses en schoolverlatersstatistieken per opleidingsniveau en beroepssector. Bevat werkloosheidspercentages, aandeel vast dienstverband en werken buiten vakrichting — uitsluitend als landelijk gemiddelde, nooit per instelling of regio.",
     "periode": "Editie 2025",
     "onderwijstype": [
       "Allen"
@@ -24,7 +25,9 @@
     "voorbeeldvragen": [
       "Wat zijn de arbeidsmarktperspectieven voor MBO-gediplomeerden tot 2025?",
       "Welke opleidingen hebben de beste arbeidsmarktkansen?",
-      "Hoe verhoudt de uitstroom van schoolverlaters zich tot de vraag per beroep?"
+      "Hoe verhoudt de uitstroom van schoolverlaters zich tot de vraag per beroep?",
+      "Wat is het landelijk werkloosheidspercentage voor HBO-bachelors?",
+      "Hoeveel procent van de WO-masters werkt buiten de vakrichting?"
     ],
     "tags": [
       "roa",
@@ -32,8 +35,19 @@
       "prognose",
       "schoolverlaters",
       "opleiding",
-      "beroep"
+      "beroep",
+      "werkloosheid",
+      "vast dienstverband",
+      "baankansen"
     ],
+    "niet_geschikt_voor": "Instellingsspecifieke arbeidsmarktdata — ROA levert uitsluitend nationale gemiddelden per opleidingsniveau (bijv. Bachelor, Mbo4), niet per instelling, opleiding of regio. Niet geschikt voor vragen als 'hoe doen onze alumni het op de arbeidsmarkt?' of 'welk percentage van afgestudeerden aan instelling X heeft een vaste baan?'.",
+    "kolomtoelichting": {
+      "thema": "Categorie van het onderzoek, bijv. 'Schoolverlatersinformatie (SIS 2024)' of 'Arbeidsmarktprognoses'",
+      "aggregatieniveau": "Granulatieniveau van de data, bijv. 'opleidingsniveau (ONR2019)' of 'opleidingssector'",
+      "detailniveau": "Specifieke waarde van het aggregatieniveau, bijv. 'Bachelor', 'Master, doctor', 'Mbo4', 'Mbo3', 'Mbo2'",
+      "onderwerp": "De gemeten indicator, bijv. 'werkloosheid', 'vast dienstverband', 'buiten de vakrichting'",
+      "perc": "Percentage (0-100) voor de indicator bij het gegeven opleidingsniveau. Altijd een nationaal gemiddelde."
+    },
     "combineerbaar_met": [
       "DUO (diplomering per opleiding)",
       "CBS (arbeidsdeelname naar onderwijsniveau)",
@@ -70,6 +84,7 @@
     "leverancier": "ROA",
     "bron": "AIS tot 2028",
     "beschrijving": "ROA Arbeidsmarktinformatiesysteem editie 2023 en 2024: prognoses per opleiding en beroep tot 2028.",
+    "samenvatting": "Oudere editie van de ROA arbeidsmarktprognoses (tot 2028). Gebruik AIS tot 2030 voor de meest recente data.",
     "periode": "Editie 2024",
     "onderwijstype": [
       "Allen"
@@ -101,6 +116,14 @@
       "opleiding",
       "beroep"
     ],
+    "niet_geschikt_voor": "Meest actuele prognoses — gebruik AIS tot 2030 voor recentere data. Net als alle ROA-edities: geen instellingsspecifieke of regionale data, alleen nationale gemiddelden per opleidingsniveau.",
+    "kolomtoelichting": {
+      "thema": "Categorie van het onderzoek",
+      "aggregatieniveau": "Granulatieniveau van de data",
+      "detailniveau": "Specifieke waarde van het aggregatieniveau",
+      "onderwerp": "De gemeten indicator",
+      "perc": "Percentage (0-100) voor de indicator — nationaal gemiddelde"
+    },
     "combineerbaar_met": [
       "DUO (diplomering per opleiding)",
       "CBS (arbeidsdeelname naar onderwijsniveau)",
