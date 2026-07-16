@@ -11,6 +11,7 @@ Gebruik:
 """
 import argparse
 import json
+import re
 import sys
 from pathlib import Path
 
@@ -41,6 +42,47 @@ def load_json(path: Path) -> list:
 def save_json(data: list, path: Path):
     with open(path, "w", encoding="utf-8") as f:
         json.dump(data, f, ensure_ascii=False, indent=2)
+
+
+# ─── Auto-metadata helpers ────────────────────────────────────────────────
+
+
+def build_niet_geschikt_voor(entry: dict) -> list:
+    """Genereert automatische waarschuwingen over beperkingen van de dataset."""
+    waarschuwingen = []
+
+    geo = entry.get("_geo_niveau") or []
+    if geo == ["landelijk"]:
+        waarschuwingen.append(
+            "Niet geschikt voor vragen op gemeente- of provincieniveau: "
+            "alleen landelijke totalen beschikbaar."
+        )
+
+    periode = entry.get("periode", "")
+    if periode:
+        jaren = re.findall(r"\b(?:19|20)\d{2}\b", periode)
+        if jaren and int(jaren[-1]) < 2020:
+            waarschuwingen.append(
+                f"Dataset is mogelijk verouderd: meest recente data is uit {jaren[-1]}."
+            )
+
+    return waarschuwingen
+
+
+def build_samenvatting(entry: dict) -> str:
+    """Bouwt een beschrijvende zin op basis van bestaande metadata."""
+    leverancier = entry.get("leverancier", "DUO")
+    bron = entry.get("bron", "onbekend")
+    onderwijstype = entry.get("onderwijstype") or []
+    geo = entry.get("_geo_niveau") or []
+    periode = entry.get("periode", "")
+
+    ot_str = ", ".join(onderwijstype) if onderwijstype else "onderwijs"
+    geo_str = ", ".join(geo) if geo else "landelijk"
+
+    if periode:
+        return f"{leverancier} dataset over {bron} ({ot_str}) per {geo_str}, periode {periode}."
+    return f"{leverancier} dataset over {bron} ({ot_str}) per {geo_str}."
 
 
 # ─── DUO ──────────────────────────────────────────────────────────────────
@@ -115,6 +157,9 @@ def enrich_duo_entry(entry: dict) -> dict:
     except Exception as e:
         print(f" WARN defs: {e}", end="")
 
+    entry.setdefault("niet_geschikt_voor", build_niet_geschikt_voor(entry))
+    entry.setdefault("samenvatting", build_samenvatting(entry))
+
     return entry
 
 
@@ -181,6 +226,9 @@ def enrich_rio_entry(entry: dict) -> dict:
         entry["_kolommen"] = kolommen
     if veldtypes:
         entry["_kolomtypes"] = {k: v or "onbekend" for k, v in veldtypes.items()}
+
+    entry.setdefault("niet_geschikt_voor", build_niet_geschikt_voor(entry))
+    entry.setdefault("samenvatting", build_samenvatting(entry))
 
     return entry
 
