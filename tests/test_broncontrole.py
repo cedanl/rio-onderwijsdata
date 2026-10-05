@@ -4,6 +4,8 @@ import importlib.util
 import json
 from pathlib import Path
 
+import pytest
+
 ROOT = Path(__file__).resolve().parent.parent
 spec = importlib.util.spec_from_file_location("broncontrole", ROOT / "catalogus" / "broncontrole.py")
 bc = importlib.util.module_from_spec(spec)
@@ -61,9 +63,12 @@ def test_vier_tijdstempels_staan_los_van_elkaar():
     assert m["catalogus_gebouwd"] == "2026-07-16" and duo["aantal"] == 1
 
 
-def test_nietgecontroleerde_bronnen_worden_expliciet_genoemd():
-    m, _ = run(None, [pkg("a")], ["a"])
-    assert set(m["niet_gecontroleerd"]) == {"rio_live", "sbb", "roa", "uwv", "inspectie"}
+def test_nietgecontroleerde_bronnen_worden_expliciet_genoemd(tmp_path):
+    m, _ = bc.controleer(None, duo_pkgs=[pkg("a")], catalogus_ids={"a"}, nu=T1,
+                         spec_pad=tmp_path / "ontbreekt.yml", contract_pad=tmp_path / "ontbreekt.json")
+    # review F8: een stil overgeslagen contractcheck moet zichtbaar zijn
+    assert set(m["niet_gecontroleerd"]) == {"rio_contract", "rio_live", "sbb", "roa", "uwv", "inspectie"}
+    assert "rio_contract" not in m["bronnen"]
 
 
 def test_rio_spec_die_afwijkt_van_contract_is_review(tmp_path):
@@ -99,3 +104,59 @@ def test_exitcodes_en_schrijven(tmp_path, monkeypatch):
     assert json.loads(pad.read_text())["schema_versie"] == 1
     monkeypatch.setattr(bc, "_catalogus_ids", lambda: {"a", "weg"})
     assert bc.main(["--manifest", str(pad)]) == 10
+
+
+class FakeCkan:
+    """Fake HTTP-client die CKAN-pagina's levert."""
+
+    def __init__(self, paginas, count):
+        self.paginas, self.count, self.aanroepen = paginas, count, 0
+
+    def get(self, url, params=None, timeout=None):
+        i = self.aanroepen
+        self.aanroepen += 1
+        batch = self.paginas[i] if i < len(self.paginas) else []
+        body = {"success": True, "result": {"count": self.count, "results": batch}}
+
+        class R:
+            def raise_for_status(self):
+                pass
+
+            def json(self):
+                return body
+        return R()
+
+
+def test_volledige_paginering_wordt_geaccepteerd():
+    assert [p["name"] for p in bc.fetch_duo(FakeCkan([[pkg("a")], [pkg("b")]], 2))] == ["a", "b"]
+
+
+def test_lege_pagina_voor_het_einde_is_een_mislukte_controle():
+    """Review F8: count=2, pagina 2 onverwacht leeg."""
+    with pytest.raises(RuntimeError, match="onvolledig"):
+        bc.fetch_duo(FakeCkan([[pkg("a")], []], 2))
+
+
+def test_count_wijkt_af_of_dubbele_namen_is_mislukt():
+    with pytest.raises(RuntimeError, match="inconsistent"):
+        bc.fetch_duo(FakeCkan([[pkg("a"), pkg("a")]], 2))
+    with pytest.raises(RuntimeError, match="inconsistent"):
+        bc.fetch_duo(FakeCkan([[pkg("a"), pkg("b"), pkg("c")]], 2))
+
+
+def test_onvolledige_inventaris_overschrijft_het_manifest_niet(tmp_path, monkeypatch):
+    pad = tmp_path / "m.json"
+    pad.write_text('{"oud": true}')
+    monkeypatch.setattr(bc, "_catalogus_ids", lambda: {"a", "b"})
+
+    class Client:
+        def __enter__(self):
+            return FakeCkan([[pkg("a")], []], 2)
+
+        def __exit__(self, *a):
+            return False
+
+    import httpx
+    monkeypatch.setattr(httpx, "Client", Client)
+    assert bc.main(["--manifest", str(pad), "--schrijf"]) == 1
+    assert pad.read_text() == '{"oud": true}'

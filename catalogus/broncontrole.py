@@ -7,8 +7,9 @@ Wat het doet (en wat niet):
 - **DUO CKAN**: inventaris van datasets (naam, ``metadata_modified``, resource-IDs, hash van
   ``notes``). Verwijderde/verplaatste datasets, nieuwe datasets en gewijzigde resources of
   beschrijvingen worden als *review* gemeld. Dit leest alleen CKAN; het past de catalogus niet aan.
-- **RIO-contract**: hash van de meegeleverde OpenAPI-spec tegen het filtercontract (offline).
-  Een nieuwe spec die het contract niet meer dekt is een reviewmelding.
+- **RIO-contract**: hash van de meegeleverde OpenAPI-spec tegen het filtercontract (offline). Een
+  nieuwe spec die het contract niet meer dekt is een reviewmelding. Dit vereist PR #28 (het
+  filtercontract); ontbreekt dat bestand, dan staat ``rio_contract`` in ``niet_gecontroleerd``.
 - RIO live, SBB, ROA, UWV en Inspectie worden nog **niet** gecontroleerd.
 
 Het manifest houdt vier tijdstempels apart: ``laatste_succesvolle_controle`` (wanneer wij
@@ -106,18 +107,32 @@ def meldingen_rio(nieuw: dict) -> list[str]:
 
 
 def fetch_duo(client) -> list[dict]:
-    pkgs, start = [], 0
+    """Haal alle CKAN-packages op en weiger een onvolledige inventaris.
+
+    CKAN meldt ``count``; krijgen we minder packages, een lege pagina vóór het einde, of dubbele
+    namen, dan is dat een mislukte controle (de aanroeper behoudt het vorige manifest).
+    """
+    pkgs, start, totaal = [], 0, None
     while True:
         r = client.get(CKAN, params={"rows": 100, "start": start}, timeout=60)
         r.raise_for_status()
         body = r.json()
         if not body.get("success"):
             raise RuntimeError(f"CKAN fout: {body.get('error')}")
+        totaal = body["result"]["count"]
         batch = body["result"]["results"]
+        if not batch and start < totaal:
+            raise RuntimeError(f"CKAN gaf een lege pagina bij start={start}, terwijl count={totaal}: inventaris onvolledig")
         pkgs += batch
         start += len(batch)
-        if not batch or start >= body["result"]["count"]:
-            return pkgs
+        if start >= totaal:
+            break
+    namen = [p["name"] for p in pkgs]
+    if len(pkgs) != totaal or len(set(namen)) != len(namen):
+        raise RuntimeError(
+            f"CKAN-inventaris inconsistent: {len(pkgs)} packages ({len(set(namen))} uniek) tegenover count={totaal}"
+        )
+    return pkgs
 
 
 def controleer(oud_manifest: dict | None, *, duo_pkgs: list[dict], catalogus_ids: set[str],
@@ -130,17 +145,21 @@ def controleer(oud_manifest: dict | None, *, duo_pkgs: list[dict], catalogus_ids
     duo = duo_inventaris(duo_pkgs)
     bronnen = {"duo_ckan": duo}
     meldingen = meldingen_duo(oud.get("duo_ckan"), duo, catalogus_ids)
+    niet_gecontroleerd = ["rio_live", "sbb", "roa", "uwv", "inspectie"]
     if contract_pad.exists() and spec_pad.exists():
         rio = rio_contract_inventaris(spec_pad, contract_pad)
         bronnen["rio_contract"] = rio
         meldingen += meldingen_rio(rio)
+    else:
+        # Zonder het filtercontract (PR #28) of de spec is er niets te vergelijken: expliciet melden.
+        niet_gecontroleerd.insert(0, "rio_contract")
     stempel = nu.isoformat(timespec="seconds")
     for b in bronnen.values():
         b["laatste_succesvolle_controle"] = stempel
     manifest = {
         "schema_versie": SCHEMA_VERSIE,
         "catalogus_gebouwd": catalogus_gebouwd or (oud_manifest or {}).get("catalogus_gebouwd"),
-        "niet_gecontroleerd": ["rio_live", "sbb", "roa", "uwv", "inspectie"],
+        "niet_gecontroleerd": niet_gecontroleerd,
         "bronnen": bronnen,
     }
     return manifest, meldingen
