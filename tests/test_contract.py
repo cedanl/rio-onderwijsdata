@@ -166,3 +166,48 @@ def test_manifest_offline():
     assert m["duo_resource_schemas"]["schema_versie"] == 1
     with pytest.raises(c.OnbekendSchema):
         c.catalog_records(schema_version=2)
+
+
+def test_zoekkaart_deelt_niets_met_de_cache():
+    """#390 A4: een consument die een zoekkaart wijzigt, wijzigt de volgende niet."""
+    eerst = next(r for r in c.catalog_records() if r["dataset_id"] == "duo:p01hoinges")
+    eerst["populatie"]["status"] = "vervuild"
+    eerst["teldefinitie"]["teleenheid"] = "vervuild"
+    eerst["scopeprofiel"]["mbo"] = "vervuild"
+    opnieuw = next(r for r in c.catalog_records() if r["dataset_id"] == "duo:p01hoinges")
+    assert "vervuild" not in json.dumps(opnieuw)
+    assert "vervuild" not in json.dumps(c.get_dataset("duo:p01hoinges"))
+
+
+def test_zoekkaart_houdt_historie_en_prognose_gescheiden():
+    """#390 A5: de compacte tijdsdekking zegt nog waar de historie ophoudt."""
+    kaart = next(r for r in c.catalog_records() if r["dataset_id"] == "duo:studentprognoses-mbo-per-instelling")
+    tijd = kaart["tijdsdekking"]
+    assert "claims" not in tijd
+    assert tijd["kaart"]["historie_prognose"] == "kolom Type: historie 2021-2025, prognose 2026-2040"
+
+
+def test_rio_id_volgt_het_formaat_uit_de_spec():
+    """#390 A6: alleen resources waarvan de spec een UUID eist, heten UUID."""
+    def sleutel(resource):
+        (s,) = c.get_dataset(f"rio:{resource}")["join_sleutels"]["sleutels"]
+        return s
+
+    assert sleutel("aangeboden-opleidingen")["formaat"] == "uuid"
+    assert sleutel("organisatorische-eenheden")["formaat"] == r"\d{3}[A-Z]{1}\d{3}"
+    assert sleutel("opleidingen")["formaat"] == "opaak"
+    assert sleutel("opleidingen")["sleutel"] == "rio:opleidingen"
+    assert "rio_uuid" not in json.dumps(c.catalog_records(provider="rio", compact=False))
+
+
+def test_rio_id_formaten_gelijk_aan_de_spec():
+    yaml = pytest.importorskip("yaml")
+    from pathlib import Path
+    spec = yaml.safe_load((Path(__file__).parent.parent / "RIO_LOD_API_v2.yml").read_text())
+    for pad, item in spec["paths"].items():
+        delen = pad.strip("/").split("/")
+        if len(delen) != 2 or delen[1] != "{id}":
+            continue
+        (prm,) = [p["schema"] for p in item["get"]["parameters"] if p["name"] == "id" and p["in"] == "path"]
+        verwacht = "uuid" if prm.get("format") == "uuid" or prm.get("minLength") == 36 else prm.get("pattern", "opaak")
+        assert c._rio_id_formaat(delen[0]) == verwacht.strip("()"), delen[0]

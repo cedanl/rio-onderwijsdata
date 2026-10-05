@@ -18,8 +18,10 @@ Per resource:
   ``volledige_scan`` (hele CSV gelezen, kolommen als tekst) geeft ``domein`` en
   ``aantal_uniek``; ``steekproef`` (eerste N rijen) geeft alleen ``voorbeeldwaarden`` en
   ``volledig: false``. Een steekproef levert nooit een domein of unieke telling op.
-- **inspectie**: ``ok``, ``mislukt`` (met fout), ``geen_tabel`` (pdf/png) of ``alleen_kop``.
-  Elke resource krijgt een status; mislukte resources worden niet weggelaten.
+- **inspectie**: ``ok``, ``mislukt`` (met fout), ``geen_tabel`` (pdf/png), ``alleen_kop`` of
+  ``schema_conflict`` (de CSV heeft andere kolommen dan het Datastore-schema; ``fout`` noemt
+  het verschil). Elke resource krijgt een status; mislukte resources worden niet weggelaten.
+  Alleen ``ok`` levert een schema op waar loaders en het contract op bouwen.
 - **schema_sha256** over kolomnamen en -types: verandert het schema, dan verandert de hash
   en is elke daarop gebaseerde cache ongeldig.
 
@@ -159,6 +161,15 @@ def _public_url(r: dict) -> str:
     return url
 
 
+def _verschil(csv_kop: list[str], schema: list[str]) -> str:
+    """Wat de CSV en het Datastore-schema van elkaar scheidt, voor ``inspectie.fout``."""
+    alleen_csv = [n for n in csv_kop if n not in schema]
+    alleen_schema = [n for n in schema if n not in csv_kop]
+    if not alleen_csv and not alleen_schema:
+        return "CSV-kop en Datastore-schema hebben dezelfde kolommen in een andere volgorde"
+    return f"alleen in CSV: {alleen_csv}; alleen in Datastore: {alleen_schema}"[:300]
+
+
 def inspecteer_resource(client: httpx.Client, res: dict, max_bytes: int, vandaag: str) -> dict:
     fmt = (res.get("format") or "").upper()
     uit = {
@@ -196,6 +207,9 @@ def inspecteer_resource(client: httpx.Client, res: dict, max_bytes: int, vandaag
             if not kolommen:
                 kolommen = [{"naam": n, "type": "onbekend", "type_bron": "csv_kop"} for n in namen]
             uit["csv_kolommen_gelijk_aan_schema"] = namen == [k["naam"] for k in kolommen]
+            if not uit["csv_kolommen_gelijk_aan_schema"]:
+                insp["status"] = "schema_conflict"
+                insp["fout"] = _verschil(namen, [k["naam"] for k in kolommen])
             uit["csv_aantal_rijen"] = len(rijen)
             uit["waarden"] = volledige_waarden(rijen, kolommen)
             insp["methode"] = "datastore+volledige_csv" if uit["datastore_actief"] else "volledige_csv"
