@@ -43,3 +43,9 @@ def test_claude_md_aantallen_komen_uit_de_catalogus():
         assert int(n) == len(riodata.catalog("all"))
     for n in re.findall(r'source="duo"\)\s+# (\d+) DUO', tekst):
         assert int(n) == len(riodata.catalog("duo"))
+
+
+def test_elke_extra_staat_in_de_readme():
+    pyproject = tomllib.loads((ROOT / "pyproject.toml").read_text(encoding="utf-8"))
+    for extra in pyproject["project"].get("optional-dependencies", {}):
+        assert f"riodata[{extra}]" in README, f"extra '{extra}' ontbreekt in README"

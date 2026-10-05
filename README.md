@@ -15,7 +15,8 @@ Python client voor Nederlandse onderwijs- en arbeidsmarktdata uit zes bronnen:
 pip install riodata                  # alleen clients (httpx)
 pip install riodata[analyse]         # + pandas, matplotlib, openpyxl
 pip install riodata[duo]             # + openpyxl (voor DUO Excel-bestanden)
-pip install riodata[catalogus]       # + anthropic (voor catalogus_ai.py)
+pip install riodata[sbb]             # + openpyxl (voor de CREBO-loader, riodata.crebo)
+pip install riodata[catalogus]       # + anthropic, pyyaml (voor de catalogusscripts)
 ```
 
 ## RIO LOD API
