@@ -7,8 +7,8 @@ halen), dus de tekstinhoud van de elementen is niet tegen echte data getoetst. A
 bestandsvarianten (bijv. "Dossiers geldig vanaf 2015") kunnen een andere structuur hebben: de
 parser geeft dan een ``SbbXmlFout`` of een waarschuwing, geen stille gok.
 
-Veiligheid: inputomvang is begrensd en elke ``DOCTYPE``/``ENTITY`` wordt geweigerd, dus er zijn
-geen externe entiteiten en geen entity-expansie.
+Veiligheid: inputomvang is begrensd en elke DTD (``DOCTYPE``, ``ENTITY``) wordt op parserniveau
+geweigerd, onafhankelijk van de encoding; er zijn dus geen externe entiteiten en geen entity-expansie.
 
     from riodata import sbb, sbb_xml
     d = sbb_xml.parse_dossiers(sbb.fetch_xml(...), editie="herziening_dossiers_2026")
@@ -18,6 +18,7 @@ from __future__ import annotations
 
 import re
 import xml.etree.ElementTree as ET
+from xml.parsers import expat
 from dataclasses import dataclass, field
 
 MAX_BYTES = 200 * 1024 * 1024
@@ -73,15 +74,58 @@ def _attr(el, *namen) -> dict:
 
 
 def _veilig_parsen(content: bytes, max_bytes: int) -> ET.Element:
+    """Parseer met expat en weiger elke DTD, ongeacht de encoding van het bestand.
+
+    De weigering gebeurt op de parsergebeurtenis (``StartDoctypeDecl``, ``EntityDecl``), niet op een
+    bytezoektocht: ook UTF-16 of een DOCTYPE na een lange proloog wordt zo gevonden, en er is geen
+    entity-expansie of extern ophalen.
+    """
     if len(content) > max_bytes:
         raise SbbXmlFout(f"XML is {len(content)} bytes; limiet is {max_bytes}")
-    kop = content[:4096].lower()
-    if b"<!doctype" in kop or b"<!entity" in content.lower():
+    parser = expat.ParserCreate(namespace_separator="}")
+    stack: list[ET.Element] = []
+    root: list[ET.Element] = []
+
+    def weiger(*_args):
         raise SbbXmlFout("DOCTYPE/ENTITY is niet toegestaan (veiligheid)")
+
+    def start(naam, attrs):
+        el = ET.Element(naam, attrs)
+        if stack:
+            stack[-1].append(el)
+        else:
+            root.append(el)
+        stack.append(el)
+
+    def einde(_naam):
+        stack.pop()
+
+    def tekst(data):
+        if not stack:
+            return
+        kinderen = list(stack[-1])
+        if kinderen:
+            kinderen[-1].tail = (kinderen[-1].tail or "") + data
+        else:
+            stack[-1].text = (stack[-1].text or "") + data
+
+    parser.StartDoctypeDeclHandler = weiger
+    parser.EntityDeclHandler = weiger
+    parser.NotationDeclHandler = weiger
+    parser.ExternalEntityRefHandler = weiger
+    parser.SetParamEntityParsing(expat.XML_PARAM_ENTITY_PARSING_NEVER)
+    parser.StartElementHandler = start
+    parser.EndElementHandler = einde
+    parser.CharacterDataHandler = tekst
     try:
-        return ET.fromstring(content)
-    except ET.ParseError as e:
+        parser.Parse(content, True)
+    except SbbXmlFout:
+        raise
+    except expat.ExpatError as e:
         raise SbbXmlFout(f"XML niet te parseren: {e}") from e
+    if not root:
+        raise SbbXmlFout("XML niet te parseren: geen wortelelement")
+    return root[0]
 
 
 def _crebo(el) -> dict:

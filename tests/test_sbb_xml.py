@@ -117,3 +117,31 @@ def test_te_grote_en_kapotte_invoer():
         parse(XML, max_bytes=100)
     with pytest.raises(sbb_xml.SbbXmlFout, match="niet te parseren"):
         parse("<sbb><dossiers>")
+
+
+@pytest.mark.parametrize("codering", ["utf-8", "utf-16", "utf-16-le", "utf-16-be", "latin-1"])
+def test_entity_wordt_geweigerd_in_elke_encoding(codering):
+    """Review F4: een kleine interne entiteit mocht in UTF-16 niet door de bytecontrole glippen."""
+    doc = ('<?xml version="1.0" encoding="%s"?><!DOCTYPE sbb [<!ENTITY x "test">]>'
+           "<sbb><dossiers><dossier titel='&x;'/></dossiers></sbb>") % ("utf-16" if codering.startswith("utf-16") else codering)
+    inhoud = doc.encode(codering)
+    if codering == "utf-16-le":
+        inhoud = doc.replace('encoding="utf-16"', 'encoding="utf-16"').encode("utf-16-le")
+    with pytest.raises(sbb_xml.SbbXmlFout):
+        parse(inhoud)
+
+
+def test_doctype_na_lange_proloog_en_zonder_entity():
+    doc = "<?xml version='1.0'?>" + "<!-- " + "x" * 10000 + " -->" + "<!DOCTYPE sbb><sbb><dossiers/></sbb>"
+    with pytest.raises(sbb_xml.SbbXmlFout, match="DOCTYPE"):
+        parse(doc)
+
+
+def test_legitieme_utf16_en_tekstvolgorde_blijven_werken():
+    doc = ("<sbb><dossiers><dossier nr='1' titel='Café'><basis><basistaken><basiskerntaken>"
+           "<kerntaak nr='1' titel='T'><complexiteit>a <b>b</b> c &amp; d</complexiteit></kerntaak>"
+           "</basiskerntaken></basistaken></basis></dossier></dossiers></sbb>")
+    for codering in ("utf-8", "utf-16"):
+        d = parse(doc.encode(codering))
+        assert d.dossiers[0]["titel"] == "Café"
+        assert d.dossiers[0]["basiskerntaken"][0]["complexiteit"] == "a b c & d"
