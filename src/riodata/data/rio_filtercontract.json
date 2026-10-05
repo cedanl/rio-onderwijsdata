@@ -1,0 +1,734 @@
+{
+  "spec_versie": "2.13.0",
+  "spec_sha256": "ed7c404d33b0832e4c4e78bd668307ceb5d3f6a701852fb283f86047417e4fcd",
+  "resources": {
+    "aangeboden-opleiding-cohorten": {
+      "filters": [
+        {
+          "naam": "aangebodenOpleidingCohorttype",
+          "in": "query",
+          "type": "string",
+          "format": null,
+          "enum": [
+            "AANGEBODENHOOPLEIDINGCOHORT",
+            "AANGEBODENHOOPLEIDINGSONDERDEELCOHORT",
+            "AANGEBODENMBOOPLEIDINGCOHORT",
+            "AANGEBODENMBOOPLEIDINGSONDERDEELCOHORT",
+            "AANGEBODENPARTICULIEREOPLEIDINGCOHORT",
+            "AANGEBODENVAVOOPLEIDINGCOHORT"
+          ],
+          "beschrijving": null,
+          "bron": "openapi"
+        },
+        {
+          "naam": "aanmeldperiode",
+          "in": "query",
+          "type": "string",
+          "format": "date",
+          "enum": null,
+          "beschrijving": null,
+          "bron": "openapi"
+        },
+        {
+          "naam": "beginAanmeldperiode",
+          "in": "query",
+          "type": "string",
+          "format": "date",
+          "enum": null,
+          "beschrijving": null,
+          "bron": "openapi"
+        },
+        {
+          "naam": "eindeAanmeldperiode",
+          "in": "query",
+          "type": "string",
+          "format": "date",
+          "enum": null,
+          "beschrijving": null,
+          "bron": "openapi"
+        },
+        {
+          "naam": "status",
+          "in": "query",
+          "type": "string",
+          "format": null,
+          "enum": [
+            "O",
+            "G"
+          ],
+          "beschrijving": null,
+          "bron": "openapi"
+        }
+      ],
+      "paginering": [
+        "page",
+        "pageSize",
+        "sort"
+      ],
+      "sort_schema_in_spec": false,
+      "catalogus_zonder_spec": [
+        {
+          "naam": "datumGeldigOp",
+          "status": "niet in spec; live ondersteuning niet vastgesteld"
+        }
+      ]
+    },
+    "aangeboden-opleidingen": {
+      "filters": [
+        {
+          "naam": "type",
+          "in": "query",
+          "type": "string",
+          "format": null,
+          "enum": [
+            "AANGEBODENBOOPLEIDING",
+            "AANGEBODENHOOPLEIDING",
+            "AANGEBODENHOOPLEIDINGSONDERDEEL",
+            "AANGEBODENMBOOPLEIDING",
+            "AANGEBODENMBOOPLEIDINGSONDERDEEL",
+            "AANGEBODENPARTICULIEREOPLEIDING",
+            "AANGEBODENSOOPLEIDING",
+            "AANGEBODENVAVOOPLEIDING",
+            "AANGEBODENVOOPLEIDING",
+            "AANGEBODENVSOOPLEIDING"
+          ],
+          "beschrijving": null,
+          "bron": "openapi"
+        },
+        {
+          "naam": "onderwijslocatieId",
+          "in": "query",
+          "type": "string",
+          "format": null,
+          "enum": null,
+          "beschrijving": null,
+          "bron": "openapi"
+        },
+        {
+          "naam": "datumGeldigOp",
+          "in": "query",
+          "type": "string",
+          "format": "date",
+          "enum": null,
+          "beschrijving": null,
+          "bron": "openapi"
+        },
+        {
+          "naam": "opleidingseenheidcode",
+          "in": "query",
+          "type": "string",
+          "format": null,
+          "enum": null,
+          "beschrijving": null,
+          "bron": "openapi"
+        },
+        {
+          "naam": "organisatorischeEenheidcode",
+          "in": "query",
+          "type": "string",
+          "format": null,
+          "enum": null,
+          "beschrijving": null,
+          "bron": "openapi"
+        }
+      ],
+      "paginering": [
+        "page",
+        "pageSize",
+        "sort"
+      ],
+      "sort_schema_in_spec": false,
+      "catalogus_zonder_spec": []
+    },
+    "contactadressen": {
+      "filters": [
+        {
+          "naam": "contactadrestype",
+          "in": "query",
+          "type": "string",
+          "format": null,
+          "enum": [
+            "BEZOEKBTL",
+            "BEZOEKNL",
+            "CONTACTPUNT",
+            "EMAIL",
+            "FAX",
+            "POSTNL",
+            "POSTBTL",
+            "TELEFOON",
+            "WEB"
+          ],
+          "beschrijving": null,
+          "bron": "openapi"
+        },
+        {
+          "naam": "datumGeldigOp",
+          "in": "query",
+          "type": "string",
+          "format": "date",
+          "enum": null,
+          "beschrijving": null,
+          "bron": "openapi"
+        }
+      ],
+      "paginering": [
+        "page",
+        "pageSize",
+        "sort"
+      ],
+      "sort_schema_in_spec": false,
+      "catalogus_zonder_spec": []
+    },
+    "erkenningen": {
+      "filters": [
+        {
+          "naam": "erkenningtype",
+          "in": "query",
+          "type": "string",
+          "format": null,
+          "enum": [
+            "BEVOEGD_GEZAG",
+            "ERKENDE_ONDERWIJSINSTELLING",
+            "ERKENDE_ONDERWIJSONDERSTEUNER",
+            "ERKENDE_SAMENWERKING",
+            "ERKENDE_VESTIGING"
+          ],
+          "beschrijving": null,
+          "bron": "openapi"
+        },
+        {
+          "naam": "volledigeNaam",
+          "in": "query",
+          "type": "string",
+          "format": null,
+          "enum": null,
+          "beschrijving": "Er kan gezocht worden op vergelijkbare waarden in plaats van exacte waarden.",
+          "bron": "openapi"
+        },
+        {
+          "naam": "plaatsnaam",
+          "in": "query",
+          "type": "string",
+          "format": null,
+          "enum": null,
+          "beschrijving": "Er kan gezocht worden op vergelijkbare waarden in plaats van exacte waarden.",
+          "bron": "openapi"
+        },
+        {
+          "naam": "datumGeldigOp",
+          "in": "query",
+          "type": "string",
+          "format": "date",
+          "enum": null,
+          "beschrijving": null,
+          "bron": "openapi"
+        }
+      ],
+      "paginering": [
+        "page",
+        "pageSize",
+        "sort"
+      ],
+      "sort_schema_in_spec": false,
+      "catalogus_zonder_spec": []
+    },
+    "examenlicenties": {
+      "filters": [
+        {
+          "naam": "datumGeldigOp",
+          "in": "query",
+          "type": "string",
+          "format": "date",
+          "enum": null,
+          "beschrijving": null,
+          "bron": "openapi"
+        }
+      ],
+      "paginering": [
+        "page",
+        "pageSize",
+        "sort"
+      ],
+      "sort_schema_in_spec": false,
+      "catalogus_zonder_spec": []
+    },
+    "onderwijslicenties": {
+      "filters": [
+        {
+          "naam": "type",
+          "in": "query",
+          "type": "string",
+          "format": null,
+          "enum": [
+            "BOONDERWIJSLICENTIE",
+            "EDUCATIEONDERWIJSLICENTIE",
+            "EXAMENLICENTIE",
+            "HOONDERWIJSLICENTIE",
+            "MBOONDERWIJSLICENTIE",
+            "PARTICULIEREONDERWIJSLICENTIE",
+            "SOONDERWIJSLICENTIE",
+            "VAVOONDERWIJSLICENTIE",
+            "VOONDERWIJSLICENTIE",
+            "VSOONDERWIJSLICENTIE"
+          ],
+          "beschrijving": null,
+          "bron": "openapi"
+        },
+        {
+          "naam": "datumGeldigOp",
+          "in": "query",
+          "type": "string",
+          "format": "date",
+          "enum": null,
+          "beschrijving": null,
+          "bron": "openapi"
+        }
+      ],
+      "paginering": [
+        "page",
+        "pageSize",
+        "sort"
+      ],
+      "sort_schema_in_spec": false,
+      "catalogus_zonder_spec": []
+    },
+    "onderwijslocatiegebruiken": {
+      "filters": [
+        {
+          "naam": "onderwijslocatieId",
+          "in": "query",
+          "type": "string",
+          "format": null,
+          "enum": null,
+          "beschrijving": null,
+          "bron": "openapi"
+        },
+        {
+          "naam": "onderwijsbestuurId",
+          "in": "query",
+          "type": "string",
+          "format": null,
+          "enum": null,
+          "beschrijving": null,
+          "bron": "openapi"
+        },
+        {
+          "naam": "datumGeldigOp",
+          "in": "query",
+          "type": "string",
+          "format": "date",
+          "enum": null,
+          "beschrijving": null,
+          "bron": "openapi"
+        }
+      ],
+      "paginering": [
+        "page",
+        "pageSize",
+        "sort"
+      ],
+      "sort_schema_in_spec": false,
+      "catalogus_zonder_spec": []
+    },
+    "onderwijslocaties": {
+      "filters": [
+        {
+          "naam": "aangebodenOpleidingId",
+          "in": "query",
+          "type": "string",
+          "format": "uuid",
+          "enum": null,
+          "beschrijving": null,
+          "bron": "openapi"
+        },
+        {
+          "naam": "datumGeldigOp",
+          "in": "query",
+          "type": "string",
+          "format": "date",
+          "enum": null,
+          "beschrijving": null,
+          "bron": "openapi"
+        }
+      ],
+      "paginering": [
+        "page",
+        "pageSize",
+        "sort"
+      ],
+      "sort_schema_in_spec": false,
+      "catalogus_zonder_spec": []
+    },
+    "opleidingserkenningen": {
+      "filters": [
+        {
+          "naam": "opleidingserkenningtype",
+          "in": "query",
+          "type": "string",
+          "format": null,
+          "enum": [
+            "BOOPLEIDINGSERKENNING",
+            "BUITENLANDSEOPLEIDINGSERKENNING",
+            "EDUCATIEOPLEIDINGSERKENNING",
+            "EVCSTANDAARDERKENNING",
+            "HOOPLEIDINGSERKENNING",
+            "MBOGENERIEKEXAMENONDERDEELERKENNING",
+            "MBOOPLEIDINGSERKENNING",
+            "PARTICULIEREOPLEIDINGSERKENNING",
+            "SOOPLEIDINGSERKENNING",
+            "VAVOGROEPSERKENNING",
+            "VAVOOPLEIDINGSERKENNING",
+            "VOGROEPSERKENNING",
+            "VOOPLEIDINGSERKENNING",
+            "VOVAKERKENNING",
+            "VSOOPLEIDINGSERKENNING"
+          ],
+          "beschrijving": null,
+          "bron": "openapi"
+        },
+        {
+          "naam": "erkendeopleidingscode",
+          "in": "query",
+          "type": "string",
+          "format": null,
+          "enum": null,
+          "beschrijving": null,
+          "bron": "openapi"
+        },
+        {
+          "naam": "datumGeldigOp",
+          "in": "query",
+          "type": "string",
+          "format": "date",
+          "enum": null,
+          "beschrijving": null,
+          "bron": "openapi"
+        }
+      ],
+      "paginering": [
+        "page",
+        "pageSize",
+        "sort"
+      ],
+      "sort_schema_in_spec": false,
+      "catalogus_zonder_spec": []
+    },
+    "opleidingsfasen": {
+      "filters": [
+        {
+          "naam": "opleidingseenheidtype",
+          "in": "query",
+          "type": "string",
+          "format": null,
+          "enum": [
+            "BOGROEP",
+            "BOOPLEIDING",
+            "BOOPLEIDINGSFASE",
+            "BUITENLANDSE_OPLEIDING",
+            "EDUCATIEOPLEIDING",
+            "EDUCATIEOPLEIDINGSONDERDEEL",
+            "EVCSTANDAARD",
+            "HOONDERWIJSEENHEDENCLUSTER",
+            "HOONDERWIJSEENHEID",
+            "HOOPLEIDING",
+            "MBOCERTIFICEERBAREEENHEID",
+            "MBOCROSS_OVERKWALIFICATIE",
+            "MBODEELKWALIFICATIE",
+            "MBODOMEIN",
+            "MBOGENERIEKEXAMENONDERDEEL",
+            "MBOKEUZEDEEL",
+            "MBOKWALIFICATIE",
+            "MBOKWALIFICATIEDOSSIER",
+            "MBOREGIONAALKEUZEDEEL",
+            "MBOREGIONALEKWALIFICATIE",
+            "PARTICULIEREOPLEIDING",
+            "SOGROEP",
+            "SOOPLEIDING",
+            "VAVOGROEP",
+            "VAVOOPLEIDING",
+            "VAVOOPLEIDINGSFASE",
+            "VOGROEP",
+            "VOOPLEIDING",
+            "VOOPLEIDINGSFASE",
+            "VOSTAGE",
+            "VOVAK",
+            "VSOGROEP",
+            "VSOOPLEIDING",
+            "VSOOPLEIDINGSFASE"
+          ],
+          "beschrijving": null,
+          "bron": "openapi"
+        },
+        {
+          "naam": "datumGeldigOp",
+          "in": "query",
+          "type": "string",
+          "format": "date",
+          "enum": null,
+          "beschrijving": null,
+          "bron": "openapi"
+        }
+      ],
+      "paginering": [
+        "page",
+        "pageSize",
+        "sort"
+      ],
+      "sort_schema_in_spec": false,
+      "catalogus_zonder_spec": []
+    },
+    "opleidingsgroepen": {
+      "filters": [
+        {
+          "naam": "opleidingseenheidtype",
+          "in": "query",
+          "type": "string",
+          "format": null,
+          "enum": [
+            "BOGROEP",
+            "BOOPLEIDING",
+            "BOOPLEIDINGSFASE",
+            "BUITENLANDSE_OPLEIDING",
+            "EDUCATIEOPLEIDING",
+            "EDUCATIEOPLEIDINGSONDERDEEL",
+            "EVCSTANDAARD",
+            "HOONDERWIJSEENHEDENCLUSTER",
+            "HOONDERWIJSEENHEID",
+            "HOOPLEIDING",
+            "MBOCERTIFICEERBAREEENHEID",
+            "MBOCROSS_OVERKWALIFICATIE",
+            "MBODEELKWALIFICATIE",
+            "MBODOMEIN",
+            "MBOGENERIEKEXAMENONDERDEEL",
+            "MBOKEUZEDEEL",
+            "MBOKWALIFICATIE",
+            "MBOKWALIFICATIEDOSSIER",
+            "MBOREGIONAALKEUZEDEEL",
+            "MBOREGIONALEKWALIFICATIE",
+            "PARTICULIEREOPLEIDING",
+            "SOGROEP",
+            "SOOPLEIDING",
+            "VAVOGROEP",
+            "VAVOOPLEIDING",
+            "VAVOOPLEIDINGSFASE",
+            "VOGROEP",
+            "VOOPLEIDING",
+            "VOOPLEIDINGSFASE",
+            "VOSTAGE",
+            "VOVAK",
+            "VSOGROEP",
+            "VSOOPLEIDING",
+            "VSOOPLEIDINGSFASE"
+          ],
+          "beschrijving": null,
+          "bron": "openapi"
+        },
+        {
+          "naam": "datumGeldigOp",
+          "in": "query",
+          "type": "string",
+          "format": "date",
+          "enum": null,
+          "beschrijving": null,
+          "bron": "openapi"
+        }
+      ],
+      "paginering": [
+        "page",
+        "pageSize",
+        "sort"
+      ],
+      "sort_schema_in_spec": false,
+      "catalogus_zonder_spec": []
+    },
+    "opleidingsonderdelen": {
+      "filters": [
+        {
+          "naam": "opleidingseenheidtype",
+          "in": "query",
+          "type": "string",
+          "format": null,
+          "enum": [
+            "BOGROEP",
+            "BOOPLEIDING",
+            "BOOPLEIDINGSFASE",
+            "BUITENLANDSE_OPLEIDING",
+            "EDUCATIEOPLEIDING",
+            "EDUCATIEOPLEIDINGSONDERDEEL",
+            "EVCSTANDAARD",
+            "HOONDERWIJSEENHEDENCLUSTER",
+            "HOONDERWIJSEENHEID",
+            "HOOPLEIDING",
+            "MBOCERTIFICEERBAREEENHEID",
+            "MBOCROSS_OVERKWALIFICATIE",
+            "MBODEELKWALIFICATIE",
+            "MBODOMEIN",
+            "MBOGENERIEKEXAMENONDERDEEL",
+            "MBOKEUZEDEEL",
+            "MBOKWALIFICATIE",
+            "MBOKWALIFICATIEDOSSIER",
+            "MBOREGIONAALKEUZEDEEL",
+            "MBOREGIONALEKWALIFICATIE",
+            "PARTICULIEREOPLEIDING",
+            "SOGROEP",
+            "SOOPLEIDING",
+            "VAVOGROEP",
+            "VAVOOPLEIDING",
+            "VAVOOPLEIDINGSFASE",
+            "VOGROEP",
+            "VOOPLEIDING",
+            "VOOPLEIDINGSFASE",
+            "VOSTAGE",
+            "VOVAK",
+            "VSOGROEP",
+            "VSOOPLEIDING",
+            "VSOOPLEIDINGSFASE"
+          ],
+          "beschrijving": null,
+          "bron": "openapi"
+        },
+        {
+          "naam": "datumGeldigOp",
+          "in": "query",
+          "type": "string",
+          "format": "date",
+          "enum": null,
+          "beschrijving": null,
+          "bron": "openapi"
+        }
+      ],
+      "paginering": [
+        "page",
+        "pageSize",
+        "sort"
+      ],
+      "sort_schema_in_spec": false,
+      "catalogus_zonder_spec": []
+    },
+    "organisatorische-eenheden": {
+      "filters": [
+        {
+          "naam": "organisatorischeEenheidType",
+          "in": "query",
+          "type": "string",
+          "format": null,
+          "enum": [
+            "ONDERWIJSAANBIEDER",
+            "ONDERWIJSAANBIEDERGROEP",
+            "ONDERWIJSBEGELEIDINGSAANBIEDER",
+            "ONDERWIJSBESTUUR"
+          ],
+          "beschrijving": null,
+          "bron": "openapi"
+        },
+        {
+          "naam": "onderwijslocatiegebruikId",
+          "in": "query",
+          "type": "string",
+          "format": null,
+          "enum": null,
+          "beschrijving": null,
+          "bron": "openapi"
+        },
+        {
+          "naam": "aangebodenOpleidingId",
+          "in": "query",
+          "type": "string",
+          "format": "uuid",
+          "enum": null,
+          "beschrijving": null,
+          "bron": "openapi"
+        },
+        {
+          "naam": "instellingserkenningId",
+          "in": "query",
+          "type": "string",
+          "format": null,
+          "enum": null,
+          "beschrijving": null,
+          "bron": "openapi"
+        },
+        {
+          "naam": "datumGeldigOp",
+          "in": "query",
+          "type": "string",
+          "format": "date",
+          "enum": null,
+          "beschrijving": null,
+          "bron": "openapi"
+        }
+      ],
+      "paginering": [
+        "page",
+        "pageSize",
+        "sort"
+      ],
+      "sort_schema_in_spec": false,
+      "catalogus_zonder_spec": []
+    },
+    "opleidingen": {
+      "filters": [
+        {
+          "naam": "opleidingseenheidtype",
+          "in": "query",
+          "type": "string",
+          "format": null,
+          "enum": [
+            "BOGROEP",
+            "BOOPLEIDING",
+            "BOOPLEIDINGSFASE",
+            "BUITENLANDSE_OPLEIDING",
+            "EDUCATIEOPLEIDING",
+            "EDUCATIEOPLEIDINGSONDERDEEL",
+            "EVCSTANDAARD",
+            "HOONDERWIJSEENHEDENCLUSTER",
+            "HOONDERWIJSEENHEID",
+            "HOOPLEIDING",
+            "MBOCERTIFICEERBAREEENHEID",
+            "MBOCROSS_OVERKWALIFICATIE",
+            "MBODEELKWALIFICATIE",
+            "MBODOMEIN",
+            "MBOGENERIEKEXAMENONDERDEEL",
+            "MBOKEUZEDEEL",
+            "MBOKWALIFICATIE",
+            "MBOKWALIFICATIEDOSSIER",
+            "MBOREGIONAALKEUZEDEEL",
+            "MBOREGIONALEKWALIFICATIE",
+            "PARTICULIEREOPLEIDING",
+            "SOGROEP",
+            "SOOPLEIDING",
+            "VAVOGROEP",
+            "VAVOOPLEIDING",
+            "VAVOOPLEIDINGSFASE",
+            "VOGROEP",
+            "VOOPLEIDING",
+            "VOOPLEIDINGSFASE",
+            "VOSTAGE",
+            "VOVAK",
+            "VSOGROEP",
+            "VSOOPLEIDING",
+            "VSOOPLEIDINGSFASE"
+          ],
+          "beschrijving": null,
+          "bron": "openapi"
+        },
+        {
+          "naam": "datumGeldigOp",
+          "in": "query",
+          "type": "string",
+          "format": "date",
+          "enum": null,
+          "beschrijving": null,
+          "bron": "openapi"
+        }
+      ],
+      "paginering": [
+        "page",
+        "pageSize",
+        "sort"
+      ],
+      "sort_schema_in_spec": false,
+      "catalogus_zonder_spec": []
+    }
+  }
+}

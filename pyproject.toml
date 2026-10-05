@@ -14,7 +14,7 @@ analyse = [
     "matplotlib",
     "openpyxl>=3.1.5",
 ]
-catalogus = ["anthropic>=0.87.0"]
+catalogus = ["anthropic>=0.87.0", "pyyaml"]
 duo = [
     "openpyxl>=3.1.5",
 ]
