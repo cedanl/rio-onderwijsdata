@@ -172,6 +172,7 @@ def column_definitions(columns: list[str], dataset_id: str | None = None) -> dic
     }
 
 CKAN_BASE = "https://onderwijsdata.duo.nl/api/3/action"
+_PAGINA = 100  # package_search-rijen per vraag; CKAN staat tot 1000 toe
 PORTAL_BASE = "https://onderwijsdata.duo.nl"
 
 _GROUP_TO_ONDERWIJSTYPE = {
@@ -194,8 +195,7 @@ def catalog() -> list[dict]:
     leverancier, bron, beschrijving, periode, onderwijstype, tags, ...
     plus extra sleutels: _ckan_id, _resources.
     """
-    pkgs = _ckan("package_search", rows=100, start=0)["results"]
-    return [_pkg_to_record(p) for p in pkgs]
+    return [_pkg_to_record(p) for p in _alle_pakketten()]
 
 
 def resources(dataset_id: str) -> list[dict]:
@@ -340,11 +340,23 @@ def search(query: str) -> list[dict]:
 
     Returns catalogusrecords die matchen (zelfde formaat als catalog()).
     """
-    result = _ckan("package_search", q=query, rows=50)
-    return [_pkg_to_record(p) for p in result["results"]]
+    return [_pkg_to_record(p) for p in _alle_pakketten(q=query)]
 
 
 # ── intern ────────────────────────────────────────────────────────────────────
+
+def _alle_pakketten(**params) -> list[dict]:
+    """Alle treffers van package_search, per pagina tot CKAN's ``count`` bereikt is.
+
+    Een vaste ``rows`` zonder lus liet datasets voorbij de eerste pagina stil weg.
+    """
+    pakketten: list[dict] = []
+    while True:
+        pagina = _ckan("package_search", rows=_PAGINA, start=len(pakketten), **params)
+        pakketten += pagina["results"]
+        if not pagina["results"] or len(pakketten) >= pagina["count"]:
+            return pakketten
+
 
 def _ckan(endpoint: str, **params) -> dict:
     r = httpx.get(f"{CKAN_BASE}/{endpoint}", params=params, timeout=30)

@@ -26,7 +26,7 @@ def _alle():
 def test_alle_datasets_en_resources_hebben_inspectiestatus():
     assert {r["_ckan_id"] for r in riodata.catalog(source="duo")} <= set(SNAP["datasets"])
     for ds, r in _alle():
-        assert r["inspectie"]["status"] in {"ok", "mislukt", "geen_tabel", "alleen_kop"}, (ds, r["naam"])
+        assert r["inspectie"]["status"] in {"ok", "mislukt", "geen_tabel", "alleen_kop", "schema_conflict"}, (ds, r["naam"])
         assert r["resource_id"]
         if r["inspectie"]["status"] == "mislukt":
             assert r["inspectie"]["fout"]
@@ -155,3 +155,30 @@ def test_sync_markeert_steekproef():
               "waarden": {"methode": "steekproef", "volledig": False, "kolommen": {"G": {"voorbeeldwaarden": ["0106"]}}}}
     kolommen, types = sync_kolommen.kolommen_en_types(schema)
     assert kolommen == {"G": ["0106"]} and types == {"G": "tekst; steekproef"}
+
+
+def _inspecteer(monkeypatch, velden: list[str], csv_kop: str) -> dict:
+    monkeypatch.setattr(rs, "_ckan", lambda client, actie, **p: {
+        "fields": [{"id": "_id", "type": "int"}] + [{"id": v, "type": "text"} for v in velden],
+        "records": [],
+    })
+
+    class R:
+        content = f"{csv_kop}\na,b\n".encode()
+
+    monkeypatch.setattr(rs, "_get", lambda client, url, **p: R())
+    res = {"id": "r1", "format": "CSV", "size": 10, "datastore_active": True, "url": "https://x/r1.csv"}
+    return rs.inspecteer_resource(None, res, max_bytes=1000, vandaag="2026-10-05")
+
+
+def test_csv_die_afwijkt_van_datastore_is_een_conflict(monkeypatch):
+    """#390 A3: een CSV met andere kolommen dan het Datastore-schema is geen 'ok'."""
+    uit = _inspecteer(monkeypatch, ["A", "B"], "A,C")
+    assert uit["csv_kolommen_gelijk_aan_schema"] is False
+    assert uit["inspectie"]["status"] == "schema_conflict"
+    assert "C" in uit["inspectie"]["fout"] and "B" in uit["inspectie"]["fout"]
+
+
+def test_csv_gelijk_aan_datastore_blijft_ok(monkeypatch):
+    uit = _inspecteer(monkeypatch, ["A", "B"], "A,B")
+    assert uit["inspectie"]["status"] == "ok"

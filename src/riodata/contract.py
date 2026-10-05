@@ -28,6 +28,8 @@ import json
 import re
 from functools import lru_cache
 
+from .duo_notes import zoekkaart_tijd
+
 SCHEMA_VERSION = 1
 SUPPORTED_SCHEMA_VERSIONS = (1,)
 SECTOREN = ("mbo", "hbo", "wo")
@@ -56,6 +58,16 @@ _JOIN_SLEUTELS = (
     ("GEMEENTENUMMER", "cbs_gemeentecode"),
     ("GEMEENTECODE", "cbs_gemeentecode"),
 )
+# ID-formaat per RIO-resource, uit het pad-parameter ``id`` van ``/{resource}/{id}`` in
+# RIO_LOD_API_v2.yml (test_rio_id_formaten_gelijk_aan_de_spec). Alleen drie zijn een UUID;
+# een opleidings-ID als '1002O5001-SBB-MIDDENKADEROPLEIDING' is opaak.
+_RIO_ID_FORMATEN = {
+    "aangeboden-opleidingen": "uuid",
+    "examenlicenties": "uuid",
+    "onderwijslicenties": "uuid",
+    "organisatorische-eenheden": r"\d{3}[A-Z]{1}\d{3}",
+    "onderwijslocaties": r"\d{3}X\d{3}",
+}
 _PERIODEKOLOMMEN = ("STUDIEJAAR", "SCHOOLJAAR", "JAAR", "PEILJAAR", "EXAMENJAAR", "PROGNOSEJAAR")
 _HBO = re.compile(r"\bhoger beroepsonderwijs\b|\bhbo\b", re.I)
 _WO = re.compile(r"\bwetenschappelijk onderwijs\b|\bwo\b", re.I)
@@ -389,10 +401,17 @@ def _alle_kolommen(resources: list[dict]) -> list[str]:
     return gezien
 
 
+def _rio_id_formaat(resource: str) -> str:
+    """``uuid``, een patroon of ``opaak``: wat een consument mag aannemen over het ID."""
+    return _RIO_ID_FORMATEN.get(resource, "opaak")
+
+
 def _join_sleutels(provider: str, rec: dict, resources: list[dict]) -> dict:
     if provider == "rio":
-        return {"status": SUPPORTED, "sleutels": [{"veld": "id", "sleutel": "rio_uuid"}],
-                "bron": "RIO LOD API"}
+        # Een RIO-ID koppelt alleen binnen zijn eigen resource.
+        resource = rec["_rio_resource"]
+        sleutel = {"veld": "id", "sleutel": f"rio:{resource}", "formaat": _rio_id_formaat(resource)}
+        return {"status": SUPPORTED, "sleutels": [sleutel], "bron": "RIO LOD API v2 (OpenAPI-spec)"}
     kolommen = _alle_kolommen(resources)
     if not kolommen:
         return _onbekend("kolommen niet vastgelegd")
@@ -493,14 +512,19 @@ def _record(rec: dict) -> dict:
 
 
 def _compact(r: dict) -> dict:
-    """Zoekkaart: zonder resource-schema's en beperkingsteksten (die via get_dataset)."""
+    """Zoekkaart: zonder resource-schema's en beperkingsteksten (die via get_dataset).
+
+    Werkt op een diepe kopie: de kaart deelt niets met de gecachete records (#390 A4).
+    """
+    r = _kopie(r)
     uit = {k: v for k, v in r.items() if k not in ("resources", "beperkingen", "herkomst")}
-    tijd = dict(r["tijdsdekking"])
+    tijd = r["tijdsdekking"]
     if "per_resource" in tijd:
         alle = sorted({w for x in tijd.pop("per_resource").values() for w in x["waarden"]})
         tijd["waarden"] = alle
-    tijd.pop("claims", None)
-    uit["tijdsdekking"] = tijd
+    if "claims" in tijd:
+        # De volledige claims (bronzinnen) via get_dataset; de kaart houdt historie en prognose apart (#390 A5).
+        tijd["kaart"] = zoekkaart_tijd(tijd.pop("claims"))
     uit["teldefinitie"] = {k: v for k, v in r["teldefinitie"].items() if k != "uitsluitingen"}
     uit["resources"] = [
         {k: res[k] for k in ("resource_id", "naam", "format", "sector", "capabilities")}
