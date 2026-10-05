@@ -206,11 +206,18 @@ def _overige_resources(provider: str, rec: dict) -> list[dict]:
             "schema": _onbekend("live API; zie riodata.filtercontract() voor filters"),
         }]
     if provider == "uwv":
+        us = rec.get("_schema")
+        schema = ({"status": SUPPORTED, "kolommen": us["kolommen"], "aantal_kolommen": len(us["kolommen"]),
+                   "rec_types": {k: {"opleidingsniveau": v["opleidingsniveau"],
+                                     "kolommen_altijd_leeg": v["kolommen_altijd_leeg"]}
+                                 for k, v in us["rec_types"].items()},
+                   "laatste_peildatum": us["laatste_peildatum"], "bron": "inhoudelijke validatie (RIO-06)"}
+                  if us else _onbekend("schema niet vastgelegd; uwv.load() controleert basisvorm"))
         return [{
             "resource_id": "snapshot", "id_soort": "semantisch",
             "naam": "Historische snapshot (uwv.resources() voor de beschikbare peildata)",
             "format": "ZIP/CSV", "sector": None, "capabilities": ["tabular_read"],
-            "schema": _onbekend("schema niet vastgelegd; uwv.load() controleert basisvorm"),
+            "schema": schema,
         }]
     uit = []
     for r in rec.get("_resources") or []:
@@ -222,10 +229,15 @@ def _overige_resources(provider: str, rec: dict) -> list[dict]:
         else:
             rid, soort = r["naam"], "semantisch"
         cap = ["xml_download"] if fmt == "XML" else ["tabular_read"]
+        rs = r.get("schema")
+        schema = ({"status": SUPPORTED, "kolommen": rs["kolommen"], "aantal_kolommen": len(rs["kolommen"]),
+                   **{k: rs.get(k) for k in ("editie", "meest_recente_editie", "granulariteit", "dataverse_sha1")},
+                   "bron": "inhoudelijke validatie (RIO-06)"}
+                  if rs else _onbekend("schema niet vastgelegd"))
         uit.append({
             "resource_id": rid, "id_soort": soort, "naam": r["naam"], "format": fmt,
             "sector": "mbo" if _types(rec) == {"mbo"} else None, "capabilities": cap,
-            "schema": _onbekend("schema niet vastgelegd"),
+            "schema": schema,
         })
     return uit
 
@@ -427,6 +439,9 @@ def _tijdsdekking(provider: str, rec: dict) -> dict:
 
 def _beperkingen(rec: dict) -> list[dict]:
     uit = []
+    for res in rec.get("_resources") or []:
+        for b in (res.get("schema") or {}).get("beperkingen") or []:
+            uit.append({**b, "resource": res.get("naam")})
     ngv = rec.get("niet_geschikt_voor")
     for tekst in ([ngv] if isinstance(ngv, str) else ngv or []):
         uit.append({"tekst": tekst, "bron": "annotatie"})

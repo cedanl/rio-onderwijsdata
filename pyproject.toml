@@ -39,3 +39,6 @@ dev = [
     "pytest>=9.1.1",
     "openpyxl>=3.1.5",
 ]
+
+[tool.pytest.ini_options]
+markers = ["echt_schema: test gebruikt het gevalideerde ROA-schema (checksum, kolommen) in plaats van een nep-CSV"]

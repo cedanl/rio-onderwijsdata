@@ -20,7 +20,9 @@ Gebruik:
 """
 from __future__ import annotations
 
+import hashlib
 import io
+
 import httpx
 
 DATAVERSE_BASE = "https://dataverse.nl/api"
@@ -38,9 +40,18 @@ def catalog() -> list[dict]:
 
 def _datasets() -> dict[str, dict]:
     return {
-        r["_roa_id"]: {"naam": r["bron"], "resources": {x["naam"]: x["file_id"] for x in r["_resources"]}}
+        r["_roa_id"]: {
+            "naam": r["bron"],
+            "resources": {x["naam"]: x["file_id"] for x in r["_resources"]},
+            "schemas": {x["file_id"]: x.get("schema") for x in r["_resources"]},
+        }
         for r in catalog()
     }
+
+
+def _schema(meta: dict, file_id: int) -> dict | None:
+    """Gevalideerd schema van een bestand (zie catalogus/valideer_roa_uwv.py), of None."""
+    return meta.get("schemas", {}).get(file_id)
 
 
 def resources(dataset_id: str) -> list[dict]:
@@ -85,10 +96,26 @@ def load(
     )
     r.raise_for_status()
 
-    from ._lezen import herkomst, lees_csv
+    from ._lezen import ChecksumFout, herkomst, lees_csv
 
-    df, enc = lees_csv(r.content, defaults={"sep": ";"}, **kwargs)
+    schema = _schema(meta, file_id)
+    if schema and schema.get("dataverse_sha1"):
+        sha1 = hashlib.sha1(r.content).hexdigest()
+        if sha1 != schema["dataverse_sha1"]:
+            raise ChecksumFout(
+                f"ROA-bestand {file_id} wijkt af van de gecontroleerde versie "
+                f"(sha1 {sha1}, verwacht {schema['dataverse_sha1']}); draai catalogus/valideer_roa_uwv.py"
+            )
+    # Getallen gebruiken een decimale komma ('42,6'); zonder decimal=',' worden ze tekst.
+    defaults = {"sep": ";", "decimal": ",", "low_memory": False}
+    if kwargs.get("sep") == ",":  # eigen separator ',' kan niet samen met decimale komma
+        defaults["decimal"] = "."
+    verwacht = tuple(schema["kolommen"]) if schema and "usecols" not in kwargs else ()
+    df, enc = lees_csv(r.content, defaults=defaults, verwacht=verwacht, **kwargs)
     df.attrs["bron"] = {**herkomst(r.content, str(r.url)), "encoding": enc, "file_id": file_id}
+    if schema:
+        df.attrs["schema"] = {k: schema.get(k) for k in (
+            "bestandsnaam", "editie", "meest_recente_editie", "granulariteit", "beperkingen", "dataverse_sha1")}
     return df
 
 

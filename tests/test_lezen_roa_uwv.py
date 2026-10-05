@@ -22,6 +22,13 @@ class Resp:
         pass
 
 
+@pytest.fixture(autouse=True)
+def zonder_gevalideerd_schema(monkeypatch, request):
+    """De meeste tests gebruiken nep-CSV's; de checksum/kolommen van het echte bestand gelden dan niet."""
+    if "echt_schema" not in request.keywords:
+        monkeypatch.setattr(roa, "_schema", lambda meta, file_id: None)
+
+
 def zip_van(naam, inhoud):
     buf = io.BytesIO()
     with zipfile.ZipFile(buf, "w") as z:
@@ -136,3 +143,95 @@ def test_gebruikerskwargs_overschrijven_defaults_zonder_typeerror(monkeypatch):
 def test_opgegeven_encoding_wordt_niet_stil_vervangen():
     with pytest.raises(_lezen.DecodeerFout):
         _lezen.lees_csv("a;b\nCafé;1\n".encode("latin-1"), defaults={"sep": ";"}, encoding="utf-8")
+
+
+# ── RIO-06: inhoudelijke schema's per bestand ────────────────────────────────
+
+import json  # noqa: E402
+
+import riodata  # noqa: E402
+
+
+def _roa_res(ds, naam):
+    rec = next(r for r in riodata.catalog(source="roa") if r["_roa_id"] == ds)
+    return next(x for x in rec["_resources"] if x["naam"] == naam)
+
+
+def test_elk_roa_bestand_heeft_gevalideerd_schema():
+    for rec in riodata.catalog(source="roa"):
+        for x in rec["_resources"]:
+            s = x["schema"]
+            assert s["kolommen"] and s["aantal_rijen"] > 0 and len(s["dataverse_sha1"]) == 40
+            assert s["granulariteit"] and s["beperkingen"] and s["decimaal"] == ","
+            assert all(b["bron"] for b in s["beperkingen"])
+        recentst = [x for x in rec["_resources"] if x["schema"]["meest_recente_editie"]]
+        assert len({x["schema"]["soort"] for x in recentst}) == len(recentst)  # één per soort
+
+
+def test_roa_beschrijving_spreekt_schema_niet_tegen():
+    for rec in riodata.catalog(source="roa"):
+        tekst = (rec["samenvatting"] + " " + rec["niet_geschikt_voor"]).lower()
+        assert "uitsluitend nationale" not in tekst and "uitsluitend als landelijk" not in tekst
+        regio = [x for x in rec["_resources"] if x["schema"]["soort"] == "arbeidsmarkt"]
+        assert all(x["schema"]["uitsplitsingen"]["regio"]["aantal"] > 12 for x in regio)
+        assert "regio" in tekst and "instelling" in tekst
+        for x in rec["_resources"]:
+            if x["schema"]["soort"] in ("uitkomsten", "schoolverlaters"):
+                assert not any("regio" in k.lower() for k in x["schema"]["kolommen"])
+
+
+def test_roa_editie_2026_aanwezig_en_oude_namen_blijven():
+    assert _roa_res("ais2030", "arbeidsmarkt_editie2026")["schema"]["meest_recente_editie"]
+    assert _roa_res("ais2030", "arbeidsmarkt")["file_id"] == 572235
+    assert _roa_res("ais2030", "uitkomsten")["schema"]["sentinels"]["-9"]["betekenis"] == "niet gedocumenteerd"
+
+
+@pytest.mark.echt_schema
+def test_roa_checksum_afwijking_is_fout(monkeypatch):
+    monkeypatch.setattr(roa.httpx, "get", lambda *a, **k: Resp(b"a;b\n1;2\n"))
+    with pytest.raises(_lezen.ChecksumFout):
+        roa.load("ais2030", "uitkomsten")
+
+
+@pytest.mark.echt_schema
+def test_roa_decimale_komma_en_verwachte_kolommen(monkeypatch):
+    s = _roa_res("ais2030", "uitkomsten")["schema"]
+    rij = ";".join("1" for _ in s["kolommen"])
+    csv = (";".join(s["kolommen"]) + "\n" + rij.replace("1", "42,6", 1) + "\n").encode()
+    monkeypatch.setattr(roa, "_schema", lambda meta, fid: {**s, "dataverse_sha1": None})
+    monkeypatch.setattr(roa.httpx, "get", lambda *a, **k: Resp(csv))
+    df = roa.load("ais2030", "uitkomsten")
+    assert df.iloc[0, 0] == 42.6  # geen tekst '42,6'
+    assert df.attrs["schema"]["editie"] == "2025"
+    kapot = (";".join(s["kolommen"][:-1]) + "\n" + ";".join("1" for _ in s["kolommen"][:-1]) + "\n").encode()
+    monkeypatch.setattr(roa.httpx, "get", lambda *a, **k: Resp(kapot))
+    with pytest.raises(_lezen.SchemaFout, match="ontbreken"):
+        roa.load("ais2030", "uitkomsten")
+
+
+def test_uwv_schema_vacature_versus_werkzoekenden():
+    s = riodata.catalog(source="uwv")[0]["_schema"]
+    assert set(s["rec_types"]) == {"Vacature", "ErvaringsBeroep", "WensBeroep"}
+    vac, erv, wens = (s["rec_types"][k] for k in ("Vacature", "ErvaringsBeroep", "WensBeroep"))
+    assert not vac["opleidingsniveau"] and erv["opleidingsniveau"] and wens["opleidingsniveau"]
+    assert "AANT_OPLNIV_1" in vac["kolommen_altijd_leeg"] and "AANT_OPLNIV_1" in erv["kolommen_met_waarden"]
+    assert "AANT_JR_ERV_GEM" in wens["kolommen_altijd_leeg"]
+    assert s["laatste_peildatum"] == "2023-05-16" and s["status"] == "historisch_archief"
+    assert len(s["schema_gelijk_in_snapshots"]) >= 4
+
+
+def test_uwv_catalogus_noemt_geen_onbestaand_rec_type():
+    rec = riodata.catalog(source="uwv")[0]
+    tekst = json.dumps({k: rec[k] for k in ("niet_geschikt_voor", "samenvatting", "kolomtoelichting")})
+    assert "rec_type='Werkzoekende'" not in tekst and "'Werkzoekende' (geregistreerde" not in tekst
+    for kolom in ("PC4", "BEROEPSGROEP", "ANTAL"):
+        assert kolom not in rec["kolomtoelichting"]
+
+
+def test_uwv_onbekend_rec_type_geeft_opties(monkeypatch):
+    csv = "PEILDATUM;REC_TYPE;AANTAL\n16-05-2023;Vacature;1\n16-05-2023;ErvaringsBeroep;2\n".encode()
+    _uwv(monkeypatch, zip_van("data.csv", csv))
+    with pytest.raises(ValueError, match="ErvaringsBeroep of WensBeroep"):
+        uwv.load(rec_type="Werkzoekende")
+    df = uwv.load()
+    assert df.attrs["snapshot"]["peildatum"] == "2023-05-16"  # ISO uit DD-MM-YYYY

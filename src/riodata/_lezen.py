@@ -29,6 +29,10 @@ class SchemaFout(LeesFout, ValueError):
     """Het bestand heeft niet de verwachte vorm (separator, kolommen)."""
 
 
+class ChecksumFout(LeesFout, RuntimeError):
+    """Het gedownloade bestand wijkt af van de gecontroleerde versie (checksum)."""
+
+
 class LimietFout(LeesFout, RuntimeError):
     """Download of uitgepakt bestand is groter dan de toegestane limiet."""
 
