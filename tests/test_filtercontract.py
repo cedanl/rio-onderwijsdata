@@ -121,3 +121,23 @@ def test_valideer_geeft_herstelopties():
 def test_valideer_catalogusfilter_zonder_spec_is_waarschuwing():
     (p,) = valideer_filters("aangeboden-opleiding-cohorten", {"datumGeldigOp": "2024-01-01"})
     assert p["probleem"] == "waarschuwing"
+
+
+def test_onmogelijke_datum_en_ongeldige_uuid_zijn_niet_geldig():
+    """Review F6: de oude regex liet 2026-02-31 en een rij streepjes door."""
+    (p,) = valideer_filters("opleidingen", {"datumGeldigOp": "2026-02-31"})
+    assert p["probleem"] == "ongeldige datum"
+    (p,) = valideer_filters("onderwijslocaties", {"aangebodenOpleidingId": "-" * 36})
+    assert p["probleem"] == "ongeldige uuid"
+    assert valideer_filters("opleidingen", {"datumGeldigOp": "2024-02-29"}) == []        # schrikkeljaar
+    assert valideer_filters("opleidingen", {"datumGeldigOp": "2023-02-29"})[0]["probleem"] == "ongeldige datum"
+    assert valideer_filters("onderwijslocaties", {"aangebodenOpleidingId": "123e4567-e89b-12d3-a456-426614174000"}) == []
+    assert valideer_filters("onderwijslocaties", {"aangebodenOpleidingId": "123e4567e89b12d3a456426614174000"})[0]["probleem"] == "ongeldige uuid"
+
+
+def test_aangeboden_types_worden_gevalideerd():
+    assert valideer_filters("opleidingen", {"datumGeldigOp": 20260101})[0]["probleem"] == "ongeldig type"
+    assert valideer_filters("opleidingen", {"opleidingseenheidtype": ["HOOPLEIDING"]})[0]["probleem"] == "ongeldig type"
+    assert valideer_filters("opleidingen", {"pageSize": "10"})[0]["probleem"] == "ongeldig type"
+    assert valideer_filters("opleidingen", {"page": True})[0]["probleem"] == "ongeldig type"
+    assert valideer_filters("opleidingen", {"page": 0, "pageSize": 50, "sort": "naam"}) == []

@@ -8,9 +8,11 @@ is daarvoor niet vastgesteld.
 """
 from __future__ import annotations
 
+import datetime as dt
 import difflib
 import json
 import re
+import uuid
 from functools import lru_cache
 from importlib.resources import files
 
@@ -81,7 +83,10 @@ def valideer_filters(resource: str, params: dict) -> list[dict]:
     problemen = []
     for naam, waarde in params.items():
         if naam in _resource(resource)["paginering"]:
-            continue
+            if naam in ("page", "pageSize") and (isinstance(waarde, bool) or not isinstance(waarde, int) or waarde < 0):
+                problemen.append({"filter": naam, "probleem": "ongeldig type",
+                                  "herstel": "Gebruik een geheel getal (>= 0)"})
+            continue  # ``sort`` heeft in de spec geen schema: niet te valideren
         f = bekend.get(naam)
         if f is None and naam in zonder_spec:
             problemen.append({"filter": naam, "probleem": "waarschuwing", "herstel": zonder_spec[naam]})
@@ -90,13 +95,36 @@ def valideer_filters(resource: str, params: dict) -> list[dict]:
             problemen.append({"filter": naam, "probleem": "onbekend filter",
                               "herstel": _onbekend("filter", naam, list(bekend))})
             continue
-        if f["enum"] and waarde not in f["enum"]:
+        if f["type"] == "string" and not isinstance(waarde, str):
+            problemen.append({"filter": naam, "probleem": "ongeldig type",
+                              "herstel": f"Verwacht tekst, kreeg {type(waarde).__name__}"})
+        elif f["enum"] and waarde not in f["enum"]:
             problemen.append({"filter": naam, "probleem": "ongeldige waarde",
                               "herstel": _onbekend("waarde", waarde, f["enum"])})
-        elif f["format"] == "date" and not re.fullmatch(r"\d{4}-\d{2}-\d{2}", str(waarde)):
+        elif f["format"] == "date" and not _geldige_datum(waarde):
             problemen.append({"filter": naam, "probleem": "ongeldige datum",
-                              "herstel": "Gebruik formaat YYYY-MM-DD"})
-        elif f["format"] == "uuid" and not re.fullmatch(r"[0-9a-fA-F-]{36}", str(waarde)):
+                              "herstel": "Gebruik een bestaande datum in formaat YYYY-MM-DD"})
+        elif f["format"] == "uuid" and not _geldige_uuid(waarde):
             problemen.append({"filter": naam, "probleem": "ongeldige uuid",
-                              "herstel": "Gebruik een UUID, bijv. uit een eerder opgehaald record"})
+                              "herstel": "Gebruik een UUID (8-4-4-4-12 hexadecimaal), bijv. uit een eerder opgehaald record"})
     return problemen
+
+
+def _geldige_datum(waarde: str) -> bool:
+    if not re.fullmatch(r"\d{4}-\d{2}-\d{2}", waarde):
+        return False
+    try:
+        dt.date.fromisoformat(waarde)
+    except ValueError:  # bijv. 2026-02-31
+        return False
+    return True
+
+
+def _geldige_uuid(waarde: str) -> bool:
+    if not re.fullmatch(r"[0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{12}", waarde):
+        return False
+    try:
+        uuid.UUID(waarde)
+    except ValueError:
+        return False
+    return True
