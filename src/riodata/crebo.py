@@ -317,6 +317,16 @@ def _bekende_edities() -> dict[str, str]:
     return {r["naam"]: r["url"] for r in sbb.resources("crebolijst")}
 
 
+def _volgorde_sleutel(editie: str, meta: dict) -> tuple:
+    """Sorteersleutel voor 'nieuwste editie': ingangsdatum uit het bestand, dan de volgorde in de catalogus.
+
+    Bewust niet ``gecontroleerd_op``: de datum waarop wij een bestand controleren zegt niets over
+    welke editie nieuwer is. Edities die uit de catalogus zijn verdwenen krijgen volgorde -1.
+    """
+    namen = list(_bekende_edities())
+    return (meta.get("geldig_vanaf") or "", namen.index(editie) if editie in namen else -1)
+
+
 def ververs(editie: str, *, client=None) -> CreboLijst:
     """Download een bekende editie, valideer die en zet haar in de cache.
 
@@ -341,10 +351,10 @@ def _bewaar(lijst: CreboLijst, content: bytes) -> CreboLijst:
     d = cache_dir()
     d.mkdir(parents=True, exist_ok=True)
     (d / f"{lijst.editie}.xlsx").write_bytes(content)
-    nu = dt.datetime.now(dt.timezone.utc).isoformat(timespec="seconds")
+    nu = dt.datetime.now(dt.timezone.utc).isoformat(timespec="microseconds")
     m = manifest()
     m[lijst.editie] = {"bron_url": lijst.bron_url, "sha256": lijst.sha256, "bytes": len(content),
-                       "rijen": len(lijst.rijen), "gecontroleerd_op": nu}
+                       "rijen": len(lijst.rijen), "geldig_vanaf": lijst.geldig_vanaf, "gecontroleerd_op": nu}
     _manifest_pad().write_text(json.dumps(m, indent=2, ensure_ascii=False), encoding="utf-8")
     return CreboLijst(**{**lijst.__dict__, "gecontroleerd_op": nu})
 
@@ -352,14 +362,18 @@ def _bewaar(lijst: CreboLijst, content: bytes) -> CreboLijst:
 def laad(editie: str = "latest") -> CreboLijst:
     """Laad een gecachete, gevalideerde editie.
 
-    ``latest`` is de editie met de laatste ``gecontroleerd_op`` in het manifest. Is er geen
-    gevalideerde editie, dan volgt een fout: er wordt niet teruggevallen op een ingebakken lijst.
-    De checksum van het cachebestand wordt bij het laden opnieuw gecontroleerd.
+    ``latest`` is de nieuwste gevalideerde editie: de hoogste ``geldig_vanaf`` (uit het bestand), bij
+    gelijke datum de latere editie in de catalogus. Het opnieuw controleren van een oudere editie
+    verandert dat niet. ``last_verified`` kiest juist de laatst gecontroleerde editie (dat is geen
+    nieuwste editie). Is er geen gevalideerde editie, dan volgt een fout: er wordt niet teruggevallen
+    op een ingebakken lijst. De checksum van het cachebestand wordt bij het laden opnieuw gecontroleerd.
     """
     m = manifest()
     if not m:
         raise CreboEditieOnbekend("Geen gevalideerde CREBO-editie in de cache. Draai crebo.ververs(<editie>) eerst.")
     if editie == "latest":
+        editie = max(m, key=lambda e: _volgorde_sleutel(e, m[e]))
+    elif editie == "last_verified":
         editie = max(m, key=lambda e: m[e]["gecontroleerd_op"])
     if editie not in m:
         raise CreboEditieOnbekend(f"Editie '{editie}' niet in cache. Beschikbaar: {sorted(m)}")
@@ -390,5 +404,6 @@ def zoek(code: str, editie: str | CreboLijst = "latest", peildatum: str | None =
                    if (r["geldig_van"] is None or r["geldig_van"] <= peildatum)
                    and (r["geldig_tot"] is None or r["geldig_tot"] >= peildatum)]
     status = "not_found" if not matches else "found" if len(matches) == 1 else "ambiguous"
-    return {"status": status, "code": sleutel, "editie": lijst.editie,
+    return {"status": status, "code": sleutel, "editie": lijst.editie, "geldig_vanaf": lijst.geldig_vanaf,
+            "bron_url": lijst.bron_url, "sha256": lijst.sha256,
             "gecontroleerd_op": lijst.gecontroleerd_op, "peildatum": peildatum, "matches": matches}

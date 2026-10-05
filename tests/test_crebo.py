@@ -186,3 +186,40 @@ def test_live_smoke_nieuwe_editie_wordt_pas_vrijgegeven_na_validatie():
     """Niet lokaal gedraaid (geen netwerk bij ontwikkeling): controleert contenttype, kolommen en omvang."""
     lijst = crebo.ververs("codelijst_2025_april")
     assert lijst.rijen and crebo.manifest()["codelijst_2025_april"]["rijen"] == len(lijst.rijen)
+
+
+class MeerdereBestanden(FakeClient):
+    """Fake client die per editie-URL een ander bestand levert."""
+
+    def __init__(self, per_id):
+        self.per_id = per_id
+
+    def get(self, url, **kw):
+        self.content = self.per_id[url.rsplit("/", 1)[-1]]
+        self.ctype = "application/octet-stream"
+        return super().get(url, **kw)
+
+
+def test_latest_wordt_niet_teruggedraaid_door_hercontrole_van_een_oudere_editie():
+    """Review F3: opnieuw controleren van april 2025 mocht latest niet naar 2025 terugzetten."""
+    bestanden = MeerdereBestanden({"58905": groot(vanaf="01-08-2025"), "58909": groot(vanaf="01-08-2026")})
+    crebo.ververs("codelijst_2026_april", client=bestanden)
+    crebo.ververs("codelijst_2025_april", client=bestanden)          # later gecontroleerd, maar oudere editie
+    assert crebo.laad("latest").editie == "codelijst_2026_april"
+    assert crebo.laad("last_verified").editie == "codelijst_2025_april"   # expliciet, niet vermomd als nieuwste
+    r = crebo.zoek("25000")
+    assert r["editie"] == "codelijst_2026_april" and r["geldig_vanaf"] == "2026-08-01"
+    assert r["bron_url"].endswith("/58909") and len(r["sha256"]) == 64
+
+
+def test_latest_bij_gelijke_ingangsdatum_volgt_catalogusvolgorde():
+    bestanden = MeerdereBestanden({"58905": groot(vanaf="01-08-2025"), "58907": groot(vanaf="01-08-2025")})
+    crebo.ververs("codelijst_2025_oktober", client=bestanden)
+    crebo.ververs("codelijst_2025_april", client=bestanden)
+    assert crebo.laad("latest").editie == "codelijst_2025_oktober"
+
+
+def test_manifest_bewaart_geldig_vanaf_los_van_controledatum():
+    crebo.ververs("codelijst_2025_april", client=FakeClient(groot(vanaf="01-08-2025")))
+    m = crebo.manifest()["codelijst_2025_april"]
+    assert m["geldig_vanaf"] == "2025-08-01" and m["gecontroleerd_op"] != m["geldig_vanaf"]
