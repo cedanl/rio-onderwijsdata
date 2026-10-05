@@ -27,22 +27,17 @@ import httpx
 
 _BASE = "https://kwalificatie-mijn.s-bb.nl"
 
-_DATASETS: dict[str, dict] = {
-    "crebolijst": {
-        "naam": "CREBO-codelijst",
-        "resources": {
-            "codelijst_2025_april": 58136,
-        },
-    },
-    "kwalificatiedossiers-xml": {
-        "naam": "Kwalificatiedossiers XML",
-        "resources": {
-            "dossiers_vanaf_2015":     53725,
-            "herziening_dossiers_2026": 58071,
-            "duo_export":              58099,
-        },
-    },
-}
+
+
+def _datasets() -> dict[str, dict]:
+    """Loaderconfig uit dezelfde bron als de catalogus (``sbb_resources.json``)."""
+    return {
+        r["_sbb_id"]: {
+            "naam": r["bron"],
+            "resources": {x["naam"]: x["output_id"] for x in r["_resources"]},
+        }
+        for r in catalog()
+    }
 
 
 def catalog() -> list[dict]:
@@ -130,11 +125,12 @@ def fetch_xml(
 # ── intern ────────────────────────────────────────────────────────────────────
 
 def _get_meta(dataset_id: str) -> dict:
-    if dataset_id not in _DATASETS:
+    datasets = _datasets()
+    if dataset_id not in datasets:
         raise ValueError(
-            f"Onbekende dataset '{dataset_id}'. Kies uit: {list(_DATASETS)}"
+            f"Onbekende dataset '{dataset_id}'. Kies uit: {list(datasets)}"
         )
-    return _DATASETS[dataset_id]
+    return datasets[dataset_id]
 
 
 def _pick_resource(res_list: list[dict], resource: int | str, dataset_id: str) -> dict:
