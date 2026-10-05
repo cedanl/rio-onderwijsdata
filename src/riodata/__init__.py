@@ -1,4 +1,9 @@
-__version__ = "0.3.0"
+from importlib.metadata import PackageNotFoundError, version as _version
+
+try:  # één versiebron: pyproject.toml, via de geïnstalleerde distributie
+    __version__ = _version("riodata")
+except PackageNotFoundError:  # broncode zonder installatie
+    __version__ = "0+onbekend"
 
 from .client import fetch, get, related
 from . import duo, roa, uwv, inspectie, sbb, crebo

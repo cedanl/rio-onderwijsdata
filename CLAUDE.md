@@ -3,7 +3,7 @@
 Dit is een Python package voor twee bronnen van Nederlandse onderwijsdata:
 
 1. **RIO LOD API v2** — dagelijks bijgewerkt register van instellingen en opleidingen
-2. **DUO Open Data** — 57 datasets via onderwijsdata.duo.nl (CKAN API)
+2. **DUO Open Data** — 56 datasets via onderwijsdata.duo.nl (CKAN API)
 
 Hieronder staat hoe je als AI-assistent een nieuwe analyse maakt van A tot Z.
 
@@ -18,7 +18,7 @@ src/riodata/
   data/
     rio_resources_ai.json Catalogus: 14 RIO-resources met AI-samenvatting, tags, voorbeeldvragen
     rio_resources.json    Catalogus: zelfde resources, zonder AI-verrijking
-    duo_resources.json    Catalogus: 57 DUO-datasets (gegenereerd uit CKAN)
+    duo_resources.json    Catalogus: 56 DUO-datasets (gegenereerd uit CKAN)
 data/02-prepared/         bron-JSONs voor de RIO-catalogus
 RIO_LOD_API_v2.yml        OpenAPI spec van de RIO API
 voorbeelden/
@@ -40,7 +40,7 @@ import riodata
 # RIO: 14 live API-resources
 rio = riodata.catalog(source="rio")
 
-# DUO: 57 downloadbare datasets (offline, lokale JSON)
+# DUO: 56 downloadbare datasets (offline, lokale JSON)
 duo = riodata.catalog(source="duo")
 
 # Alles gecombineerd
@@ -236,7 +236,7 @@ related(resource, id, sub, **params)
 from riodata import duo
 
 duo.catalog()
-# 57 DUO-datasets als catalogusrecords (offline, lokale JSON).
+# 56 DUO-datasets als catalogusrecords (offline, lokale JSON).
 
 duo.catalog()  # gebruik riodata.catalog(source="duo", live=True) voor live CKAN
 
@@ -258,8 +258,8 @@ duo.load("dataset-id", resource=0, skiprows=None, **kwargs)
 import riodata
 
 riodata.catalog(source="rio")              # 14 RIO-resources
-riodata.catalog(source="duo")              # 57 DUO-datasets (lokale snapshot)
-riodata.catalog(source="all")              # 71 gecombineerd
+riodata.catalog(source="duo")              # 56 DUO-datasets (lokale snapshot)
+riodata.catalog(source="all")              # 77 gecombineerd
 riodata.catalog(source="duo", live=True)   # live van CKAN
 riodata.catalog(source="rio", ai=False)    # zonder AI-verrijking
 ```
