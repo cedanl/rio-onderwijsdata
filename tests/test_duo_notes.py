@@ -41,6 +41,13 @@ class TestTelverschilHo:
         assert len(set(kaarten.values())) == 3
 
 
+class TestKopvarianten:
+    @pytest.mark.parametrize("kop", ["Selectie", "Selecties", "Selectiecriteria"])
+    def test_selectiesectie_onder_alle_kopvarianten(self, kop):
+        r = parse_notes(f"## {kop}\nTelt personen.\n\n## Periode\nJaarlijks.")
+        assert r["teldefinitie"]["selectie"] == "Telt personen."
+
+
 class TestPublicatieregel:
     @pytest.mark.parametrize("ds", ["p01hoinges", "p02ho1ejrs", "p03hoinschr"])
     def test_1_tot_4_wordt_4_met_bronpassage(self, ds):

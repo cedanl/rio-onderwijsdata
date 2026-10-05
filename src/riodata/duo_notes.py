@@ -111,7 +111,8 @@ def _passage(tekst: str, begin: str, eind: str) -> str | None:
 
 
 def _teldefinitie(secties: dict[str, str], fouten: list[str]) -> dict:
-    selecties = secties.get("Selecties") or secties.get("Selectie")
+    # DUO gebruikt 'Selectie', 'Selecties' en 'Selectiecriteria' als kop.
+    selecties = next((body for kop, body in secties.items() if kop.lower().startswith("selectie")), None)
     leeg = {
         "teleenheid": None,
         "inschrijvingstype": None,
