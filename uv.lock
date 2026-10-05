@@ -1046,9 +1046,13 @@ catalogus = [
 duo = [
     { name = "openpyxl" },
 ]
+sbb = [
+    { name = "openpyxl" },
+]
 
 [package.dev-dependencies]
 dev = [
+    { name = "openpyxl" },
     { name = "pandas" },
     { name = "pytest" },
 ]
@@ -1060,13 +1064,15 @@ requires-dist = [
     { name = "matplotlib", marker = "extra == 'analyse'" },
     { name = "openpyxl", marker = "extra == 'analyse'", specifier = ">=3.1.5" },
     { name = "openpyxl", marker = "extra == 'duo'", specifier = ">=3.1.5" },
+    { name = "openpyxl", marker = "extra == 'sbb'", specifier = ">=3.1.5" },
     { name = "pandas", marker = "extra == 'analyse'" },
     { name = "pyyaml", marker = "extra == 'catalogus'" },
 ]
-provides-extras = ["analyse", "catalogus", "duo"]
+provides-extras = ["analyse", "catalogus", "sbb", "duo"]
 
 [package.metadata.requires-dev]
 dev = [
+    { name = "openpyxl", specifier = ">=3.1.5" },
     { name = "pandas" },
     { name = "pytest", specifier = ">=9.1.1" },
 ]
