@@ -127,7 +127,7 @@
       "tekst": "RIO LOD API v2 — aangeboden-opleiding-cohorten",
       "url": "https://lod.onderwijsregistratie.nl/api/rio/v2/aangeboden-opleiding-cohorten"
     },
-    "filters": ["aangebodenOpleidingCohorttype", "aanmeldperiode", "beginAanmeldperiode", "eindeAanmeldperiode", "datumGeldigOp"],
+    "filters": ["aangebodenOpleidingCohorttype", "aanmeldperiode", "beginAanmeldperiode", "eindeAanmeldperiode", "datumGeldigOp", "status"],
     "sub_resources": [],
     "_rio_resource": "aangeboden-opleiding-cohorten",
     "_thema": "Aanbod"
@@ -146,7 +146,7 @@
       "tekst": "RIO LOD API v2 — opleidingen",
       "url": "https://lod.onderwijsregistratie.nl/api/rio/v2/opleidingen"
     },
-    "filters": ["datumGeldigOp"],
+    "filters": ["datumGeldigOp", "opleidingseenheidtype"],
     "sub_resources": [],
     "_rio_resource": "opleidingen",
     "_thema": "Opleidingsstructuur"

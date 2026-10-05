@@ -325,7 +325,8 @@
       "aanmeldperiode",
       "beginAanmeldperiode",
       "eindeAanmeldperiode",
-      "datumGeldigOp"
+      "datumGeldigOp",
+      "status"
     ],
     "sub_resources": [],
     "voorbeeldvragen": [
@@ -367,7 +368,8 @@
       "url": "https://lod.onderwijsregistratie.nl/api/rio/v2/opleidingen"
     },
     "filters": [
-      "datumGeldigOp"
+      "datumGeldigOp",
+      "opleidingseenheidtype"
     ],
     "sub_resources": [],
     "voorbeeldvragen": [
