@@ -101,7 +101,9 @@ def load(
 
     Args:
         date:     "latest" (laatste historische snapshot, niet vandaag), of datum als "YYYY-MM-DD" of "YYYYMMDD"
-        rec_type: Filter op "Vacature" of "Werkzoekende" (default: beide)
+        rec_type: Filter op "Vacature", "ErvaringsBeroep" of "WensBeroep" (default: alle). Werkzoekenden
+                  staan als ErvaringsBeroep/WensBeroep in het bestand; "Werkzoekende" bestaat niet.
+                  Alleen die twee hebben opleidingsniveau (AANT_OPLNIV_*); Vacature heeft alleen AANTAL.
         **kwargs: Doorgegeven aan pd.read_csv()
 
     Kolommen (39 totaal):
@@ -140,12 +142,11 @@ def load(
 
     df, enc = lees_csv(raw, defaults={"sep": ";", "decimal": ",", "low_memory": False}, **kwargs)
 
-    peildatum = None
-    if "PEILDATUM" in df.columns and len(df):
-        peildatum = str(df["PEILDATUM"].dropna().astype(str).max()) if df["PEILDATUM"].notna().any() else None
+    peildata = sorted({_iso(w) for w in df["PEILDATUM"].dropna().astype(str)}) if "PEILDATUM" in df.columns else []
     df.attrs["snapshot"] = {
         "gevraagd": date,
-        "peildatum": peildatum,
+        "peildatum": peildata[-1] if peildata else None,
+        "peildata_in_bestand": peildata,
         "created": snap["created"],
         "status": "historisch_archief",
         "opmerking": "Gearchiveerde UWV-snapshot (publicatie liep t/m mei 2023); geen actuele vacatures.",
@@ -157,12 +158,26 @@ def load(
     if rec_type:
         if "REC_TYPE" not in df.columns:
             raise SchemaFout(f"Kolom REC_TYPE ontbreekt voor filter rec_type. Aanwezig: {list(df.columns)}")
+        bekend = sorted(df["REC_TYPE"].dropna().unique())
+        if rec_type.lower() not in {b.lower() for b in bekend}:
+            hint = " Werkzoekenden staan als ErvaringsBeroep of WensBeroep." if "zoek" in rec_type.lower() else ""
+            raise ValueError(f"Onbekend rec_type '{rec_type}'. In dit bestand: {bekend}.{hint}")
         df = df[df["REC_TYPE"].str.lower() == rec_type.lower()]
 
     return df
 
 
 # ── intern ────────────────────────────────────────────────────────────────────
+
+def _iso(datum: str) -> str:
+    """PEILDATUM staat als DD-MM-YYYY in het bestand; ISO maakt sorteren en vergelijken veilig."""
+    import datetime as _dt
+    for fmt in ("%d-%m-%Y", "%Y-%m-%d", "%Y%m%d"):
+        try:
+            return _dt.datetime.strptime(datum.strip(), fmt).date().isoformat()
+        except ValueError:
+            continue
+    return datum
 
 def _get_snapshots() -> list[dict]:
     r = httpx.get(f"{CKAN_BASE}/package_show", params={"id": DATASET_ID}, timeout=15)
