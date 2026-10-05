@@ -3,7 +3,8 @@ Voeg _meest_recent toe aan multi-resource DUO catalogus-entries.
 
 Voor elke entry waarbij _kolommen een dict is (resource-namen als keys),
 wordt de resource-naam met het hoogste jaargetal als _meest_recent opgeslagen.
-Als er geen jaargetal in de namen staat, wordt de laatste key gebruikt.
+Als er geen jaargetal in de namen staat, wordt de laatste key gebruikt en staat
+_meest_recent_bewijs op 'geen': het veld is dan geen autoritatieve selector.
 
 Zie GitHub issue #7.
 """
@@ -42,6 +43,8 @@ for entry in data:
         best = list(kolommen.keys())[-1]
 
     entry["_meest_recent"] = best
+    # Alleen een jaartal in de naam is bewijs voor 'meest recent'; anders is het de laatste key.
+    entry["_meest_recent_bewijs"] = "jaartal_in_naam" if best_year >= 0 else "geen"
     changed += 1
     print(f"  {entry['bron']}: {best}")
 
