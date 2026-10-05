@@ -2,8 +2,8 @@
   {
     "leverancier": "SBB",
     "bron": "CREBO-codelijst",
-    "beschrijving": "Officiële lijst van erkende MBO-kwalificaties met CREBO-codes, namen, niveaus en geldigheidsperiodes. Gepubliceerd door SBB (Samenwerkingsorganisatie Beroepsonderwijs Bedrijfsleven). Per cohort gepubliceerd (1-2x per jaar).",
-    "periode": "Cohort april 2025 (meest recent vastgesteld)",
+    "beschrijving": "Officiële lijst van erkende MBO-kwalificaties met CREBO-codes, namen, niveaus, prijsfactor, soort opleiding en leerweg per kwalificatie; einddata staan per dossier in het werkblad Vervallen. Gepubliceerd door SBB (Samenwerkingsorganisatie Beroepsonderwijs Bedrijfsleven). Per cohort gepubliceerd (1-2x per jaar).",
+    "periode": "Edities april 2025, oktober 2025 en april 2026 (nieuwste: april 2026, geldig vanaf 2026-08-01)",
     "onderwijstype": ["MBO"],
     "doel": "Bevat alle erkende MBO-kwalificaties met CREBO-codes, namen, niveaus en geldigheidsperiodes. Basis voor elke MBO-analyse waarbij opleidingscodes gekoppeld moeten worden aan namen of niveaus. RIO gebruikt CREBO-codes; SBB geeft de leesbare namen erbij.",
     "frequentie": "Per cohort (1-2x per jaar)",
@@ -41,8 +41,20 @@
     "_resources": [
       {
         "naam": "codelijst_2025_april",
-        "output_id": 58136,
-        "url": "https://kwalificatie-mijn.s-bb.nl/Lijsten/Output/58136",
+        "output_id": 58905,
+        "url": "https://kwalificatie-mijn.s-bb.nl/Lijsten/Output/58905",
+        "format": "XLSX"
+      },
+      {
+        "naam": "codelijst_2025_oktober",
+        "output_id": 58907,
+        "url": "https://kwalificatie-mijn.s-bb.nl/Lijsten/Output/58907",
+        "format": "XLSX"
+      },
+      {
+        "naam": "codelijst_2026_april",
+        "output_id": 58909,
+        "url": "https://kwalificatie-mijn.s-bb.nl/Lijsten/Output/58909",
         "format": "XLSX"
       }
     ],
@@ -97,14 +109,14 @@
       },
       {
         "naam": "herziening_dossiers_2026",
-        "output_id": 58071,
-        "url": "https://kwalificatie-mijn.s-bb.nl/Lijsten/Output/58071",
+        "output_id": 58836,
+        "url": "https://kwalificatie-mijn.s-bb.nl/Lijsten/Output/58836",
         "format": "XML"
       },
       {
         "naam": "duo_export",
-        "output_id": 58099,
-        "url": "https://kwalificatie-mijn.s-bb.nl/Lijsten/Output/58099",
+        "output_id": 58864,
+        "url": "https://kwalificatie-mijn.s-bb.nl/Lijsten/Output/58864",
         "format": "XML"
       }
     ],

@@ -15,6 +15,9 @@ analyse = [
     "openpyxl>=3.1.5",
 ]
 catalogus = ["anthropic>=0.87.0", "pyyaml"]
+sbb = [
+    "openpyxl>=3.1.5",
+]
 duo = [
     "openpyxl>=3.1.5",
 ]
@@ -33,4 +36,5 @@ build-backend = "hatchling.build"
 [dependency-groups]
 dev = [
     "pytest>=9.1.1",
+    "openpyxl>=3.1.5",
 ]
