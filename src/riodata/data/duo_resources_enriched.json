@@ -3157,7 +3157,7 @@
       "GESLACHT": "Geslacht: MAN, VROUW of ONBEKEND.",
       "OPLEIDINGSCODE_ACTUEEL": "Actuele opleidingscode: CREBO-code voor mbo, CROHO-code voor ho.",
       "OPLEIDINGSNAAM_ACTUEEL": "Actuele naam van de opleiding zoals geregistreerd in CROHO (ho) of CREBO (mbo).",
-      "OPLEIDINGSVORM": "Opleidingsvorm: VT (voltijd), DT (deeltijd) of DU (duaal). De codes staan zo in de data; de uitleg volgt de gangbare 1cijferHO-codes en staat niet in de dataset zelf."
+      "OPLEIDINGSVORM": "Opleidingsvorm hoger onderwijs: VT = voltijd, DT = deeltijd, DU = duaal (bron: DUO-datasetbeschrijving)."
     },
     "_tijd": {
       "bron": {
@@ -4355,7 +4355,7 @@
       "GESLACHT": "Geslacht: MAN, VROUW of ONBEKEND.",
       "OPLEIDINGSCODE_ACTUEEL": "Actuele opleidingscode: CREBO-code voor mbo, CROHO-code voor ho.",
       "OPLEIDINGSNAAM_ACTUEEL": "Actuele naam van de opleiding zoals geregistreerd in CROHO (ho) of CREBO (mbo).",
-      "OPLEIDINGSVORM": "Opleidingsvorm: VT (voltijd), DT (deeltijd) of DU (duaal). De codes staan zo in de data; de uitleg volgt de gangbare 1cijferHO-codes en staat niet in de dataset zelf."
+      "OPLEIDINGSVORM": "Opleidingsvorm hoger onderwijs: VT = voltijd, DT = deeltijd, DU = duaal (bron: DUO-datasetbeschrijving)."
     },
     "_tijd": {
       "bron": {
@@ -5946,7 +5946,7 @@
       "AANTAL_INGESCHREVENEN": "Aantal ingeschrevenen (natuurlijke personen, hoofdinschrijvingen) op peildatum 1 oktober van het studiejaar.",
       "OPLEIDINGSCODE_ACTUEEL": "Actuele opleidingscode: CREBO-code voor mbo, CROHO-code voor ho.",
       "OPLEIDINGSNAAM_ACTUEEL": "Actuele naam van de opleiding zoals geregistreerd in CROHO (ho) of CREBO (mbo).",
-      "OPLEIDINGSVORM": "Opleidingsvorm: VT (voltijd), DT (deeltijd) of DU (duaal). De codes staan zo in de data; de uitleg volgt de gangbare 1cijferHO-codes en staat niet in de dataset zelf."
+      "OPLEIDINGSVORM": "Opleidingsvorm hoger onderwijs: VT = voltijd, DT = deeltijd, DU = duaal (bron: DUO-datasetbeschrijving)."
     },
     "_tijd": {
       "bron": {
@@ -7144,7 +7144,7 @@
       "GESLACHT": "Geslacht: MAN, VROUW of ONBEKEND.",
       "OPLEIDINGSCODE_ACTUEEL": "Actuele opleidingscode: CREBO-code voor mbo, CROHO-code voor ho.",
       "OPLEIDINGSNAAM_ACTUEEL": "Actuele naam van de opleiding zoals geregistreerd in CROHO (ho) of CREBO (mbo).",
-      "OPLEIDINGSVORM": "Opleidingsvorm: VT (voltijd), DT (deeltijd) of DU (duaal). De codes staan zo in de data; de uitleg volgt de gangbare 1cijferHO-codes en staat niet in de dataset zelf."
+      "OPLEIDINGSVORM": "Opleidingsvorm hoger onderwijs: VT = voltijd, DT = deeltijd, DU = duaal (bron: DUO-datasetbeschrijving)."
     },
     "_tijd": {
       "bron": {
@@ -12153,7 +12153,7 @@
       "DIPVROUW2025": "numeriek (156 waarden)"
     },
     "_kolomdefinities": {
-      "LEERWEG": "Leerwegcode zoals gepubliceerd, o.a. BBL (beroepsbegeleidende leerweg), BOL, BOLVT en BOLDT (beroepsopleidende leerweg; VT/DT = voltijd/deeltijd, afgeleid uit de code), EX (extraneus; afgeleid) en in gediplomeerde-mbo-studenten ook OVO (betekenis niet in de bron). Niet VOLTIJD/DEELTIJD/DUAAL.",
+      "LEERWEG": "Leerwegcode zoals gepubliceerd, o.a. BBL (beroepsbegeleidende leerweg), BOL, BOLVT en BOLDT (beroepsopleidende leerweg; VT/DT = voltijd/deeltijd, afgeleid uit de code), EX (examendeelnemers, niet-bekostigd; de notes noemen die groep, de code is afgeleid) en in gediplomeerde-mbo-studenten ook OVO (betekenis niet in de bron). Niet VOLTIJD/DEELTIJD/DUAAL.",
       "NIVEAU": "Opleidingsniveau zoals gepubliceerd; de codes verschillen per dataset (mbo: 1 t/m 4; ho: bijv. HBO-BA, WO-MA)."
     },
     "_tijd": {
@@ -13648,7 +13648,7 @@
     },
     "_kolomdefinities": {
       "NIVEAU": "Opleidingsniveau zoals gepubliceerd; de codes verschillen per dataset (mbo: 1 t/m 4; ho: bijv. HBO-BA, WO-MA).",
-      "LEERWEG": "Leerwegcode zoals gepubliceerd, o.a. BBL (beroepsbegeleidende leerweg), BOL, BOLVT en BOLDT (beroepsopleidende leerweg; VT/DT = voltijd/deeltijd, afgeleid uit de code), EX (extraneus; afgeleid) en in gediplomeerde-mbo-studenten ook OVO (betekenis niet in de bron). Niet VOLTIJD/DEELTIJD/DUAAL.",
+      "LEERWEG": "Leerwegcode zoals gepubliceerd, o.a. BBL (beroepsbegeleidende leerweg), BOL, BOLVT en BOLDT (beroepsopleidende leerweg; VT/DT = voltijd/deeltijd, afgeleid uit de code), EX (examendeelnemers, niet-bekostigd; de notes noemen die groep, de code is afgeleid) en in gediplomeerde-mbo-studenten ook OVO (betekenis niet in de bron). Niet VOLTIJD/DEELTIJD/DUAAL.",
       "JAAR": "Jaar van de peildatum 1 oktober (2025 = 1 oktober 2025, studiejaar 2025/2026). Cijfers over 2025 zijn voorlopig."
     },
     "_tijd": {
@@ -14840,7 +14840,7 @@
     },
     "_kolomdefinities": {
       "JAAR": "Jaar van de peildatum 1 oktober (2025 = 1 oktober 2025, studiejaar 2025/2026). Cijfers over 2025 zijn voorlopig.",
-      "LEERWEG": "Leerwegcode zoals gepubliceerd, o.a. BBL (beroepsbegeleidende leerweg), BOL, BOLVT en BOLDT (beroepsopleidende leerweg; VT/DT = voltijd/deeltijd, afgeleid uit de code), EX (extraneus; afgeleid) en in gediplomeerde-mbo-studenten ook OVO (betekenis niet in de bron). Niet VOLTIJD/DEELTIJD/DUAAL.",
+      "LEERWEG": "Leerwegcode zoals gepubliceerd, o.a. BBL (beroepsbegeleidende leerweg), BOL, BOLVT en BOLDT (beroepsopleidende leerweg; VT/DT = voltijd/deeltijd, afgeleid uit de code), EX (examendeelnemers, niet-bekostigd; de notes noemen die groep, de code is afgeleid) en in gediplomeerde-mbo-studenten ook OVO (betekenis niet in de bron). Niet VOLTIJD/DEELTIJD/DUAAL.",
       "NIVEAU": "Opleidingsniveau zoals gepubliceerd; de codes verschillen per dataset (mbo: 1 t/m 4; ho: bijv. HBO-BA, WO-MA)."
     },
     "_tijd": {
@@ -15313,7 +15313,7 @@
       }
     },
     "_kolomdefinities": {
-      "LEERWEG": "Leerwegcode zoals gepubliceerd, o.a. BBL (beroepsbegeleidende leerweg), BOL, BOLVT en BOLDT (beroepsopleidende leerweg; VT/DT = voltijd/deeltijd, afgeleid uit de code), EX (extraneus; afgeleid) en in gediplomeerde-mbo-studenten ook OVO (betekenis niet in de bron). Niet VOLTIJD/DEELTIJD/DUAAL.",
+      "LEERWEG": "Leerwegcode zoals gepubliceerd, o.a. BBL (beroepsbegeleidende leerweg), BOL, BOLVT en BOLDT (beroepsopleidende leerweg; VT/DT = voltijd/deeltijd, afgeleid uit de code), EX (examendeelnemers, niet-bekostigd; de notes noemen die groep, de code is afgeleid) en in gediplomeerde-mbo-studenten ook OVO (betekenis niet in de bron). Niet VOLTIJD/DEELTIJD/DUAAL.",
       "NIVEAU": "Opleidingsniveau zoals gepubliceerd; de codes verschillen per dataset (mbo: 1 t/m 4; ho: bijv. HBO-BA, WO-MA)."
     },
     "_tijd": {
