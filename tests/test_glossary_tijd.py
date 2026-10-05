@@ -25,9 +25,22 @@ def test_scope_lekt_niet_naar_andere_datasets():
     assert duo.column_definitions(["OPLEIDINGSVORM"], "p01hoinges") == {}
 
 
-def test_opleidingsvorm_codes_in_mbo_aanbod():
+def test_opleidingsvorm_in_mbo_aanbod_zijn_geen_vt_dt_du_codes():
+    """Datastore (2026-10-05): KLASSIKAAL/COACHING/KLASSIKAAL_EN_ONLINE, geen VT/DT/DU."""
     tekst = duo.column_definitions(["OPLEIDINGSVORM"], "mbo_opleidingsaanbod")["OPLEIDINGSVORM"]
-    assert all(c in tekst for c in ("VT = voltijd", "DT = deeltijd", "DU = duaal"))
+    assert all(w in tekst for w in ("KLASSIKAAL", "COACHING", "KLASSIKAAL_EN_ONLINE"))
+    assert "VT = voltijd" not in tekst
+
+
+def test_leerweg_volgt_gepubliceerde_codes_en_niet_voltijd_deeltijd_duaal():
+    for ds in ("mbo-studenten-per-instelling", "mbo-studenten-per-sectorkamer-en-leerweg",
+               "instromende-mbo-studenten", "gediplomeerde-mbo-studenten"):
+        tekst = duo.column_definitions(["LEERWEG"], ds)["LEERWEG"]
+        assert "BBL" in tekst and "BOLVT" in tekst and "afgeleid" in tekst
+    # geen algemene LEERWEG-definitie meer: elders is de betekenis niet vastgesteld
+    assert duo.column_definitions(["LEERWEG"]) == {}
+    assert duo.column_definitions(["LEERWEG"], "04_voex-v1") == {}
+    assert "LEERWEG" not in duo.DUO_COLUMN_GLOSSARY
 
 
 def test_catalogus_kolomdefinities_gelijk_aan_scoped_glossary():

@@ -6860,7 +6860,7 @@
       "DIPVROUW2025": "numeriek"
     },
     "_kolomdefinities": {
-      "LEERWEG": "Onderwijsvorm: VOLTIJD, DEELTIJD of DUAAL.",
+      "LEERWEG": "Leerwegcode zoals gepubliceerd, o.a. BBL (beroepsbegeleidende leerweg), BOLVT en BOLDT (beroepsopleidende leerweg, voltijd resp. deeltijd; afgeleid uit de code) en EX (extraneus; afgeleid). Niet VOLTIJD/DEELTIJD/DUAAL.",
       "NIVEAU": "Opleidingsniveau (mbo: niveau 1 t/m 4; ho: associate degree, bachelor, master)."
     }
   },
@@ -7467,7 +7467,7 @@
     },
     "_kolomdefinities": {
       "NIVEAU": "Opleidingsniveau (mbo: niveau 1 t/m 4; ho: associate degree, bachelor, master).",
-      "LEERWEG": "Onderwijsvorm: VOLTIJD, DEELTIJD of DUAAL."
+      "LEERWEG": "Leerwegcode zoals gepubliceerd, o.a. BBL (beroepsbegeleidende leerweg), BOLVT en BOLDT (beroepsopleidende leerweg, voltijd resp. deeltijd; afgeleid uit de code) en EX (extraneus; afgeleid). Niet VOLTIJD/DEELTIJD/DUAAL."
     }
   },
   {
@@ -7969,7 +7969,7 @@
       }
     },
     "_kolomdefinities": {
-      "LEERWEG": "Onderwijsvorm: VOLTIJD, DEELTIJD of DUAAL.",
+      "LEERWEG": "Leerwegcode zoals gepubliceerd, o.a. BBL (beroepsbegeleidende leerweg), BOLVT en BOLDT (beroepsopleidende leerweg, voltijd resp. deeltijd; afgeleid uit de code) en EX (extraneus; afgeleid). Niet VOLTIJD/DEELTIJD/DUAAL.",
       "NIVEAU": "Opleidingsniveau (mbo: niveau 1 t/m 4; ho: associate degree, bachelor, master)."
     }
   },
@@ -8250,7 +8250,7 @@
       }
     },
     "_kolomdefinities": {
-      "LEERWEG": "Onderwijsvorm: VOLTIJD, DEELTIJD of DUAAL.",
+      "LEERWEG": "Leerwegcode zoals gepubliceerd, o.a. BBL (beroepsbegeleidende leerweg), BOLVT en BOLDT (beroepsopleidende leerweg, voltijd resp. deeltijd; afgeleid uit de code) en EX (extraneus; afgeleid). Niet VOLTIJD/DEELTIJD/DUAAL.",
       "NIVEAU": "Opleidingsniveau (mbo: niveau 1 t/m 4; ho: associate degree, bachelor, master)."
     }
   },
@@ -15920,8 +15920,7 @@
       "GEMIDDELD CIJFER": "numeriek"
     },
     "_kolomdefinities": {
-      "GEMEENTENAAM": "Naam van de gemeente conform CBS-gemeentelijke indeling.",
-      "LEERWEG": "Onderwijsvorm: VOLTIJD, DEELTIJD of DUAAL."
+      "GEMEENTENAAM": "Naam van de gemeente conform CBS-gemeentelijke indeling."
     }
   },
   {

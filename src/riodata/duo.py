@@ -34,7 +34,6 @@ DUO_COLUMN_GLOSSARY: dict[str, str] = {
     "UITSTROOM": "Studenten die de opleiding verlaten, onderscheiden in gediplomeerd en niet-gediplomeerd uitstroom.",
     "GEDIPLOMEERDEN": "Studenten die in het studiejaar een diploma of getuigschrift hebben behaald.",
     "GESLACHT": "Geslacht van de student: MAN, VROUW of ONBEKEND.",
-    "LEERWEG": "Onderwijsvorm: VOLTIJD, DEELTIJD of DUAAL.",
     "NIVEAU": "Opleidingsniveau (mbo: niveau 1 t/m 4; ho: associate degree, bachelor, master).",
     "GEMEENTENUMMER": "CBS-gemeentecode (4 cijfers), conform de gemeentelijke indeling op de peildatum.",
     "GEMEENTENAAM": "Naam van de gemeente conform CBS-gemeentelijke indeling.",
@@ -70,8 +69,31 @@ DUO_COLUMN_GLOSSARY_SCOPED: dict[str, dict[str, str]] = {
         }
         for dataset in ("p01hoinges", "p02ho1ejrs", "p03hoinschr")
     },
+    # LEERWEG-waarden in de datastore (gecontroleerd 2026-10-05): o.a. BBL, BOLVT, EX; niet VOLTIJD/DEELTIJD/DUAAL.
+    # BOL en BBL volgen de gangbare mbo-termen; VT/DT (voltijd/deeltijd) en EX (extraneus) zijn afgeleid uit
+    # de code en het DUO-overzicht van leerwegen en niet in de dataset zelf gedefinieerd.
+    **{
+        dataset: {
+            "LEERWEG": (
+                "Leerwegcode zoals gepubliceerd, o.a. BBL (beroepsbegeleidende leerweg), BOLVT en BOLDT "
+                "(beroepsopleidende leerweg, voltijd resp. deeltijd; afgeleid uit de code) en EX (extraneus; "
+                "afgeleid). Niet VOLTIJD/DEELTIJD/DUAAL."
+            ),
+        }
+        for dataset in (
+            "mbo-studenten-per-instelling",
+            "mbo-studenten-per-sectorkamer-en-leerweg",
+            "instromende-mbo-studenten",
+            "gediplomeerde-mbo-studenten",
+        )
+    },
+    # OPLEIDINGSVORM in mbo_opleidingsaanbod_cohorten: KLASSIKAAL, COACHING, KLASSIKAAL_EN_ONLINE of leeg
+    # (gecontroleerd 2026-10-05 in de datastore). Dit zijn geen VT/DT/DU-codes.
     "mbo_opleidingsaanbod": {
-        "OPLEIDINGSVORM": "Opleidingsvorm van het cohort: VT = voltijd, DT = deeltijd, DU = duaal.",
+        "OPLEIDINGSVORM": (
+            "Vorm waarin het cohort wordt gegeven, zoals gepubliceerd: KLASSIKAAL, COACHING of "
+            "KLASSIKAAL_EN_ONLINE; kan leeg zijn. Geen VT/DT/DU-codes."
+        ),
     },
 }
 
