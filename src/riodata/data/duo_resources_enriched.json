@@ -323,6 +323,7 @@
     "_thema": "Arbeidsmarkt",
     "_geo_niveau": [],
     "_meest_recent": "Functiemix maatwerkafspraken",
+    "_meest_recent_bewijs": "geen",
     "_codes": {
       "ONDERWIJSSECTOR": {
         "1": "PO",
@@ -1327,6 +1328,7 @@
       "gemeente"
     ],
     "_meest_recent": "Adressen van instellingen in het hoger onderwijs",
+    "_meest_recent_bewijs": "geen",
     "_kolomtypes": {
       "Adressen van besturen in het hoger onderwijs": {
         "SOORT HO": "categorie (2 waarden)",
@@ -1779,6 +1781,7 @@
       "provincie"
     ],
     "_meest_recent": "Eerstejaarsingeschrevenen wetenschappelijk onderwijs niveau opleiding in het domein hoger onderwijs",
+    "_meest_recent_bewijs": "geen",
     "_kolomtypes": {
       "Eerstejaarsingeschrevenen hoger beroepsonderwijs inclusief geslacht in het domein hoger onderwijs": {
         "STUDIEJAAR": "numeriek",
@@ -1825,7 +1828,7 @@
       }
     },
     "_kolomdefinities": {
-      "STUDIEJAAR": "Studiejaar in formaat YYYY/YYYY (bijv. 2023/2024). Loopt van 1 augustus t/m 31 juli.",
+      "STUDIEJAAR": "Startjaar van het studiejaar als geheel getal (2023 = studiejaar 2023/2024). Peildatum 1 oktober.",
       "PROVINCIENAAM": "Naam van de provincie.",
       "GEMEENTENUMMER": "CBS-gemeentecode (4 cijfers), conform de gemeentelijke indeling op de peildatum.",
       "GEMEENTENAAM": "Naam van de gemeente conform CBS-gemeentelijke indeling.",
@@ -2224,6 +2227,7 @@
       "provincie"
     ],
     "_meest_recent": "Gediplomeerden wetenschappelijk onderwijs niveau opleiding",
+    "_meest_recent_bewijs": "geen",
     "_kolomtypes": {
       "Gediplomeerden hoger beroepsonderwijs inclusief geslacht": {
         "DIPLOMAJAAR": "numeriek",
@@ -2766,6 +2770,7 @@
     "_thema": "HO",
     "_geo_niveau": [],
     "_meest_recent": "controlebestand",
+    "_meest_recent_bewijs": "geen",
     "_kolomtypes": {
       "ho_opleidingsoverzicht": {
         "ONDERWIJSBESTUURID": "categorie (2 waarden)",
@@ -3200,6 +3205,7 @@
       "provincie"
     ],
     "_meest_recent": "Ingeschrevenen wetenschappelijk onderwijs niveau opleiding in het domein hoger onderwijs",
+    "_meest_recent_bewijs": "geen",
     "_kolomtypes": {
       "Ingeschrevenen hoger beroepsonderwijs inclusief geslacht in het domein hoger onderwijs": {
         "STUDIEJAAR": "numeriek",
@@ -3246,7 +3252,7 @@
       }
     },
     "_kolomdefinities": {
-      "STUDIEJAAR": "Studiejaar in formaat YYYY/YYYY (bijv. 2023/2024). Loopt van 1 augustus t/m 31 juli.",
+      "STUDIEJAAR": "Startjaar van het studiejaar als geheel getal (2023 = studiejaar 2023/2024). Peildatum 1 oktober.",
       "PROVINCIENAAM": "Naam van de provincie.",
       "GEMEENTENUMMER": "CBS-gemeentecode (4 cijfers), conform de gemeentelijke indeling op de peildatum.",
       "GEMEENTENAAM": "Naam van de gemeente conform CBS-gemeentelijke indeling.",
@@ -3638,6 +3644,7 @@
       "provincie"
     ],
     "_meest_recent": "Inschrijvingen wetenschappelijk onderwijs niveau opleiding",
+    "_meest_recent_bewijs": "geen",
     "_kolomtypes": {
       "Inschrijvingen hoger beroepsonderwijs inclusief geslacht": {
         "STUDIEJAAR": "numeriek",
@@ -3684,7 +3691,7 @@
       }
     },
     "_kolomdefinities": {
-      "STUDIEJAAR": "Studiejaar in formaat YYYY/YYYY (bijv. 2023/2024). Loopt van 1 augustus t/m 31 juli.",
+      "STUDIEJAAR": "Startjaar van het studiejaar als geheel getal (2023 = studiejaar 2023/2024). Peildatum 1 oktober.",
       "PROVINCIENAAM": "Naam van de provincie.",
       "GEMEENTENUMMER": "CBS-gemeentecode (4 cijfers), conform de gemeentelijke indeling op de peildatum.",
       "GEMEENTENAAM": "Naam van de gemeente conform CBS-gemeentelijke indeling.",
@@ -4174,6 +4181,7 @@
       "gemeente"
     ],
     "_meest_recent": "controlebestand",
+    "_meest_recent_bewijs": "geen",
     "_kolomtypes": {
       "HO_Erkenningen_RIO": {
         "BEVOEGD_GEZAG_CODE": "numeriek",
@@ -4353,6 +4361,7 @@
       "gemeente"
     ],
     "_meest_recent": "controlebestand",
+    "_meest_recent_bewijs": "geen",
     "_kolomtypes": {
       "DUO_SCI_OPENDATA_WI2021.csv": {
         "WET": "categorie (1 waarden)",
@@ -5254,6 +5263,7 @@
       "gemeente"
     ],
     "_meest_recent": "Adressen instellingen",
+    "_meest_recent_bewijs": "geen",
     "_kolomtypes": {
       "Adressen bevoegde gezagen mbo": {
         "BEVOEGD GEZAG NUMMER": "numeriek",
@@ -6033,6 +6043,7 @@
     "_thema": "MBO",
     "_geo_niveau": [],
     "_meest_recent": "controlebestand",
+    "_meest_recent_bewijs": "geen",
     "_kolomtypes": {
       "mbo_opleidingsaanbod": {
         "OPLEIDINGSEENHEIDCODE": "categorie (25 waarden)",
@@ -6411,6 +6422,7 @@
       "gemeente"
     ],
     "_meest_recent": "mbo-studentenprognose_arbeidsmarktregio_sectorkamer",
+    "_meest_recent_bewijs": "geen",
     "_kolomtypes": {
       "mbo-studentenprognose_gemeente_leeftijdscategorie": {
         "Gemeentenaam": "categorie (2 waarden)",
@@ -6662,7 +6674,8 @@
     },
     "_thema": "Overig",
     "_geo_niveau": [],
-    "_meest_recent": "PVL organisatorischeEenheden tbv RIO CSV bestanden generiek_specifiek (nfo, po, vo, vavo, mbo, ho) v3.3"
+    "_meest_recent": "PVL organisatorischeEenheden tbv RIO CSV bestanden generiek_specifiek (nfo, po, vo, vavo, mbo, ho) v3.3",
+    "_meest_recent_bewijs": "geen"
   },
   {
     "leverancier": "DUO",
@@ -7392,6 +7405,7 @@
     "_thema": "Overig",
     "_geo_niveau": [],
     "_meest_recent": "2025 nieuw-instromende-studenten-per-instelling-hoofdgroep-leerweg-beroepsopleiding-niveau-vooropleiding",
+    "_meest_recent_bewijs": "jaartal_in_naam",
     "_codes": {
       "NIVEAU": {
         "1": "Entreeopleiding",
@@ -7886,6 +7900,7 @@
       "provincie"
     ],
     "_meest_recent": "Studenten per instelling bevoegd gezag plaats van de instelling beroepsopleiding woonprovincie",
+    "_meest_recent_bewijs": "geen",
     "_codes": {
       "NIVEAU": {
         "1": "Entreeopleiding",
@@ -8185,6 +8200,7 @@
     "_thema": "Overig",
     "_geo_niveau": [],
     "_meest_recent": "Studenten per leerweg opleiding verblijfsjaar",
+    "_meest_recent_bewijs": "geen",
     "_codes": {
       "NIVEAU": {
         "1": "Entreeopleiding",
@@ -9611,6 +9627,7 @@
     "_thema": "Overig",
     "_geo_niveau": [],
     "_meest_recent": "controlebestand",
+    "_meest_recent_bewijs": "geen",
     "_kolomtypes": {
       "aangeboden_bo_opleidingen": {
         "AANGEBODEN_OPLEIDINGCODE": "categorie (165 waarden)",
@@ -9866,6 +9883,7 @@
     "_thema": "Overig",
     "_geo_niveau": [],
     "_meest_recent": "controlebestand",
+    "_meest_recent_bewijs": "geen",
     "_kolomtypes": {
       "sectorale_ontwikkelpaden": {
         "INGANGSDATUM_ONTWIKKELPAD": "categorie (2 waarden)",
@@ -11042,6 +11060,7 @@
       "gemeente"
     ],
     "_meest_recent": "Alle vestigingen in het basisonderwijs",
+    "_meest_recent_bewijs": "geen",
     "_kolomtypes": {
       "Adressen bevoegde gezagen basisonderwijs": {
         "BEVOEGD GEZAG NUMMER": "numeriek",
@@ -11309,6 +11328,7 @@
     "_thema": "PO",
     "_geo_niveau": [],
     "_meest_recent": "Leerlingen po per bevoegd gezag",
+    "_meest_recent_bewijs": "geen",
     "_kolomtypes": {
       "Leerlingen po per bevoegd gezag naar geslacht": {
         "BEVOEGD_GEZAGNUMMER": "numeriek",
@@ -13405,6 +13425,7 @@
       "gemeente"
     ],
     "_meest_recent": "Adressen van vestigingen in het speciaal onderwijs",
+    "_meest_recent_bewijs": "geen",
     "_kolomtypes": {
       "Adressen van besturen in het speciaal onderwijs": {
         "SOORT PRIMAIR ONDERWIJS": "categorie (2 waarden)",
@@ -13819,6 +13840,7 @@
       "gemeente"
     ],
     "_meest_recent": "Historische leerlingentellingen PO gemeente per jaar",
+    "_meest_recent_bewijs": "geen",
     "_kolomtypes": {
       "Historische leerlingentellingen PO vestigingen per jaar": {
         "INSTELLINGSCODE": "categorie (6 waarden)",
@@ -14074,6 +14096,7 @@
     "_thema": "PO",
     "_geo_niveau": [],
     "_meest_recent": "Leerlingen bo per vestiging naar noat",
+    "_meest_recent_bewijs": "geen",
     "_kolomtypes": {
       "Leerlingen sbo, so en vso per vestiging naar cumi": {
         "INSTELLINGSCODE": "categorie (6 waarden)",
@@ -14279,6 +14302,7 @@
     "_thema": "PO",
     "_geo_niveau": [],
     "_meest_recent": "Materi�le instandhouding sbo bekostigingskenmerken per instelling",
+    "_meest_recent_bewijs": "geen",
     "_kolomtypes": {
       "Materi�le instandhouding bo schoolkenmerken per instelling": {
         "PEILJAAR": "numeriek",
@@ -14488,6 +14512,7 @@
     "_thema": "PO",
     "_geo_niveau": [],
     "_meest_recent": "Personele Bekostiging sbo bekostigingskenmerken per instelling",
+    "_meest_recent_bewijs": "geen",
     "_kolomtypes": {
       "Personele Bekostiging bo schoolkenmerken per instelling": {
         "PEILJAAR": "numeriek",
@@ -15181,6 +15206,7 @@
     "_thema": "PO",
     "_geo_niveau": [],
     "_meest_recent": "Kwaliteitsoordelen bevoegd gezag",
+    "_meest_recent_bewijs": "geen",
     "_kolomtypes": {
       "Kwaliteitsoordelen po, so en vso": {
         "_id": "numeriek",
@@ -15329,6 +15355,7 @@
       "gemeente"
     ],
     "_meest_recent": "Leerlingen po per gemeente",
+    "_meest_recent_bewijs": "geen",
     "_kolomtypes": {
       "Leerlingen po per gemeente naar geslacht": {
         "GEMEENTENUMMER": "numeriek",
@@ -15475,6 +15502,7 @@
     "_thema": "PO",
     "_geo_niveau": [],
     "_meest_recent": "Leerlingen po per Samenwerkingsverband",
+    "_meest_recent_bewijs": "geen",
     "_kolomtypes": {
       "Leerlingen po per Samenwerkingsverband naar geslacht": {
         "SAMENWERKINGSVERBANDNUMMER": "categorie (3 waarden)",
@@ -15711,6 +15739,7 @@
     "_thema": "SO",
     "_geo_niveau": [],
     "_meest_recent": "Leerlingen so en vso per samenwerkingsverband naar uitstroomprofiel",
+    "_meest_recent_bewijs": "geen",
     "_kolomtypes": {
       "Leerlingen so en vso per samenwerkingsverband, residenti�le plaatsen": {
         "SWV_BETALEND": "categorie (76 waarden)",
@@ -17260,6 +17289,7 @@
       "gemeente"
     ],
     "_meest_recent": "Adressen van vestigingen in het voortgezet onderwijs",
+    "_meest_recent_bewijs": "geen",
     "_kolomtypes": {
       "Adressen van besturen in het voortgezet onderwijs": {
         "BEVOEGD GEZAG NUMMER": "numeriek",

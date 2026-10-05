@@ -57,12 +57,39 @@ DUO_COLUMN_GLOSSARY: dict[str, str] = {
 }
 
 
-def column_definitions(columns: list[str]) -> dict[str, str]:
+# Definities die alleen gelden voor een bepaalde dataset en die de algemene definitie
+# hierboven vervangen. Alleen opnemen wat uit de bron of uit de data is te onderbouwen.
+DUO_COLUMN_GLOSSARY_SCOPED: dict[str, dict[str, str]] = {
+    # STUDIEJAAR is hier numeriek (kolomtype 'numeriek'), geen 'YYYY/YYYY'-tekst.
+    **{
+        dataset: {
+            "STUDIEJAAR": (
+                "Startjaar van het studiejaar als geheel getal (2023 = studiejaar 2023/2024). "
+                "Peildatum 1 oktober."
+            ),
+        }
+        for dataset in ("p01hoinges", "p02ho1ejrs", "p03hoinschr")
+    },
+    "mbo_opleidingsaanbod": {
+        "OPLEIDINGSVORM": "Opleidingsvorm van het cohort: VT = voltijd, DT = deeltijd, DU = duaal.",
+    },
+}
+
+
+def column_definitions(columns: list[str], dataset_id: str | None = None) -> dict[str, str]:
     """Geeft bekende definities terug voor kolomnamen uit DUO-datasets.
+
+    Met ``dataset_id`` gaan definities die specifiek voor die dataset gelden voor op de
+    algemene definitie. Zonder ``dataset_id`` is het gedrag ongewijzigd.
 
     Returns dict met alleen de kolommen waarvoor een definitie bekend is.
     """
-    return {col: DUO_COLUMN_GLOSSARY[col] for col in columns if col in DUO_COLUMN_GLOSSARY}
+    scoped = DUO_COLUMN_GLOSSARY_SCOPED.get(dataset_id, {}) if dataset_id else {}
+    return {
+        col: scoped.get(col, DUO_COLUMN_GLOSSARY.get(col))
+        for col in columns
+        if col in scoped or col in DUO_COLUMN_GLOSSARY
+    }
 
 CKAN_BASE = "https://onderwijsdata.duo.nl/api/3/action"
 PORTAL_BASE = "https://onderwijsdata.duo.nl"

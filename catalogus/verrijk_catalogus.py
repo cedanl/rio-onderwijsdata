@@ -171,7 +171,7 @@ def enrich_duo_entry(entry: dict, annotaties: bool = False) -> dict:
         entry["_kolomtypes"] = kolomtypes
 
     try:
-        col_defs = _duo.column_definitions(last_df_columns) if last_df_columns else {}
+        col_defs = _duo.column_definitions(last_df_columns, entry.get("_ckan_id")) if last_df_columns else {}
         if col_defs:
             entry["_kolomdefinities"] = col_defs
     except Exception as e:
