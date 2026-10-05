@@ -22,6 +22,8 @@ from __future__ import annotations
 import io
 import httpx
 
+from .duo_notes import details_from_pkg
+
 DUO_COLUMN_GLOSSARY: dict[str, str] = {
     "STUDIEJAAR": "Studiejaar in formaat YYYY/YYYY (bijv. 2023/2024). Loopt van 1 augustus t/m 31 juli.",
     "BRIN_NUMMER": "Basisregistratie Instellingen-nummer: unieke code voor elke onderwijsinstelling.",
@@ -220,6 +222,7 @@ def _pkg_to_record(pkg: dict) -> dict:
         "_ckan_id": pkg["name"],
         "_resources": res_list,
         "_thema": _groups_to_categorie(groups),
+        **details_from_pkg(pkg),
     }
 
 
