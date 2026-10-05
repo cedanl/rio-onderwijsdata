@@ -138,7 +138,7 @@ def load(
     with zf.open(csvs[0]) as f:
         raw = f.read()
 
-    df, enc = lees_csv(raw, sep=";", decimal=",", low_memory=False, **kwargs)
+    df, enc = lees_csv(raw, defaults={"sep": ";", "decimal": ",", "low_memory": False}, **kwargs)
 
     peildatum = None
     if "PEILDATUM" in df.columns and len(df):

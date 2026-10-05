@@ -54,20 +54,20 @@ def test_verkeerde_separator_is_geen_succes(monkeypatch):
 def test_parserfout_wordt_niet_als_decodeerfout_gemeld():
     kapot = b'a;b\n"niet gesloten;1\n'
     with pytest.raises(_lezen.ParserFout):
-        _lezen.lees_csv(kapot, sep=";", engine="python")
+        _lezen.lees_csv(kapot, defaults={"sep": ";"}, engine="python")
     with pytest.raises(_lezen.ParserFout, match="niet te parseren"):
-        _lezen.lees_csv(b"", sep=";")
+        _lezen.lees_csv(b"", defaults={"sep": ";"})
 
 
 def test_echt_ondecodeerbaar_geeft_decodeerfout(monkeypatch):
     monkeypatch.setattr(_lezen, "ENCODINGS", ("utf-8",))
     with pytest.raises(_lezen.DecodeerFout):
-        _lezen.lees_csv(b"a;b\n\xff;1\n", sep=";")
+        _lezen.lees_csv(b"a;b\n\xff;1\n", defaults={"sep": ";"})
 
 
 def test_verwachte_kolommen_worden_afgedwongen():
     with pytest.raises(_lezen.SchemaFout, match="ontbreken"):
-        _lezen.lees_csv(b"a;b\n1;2\n", sep=";", verwacht=("REC_TYPE",))
+        _lezen.lees_csv(b"a;b\n1;2\n", defaults={"sep": ";"}, verwacht=("REC_TYPE",))
 
 
 def test_oude_exceptietypes_blijven_bruikbaar():
@@ -115,3 +115,24 @@ def test_uwv_limiet_op_uitgepakte_omvang(monkeypatch):
     _uwv(monkeypatch, zip_van("data.csv", UWV_CSV))
     with pytest.raises(_lezen.LimietFout):
         uwv.load()
+
+
+def test_gebruikerskwargs_overschrijven_defaults_zonder_typeerror(monkeypatch):
+    """Review F5: sep/encoding/decimal/low_memory van de gebruiker moeten blijven werken."""
+    csv = "opleiding;aantal\nA;1\n".encode("utf-8")
+    monkeypatch.setattr(roa.httpx, "get", lambda *a, **k: Resp(csv))
+    assert list(roa.load("ais2030", "uitkomsten", sep=";").columns) == ["opleiding", "aantal"]
+    df = roa.load("ais2030", "uitkomsten", encoding="utf-8")
+    assert df.attrs["bron"]["encoding"] == "utf-8"
+    monkeypatch.setattr(roa.httpx, "get", lambda *a, **k: Resp("a,b\n1.5,2\n".encode()))
+    assert roa.load("ais2030", 0, sep=",")["a"][0] == 1.5
+    _uwv(monkeypatch, zip_van("data.csv", UWV_CSV.decode().replace(",", ".")))
+    assert uwv.load(decimal=".")["OPLNIV_GEM"].iloc[0] == 3.5
+    _uwv(monkeypatch, zip_van("data.csv", UWV_CSV))
+    assert len(uwv.load(low_memory=True)) == 3
+    assert len(uwv.load(sep=";", encoding="utf-8")) == 3
+
+
+def test_opgegeven_encoding_wordt_niet_stil_vervangen():
+    with pytest.raises(_lezen.DecodeerFout):
+        _lezen.lees_csv("a;b\nCafé;1\n".encode("latin-1"), defaults={"sep": ";"}, encoding="utf-8")

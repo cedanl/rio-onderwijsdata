@@ -43,22 +43,27 @@ def herkomst(content: bytes, url: str | None) -> dict:
     return {"bron_url": url, "sha256": hashlib.sha256(content).hexdigest(), "bytes": len(content)}
 
 
-def lees_csv(content: bytes, *, sep: str, verwacht: tuple[str, ...] = (), **kwargs):
+def lees_csv(content: bytes, *, defaults: dict | None = None, verwacht: tuple[str, ...] = (), **kwargs):
     """Lees CSV-bytes als DataFrame.
 
-    Probeert alleen bij een ``UnicodeDecodeError`` de volgende encoding. Parserfouten stoppen
-    meteen als ``ParserFout``. Een tabel met één kolom terwijl de kopregel een andere separator
-    bevat, of waarin ``verwacht`` ontbreekt, geeft ``SchemaFout``.
+    ``defaults`` zijn de standaard ``read_csv``-opties van de aanroeper (bijv. ``sep``); ``kwargs``
+    van de gebruiker overschrijven ze, zoals voor deze PR. Is ``encoding`` opgegeven, dan wordt alleen
+    die gebruikt; anders probeert de loader bij een ``UnicodeDecodeError`` de volgende encoding.
+    Parserfouten stoppen meteen als ``ParserFout``. Een tabel met één kolom terwijl de kopregel een
+    andere separator bevat, of waarin ``verwacht`` ontbreekt, geeft ``SchemaFout``.
 
     Returns (DataFrame, gebruikte_encoding).
     """
     import pandas as pd
 
+    opties = {"sep": ",", **(defaults or {}), **kwargs}
+    sep = opties["sep"]
+    encodings = (opties.pop("encoding"),) if "encoding" in opties else ENCODINGS
     controleer_omvang(len(content), "CSV")
     laatste: UnicodeDecodeError | None = None
-    for enc in ENCODINGS:
+    for enc in encodings:
         try:
-            df = pd.read_csv(io.BytesIO(content), sep=sep, encoding=enc, **kwargs)
+            df = pd.read_csv(io.BytesIO(content), encoding=enc, **opties)
         except UnicodeDecodeError as e:
             laatste = e
             continue
@@ -66,7 +71,7 @@ def lees_csv(content: bytes, *, sep: str, verwacht: tuple[str, ...] = (), **kwar
             raise ParserFout(f"CSV niet te parseren met separator {sep!r}: {e}") from e
         _controleer_schema(df, content, enc, sep, verwacht)
         return df, enc
-    raise DecodeerFout(f"Niet te decoderen met {ENCODINGS}: {laatste}")
+    raise DecodeerFout(f"Niet te decoderen met {tuple(encodings)}: {laatste}")
 
 
 def _controleer_schema(df, content: bytes, enc: str, sep: str, verwacht: tuple[str, ...]) -> None:

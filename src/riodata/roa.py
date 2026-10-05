@@ -148,7 +148,7 @@ def load(
 
     from ._lezen import herkomst, lees_csv
 
-    df, enc = lees_csv(r.content, sep=";", **kwargs)
+    df, enc = lees_csv(r.content, defaults={"sep": ";"}, **kwargs)
     df.attrs["bron"] = {**herkomst(r.content, str(r.url)), "encoding": enc, "file_id": file_id}
     return df
 
