@@ -52,6 +52,12 @@ df = duo.load("p01hoinges", 1)           # WO ingeschrevenen per geslacht
 df = duo.load("p01hoinges", "wetenschappelijk")  # selectie op naam
 ```
 
+## Broncontrole
+
+Een wekelijkse workflow (`.github/workflows/broncontrole.yml`) vergelijkt de DUO CKAN-inventaris en de
+RIO-spec met de catalogus en meldt verschillen als issue. De catalogus wordt daarbij niet automatisch
+vernieuwd. RIO live, SBB, ROA, UWV en Inspectie worden nog niet gecontroleerd.
+
 ## Catalogus
 
 ```python
