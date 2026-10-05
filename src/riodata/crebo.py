@@ -11,13 +11,15 @@ Bouwt voort op ``sbb.resources("crebolijst")``; de bestaande ``sbb.load()`` blij
 Vereist ``openpyxl`` (``pip install 'riodata[sbb]'``).
 
 Ontwerpkeuzes:
-- CREBO-codes blijven strings. Een cel die in de XLSX als getal is opgeslagen heeft de
-  voorloopnullen al verloren; die worden niet geraden of aangevuld.
+- CREBO-codes blijven strings. In het echte bestand zijn ze deels getal en deels tekst met
+  niet-brekende spaties; die worden schoongemaakt. Voorloopnullen die in een numerieke cel al
+  verloren zijn, worden niet geraden of aangevuld.
 - Ontbrekende waarden worden ``None``, rijen blijven behouden. Dubbele codes (over cohorten)
   blijven bestaan; de lookup geeft ze terug in plaats van de eerste.
-- Bronkolommen blijven in ``bron`` bewaard. Kolomnamen worden via alias-lijsten (hieronder)
-  herkend; herkent een lijst de verplichte kolommen niet, dan volgt een ``CreboSchemaFout``
-  met de werkelijke kolomnamen, geen gok.
+- Bronkolommen blijven in ``bron`` bewaard. Herkent de loader de kopregel of het werkblad
+  "Complete lijst" niet, dan volgt een ``CreboSchemaFout`` met wat er wel staat, geen gok.
+- Geldigheid: de editie geldt vanaf de datum in de titelregel; einddata bestaan alleen per dossier
+  (werkblad "Vervallen") en staan dan in ``geldig_tot``.
 """
 from __future__ import annotations
 
@@ -30,19 +32,31 @@ import re
 from dataclasses import dataclass, field
 from pathlib import Path
 
-# Genormaliseerde kolomnaam -> herkende bronkoppen (lowercase, zonder spaties/streepjes).
-KOLOM_ALIASSEN: dict[str, tuple[str, ...]] = {
-    "crebo": ("crebo", "crebocode", "creboopleidingscode", "opleidingscode"),
-    "naam": ("naam", "opleidingsnaam", "kwalificatienaam", "omschrijving", "naamkwalificatie"),
-    "niveau": ("niveau", "kwalificatieniveau", "mboniveau"),
-    "geldig_van": ("ingangsdatum", "geldigvanaf", "geldigvan", "begindatum", "startdatum"),
-    "geldig_tot": ("einddatum", "geldigtot", "geldigtm", "vervaldatum", "uitgangsdatum"),
+# Het echte SBB-bestand (gecontroleerd op de edities april 2025, oktober 2025 en april 2026, plus
+# 2021): werkblad "Complete lijst" (in 2021 niet het eerste werkblad); de titelregel
+# ("Overzicht vastgestelde kwalificatiedossiers en kwalificaties geldig vanaf 01-08-2026") staat in
+# dezelfde rij als de kolomkoppen Opleidingscode (2021: Crebonummer), Kwalificatie, Niveau,
+# Prijsfactor, Soort opleiding, Beroepsvereisten, Leerweg. Daaronder staat een tweede kopregel voor
+# het dossier (Opleidingscode, Prijsfactor, Kwalificatiedossier) en rijen voor opleidingsdomeinen.
+# Codes zijn deels getal, deels tekst met niet-brekende spaties ('25950\xa0'). Er is geen begin- of
+# einddatum per kwalificatie: de geldigheid is die van de editie (titelregel); einddata staan alleen
+# per dossier in het werkblad "Vervallen".
+WERKBLAD = "complete lijst"
+VERVALLEN = "vervallen"
+CODE_KOPPEN = ("opleidingscode", "crebonummer", "crebocode")
+KOLOMKOPPEN = {
+    "naam": ("kwalificatie",),
+    "niveau": ("niveau",),
+    "prijsfactor": ("prijsfactor",),
+    "soort_opleiding": ("soortopleiding",),
+    "beroepsvereisten": ("beroepsvereisten",),
+    "leerweg": ("leerweg",),
 }
 VERPLICHT = ("crebo", "naam")
 MIN_RIJEN = 100  # een CREBO-lijst met minder rijen is een afgekapt of verkeerd bestand
 XLSX_CONTENTTYPES = (
     "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet",
-    "application/octet-stream",
+    "application/octet-stream",  # zo levert kwalificatie-mijn.s-bb.nl sommige edities uit
 )
 
 
@@ -66,26 +80,12 @@ class CreboLijst:
     bron_url: str | None = None
     sha256: str | None = None
     gecontroleerd_op: str | None = None
-    kolomtoewijzing: dict = field(default_factory=dict)
+    geldig_vanaf: str | None = None
+    vervallen: dict = field(default_factory=dict)
 
 
 def _norm(kop) -> str:
-    return re.sub(r"[\s_\-./]", "", str(kop or "").lower())
-
-
-def _toewijzing(koppen: list[str]) -> dict[str, str]:
-    """Wijs genormaliseerde namen toe aan bronkoppen; bij dubbelzinnigheid een fout."""
-    out: dict[str, str] = {}
-    for doel, aliassen in KOLOM_ALIASSEN.items():
-        hits = [k for k in koppen if _norm(k) in aliassen]
-        if len(hits) > 1:
-            raise CreboSchemaFout(f"Kolom '{doel}' is dubbelzinnig: {hits}")
-        if hits:
-            out[doel] = hits[0]
-    ontbreekt = [d for d in VERPLICHT if d not in out]
-    if ontbreekt:
-        raise CreboSchemaFout(f"Verplichte kolommen {ontbreekt} niet gevonden. Aanwezige kolommen: {koppen}")
-    return out
+    return re.sub(r"[\s\u202f\xa0_\-./]", "", str(kop or "").lower())
 
 
 def _tekst(v) -> str | None:
@@ -93,8 +93,21 @@ def _tekst(v) -> str | None:
         return None
     if isinstance(v, float) and v.is_integer():
         v = int(v)  # 25604.0 uit een numerieke cel
-    s = str(v).strip()
+    s = str(v).replace("\xa0", " ").replace("\u202f", " ").strip()
     return s or None
+
+
+def _getal(v) -> float | None:
+    t = _tekst(v)
+    try:
+        return float(t.replace(",", ".")) if t else None
+    except ValueError:
+        return None
+
+
+def _is_code(v) -> bool:
+    t = _tekst(v)
+    return bool(t) and t.isdigit()
 
 
 def _datum(v) -> str | None:
@@ -104,7 +117,7 @@ def _datum(v) -> str | None:
         return v.date().isoformat()
     if isinstance(v, dt.date):
         return v.isoformat()
-    s = str(v).strip()
+    s = _tekst(v) or ""
     for fmt in ("%Y-%m-%d", "%d-%m-%Y", "%d/%m/%Y"):
         try:
             return dt.datetime.strptime(s, fmt).date().isoformat()
@@ -113,8 +126,87 @@ def _datum(v) -> str | None:
     return s  # niet te lezen: ruwe tekst behouden, niet weggooien
 
 
-def parse_xlsx(content: bytes, editie: str, *, bron_url: str | None = None, sheet: str | None = None) -> CreboLijst:
-    """Lees een CREBO-XLSX naar een genormaliseerde tabel (zonder omvangscontrole)."""
+def _werkblad(wb, naam: str):
+    for ws in wb.worksheets:
+        if ws.title.strip().lower() == naam:
+            return ws
+    return None
+
+
+def _rijen(ws) -> list[tuple]:
+    return [tuple(r) for r in ws.iter_rows(values_only=True)]
+
+
+def _kopregel(rijen: list[tuple]) -> tuple[int, dict[str, int]]:
+    """Vind de kopregel: de rij met een codekop plus Kwalificatie en Niveau."""
+    for i, rij in enumerate(rijen[:15]):
+        pos: dict[str, int] = {}
+        for j, c in enumerate(rij):
+            n = _norm(c)
+            if n in CODE_KOPPEN and "crebo" not in pos:
+                pos["crebo"] = j
+            for doel, aliassen in KOLOMKOPPEN.items():
+                if n in aliassen and doel not in pos:
+                    pos[doel] = j
+        if all(k in pos for k in VERPLICHT) and "niveau" in pos:
+            return i, pos
+    voorbeeld = [[_tekst(c) for c in r[:10]] for r in rijen[:4]]
+    raise CreboSchemaFout(
+        "Geen kopregel met Opleidingscode/Crebonummer, Kwalificatie en Niveau gevonden. "
+        f"Eerste rijen: {voorbeeld}"
+    )
+
+
+def _dossierkolommen(rijen: list[tuple], na: int) -> dict[str, int]:
+    """Tweede kopregel (Opleidingscode, Prijsfactor, Kwalificatiedossier) voor de dossierkolommen."""
+    for rij in rijen[na + 1: na + 4]:
+        pos = {}
+        for j, c in enumerate(rij):
+            n = _norm(c)
+            if n in CODE_KOPPEN and "code" not in pos:
+                pos["code"] = j
+            elif n == "kwalificatiedossier":
+                pos["naam"] = j
+        if "naam" in pos:
+            return pos
+    return {}
+
+
+def _vervallen(wb) -> dict[str, dict]:
+    ws = _werkblad(wb, VERVALLEN)
+    if ws is None:
+        return {}
+    rijen = _rijen(ws)
+    for i, rij in enumerate(rijen[:10]):
+        koppen = [_norm(c) for c in rij]
+        if any(k.startswith("opleidingscode") or k.startswith("crebo") for k in koppen) and "dossiernaam" in koppen:
+            idx = {k: j for j, k in enumerate(koppen) if k}
+            code_j = next(j for k, j in idx.items() if k.startswith("opleidingscode") or k.startswith("crebo"))
+            out = {}
+            for r in rijen[i + 1:]:
+                if not _is_code(r[code_j]):
+                    continue
+                def cel(k):
+                    j = idx.get(k)
+                    return r[j] if j is not None and j < len(r) else None
+                out[_tekst(r[code_j])] = {
+                    "dossiernaam": _tekst(cel("dossiernaam")),
+                    "einde_instroom": _datum(cel("datumeindeinstroom")),
+                    "einde_opleiding": _datum(cel("datumeindeopleiding")),
+                    "vervangen_door": _tekst(cel("wordtvervangendoor")),
+                }
+            return out
+    return {}
+
+
+def parse_xlsx(content: bytes, editie: str, *, bron_url: str | None = None) -> CreboLijst:
+    """Lees een SBB-CREBO-XLSX naar een genormaliseerde tabel (zonder omvangscontrole).
+
+    Per kwalificatierij: ``crebo``, ``naam``, ``niveau``, ``prijsfactor``, ``soort_opleiding``,
+    ``beroepsvereisten``, ``leerweg``, ``dossier_code``, ``dossier_naam``, ``domein``,
+    ``geldig_van`` (begin van de editie), ``geldig_tot`` (einde opleiding van het dossier als dat in
+    "Vervallen" staat), ``dossier_vervallen`` en ``bron`` (de ruwe cellen).
+    """
     try:
         from openpyxl import load_workbook
     except ImportError:
@@ -123,35 +215,68 @@ def parse_xlsx(content: bytes, editie: str, *, bron_url: str | None = None, shee
         wb = load_workbook(io.BytesIO(content), read_only=True, data_only=True)
     except Exception as e:  # zip/xml-fout in het bestand zelf
         raise CreboSchemaFout(f"Geen leesbaar XLSX-bestand: {e}") from e
-    ws = wb[sheet] if sheet else wb.worksheets[0]
-    it = ws.iter_rows(values_only=True)
-    koppen: list[str] = []
-    for rij in it:  # eerste niet-lege rij is de kop
-        if any(c is not None and str(c).strip() for c in rij):
-            koppen = [str(c).strip() if c is not None else "" for c in rij]
-            break
-    if not koppen:
-        raise CreboSchemaFout("Bestand bevat geen kopregel")
-    toe = _toewijzing(koppen)
-    pos = {k: i for i, k in enumerate(koppen)}
-    rijen = []
-    for rij in it:
-        if not any(c is not None and str(c).strip() for c in rij):
+    ws = _werkblad(wb, WERKBLAD)
+    if ws is None:
+        raise CreboSchemaFout(f"Werkblad 'Complete lijst' ontbreekt. Aanwezig: {[w.title for w in wb.worksheets]}")
+    rijen = _rijen(ws)
+    kop_i, pos = _kopregel(rijen)
+    dossier = _dossierkolommen(rijen, kop_i)
+    titel = _tekst(rijen[kop_i][0]) or _tekst(rijen[0][0]) or ""
+    m = re.search(r"geldig vanaf\s+(\d{1,2}-\d{1,2}-\d{4})", titel, re.I)
+    geldig_vanaf = _datum(m.group(1)) if m else None
+    vervallen = _vervallen(wb)
+    koppen = {j: _tekst(c) for j, c in enumerate(rijen[kop_i]) if _tekst(c) and j != 0}
+
+    geldig_vanaf_sectie = geldig_vanaf
+    uit = []
+    domein = d_code = d_naam = None
+    volgt_domein = False
+    for rij in rijen[kop_i + 1:]:
+        cel = lambda j: rij[j] if j is not None and j < len(rij) else None  # noqa: E731
+        if not _is_code(cel(pos["crebo"])):
+            titel_rij = _tekst(cel(0)) or ""
+            tekst_naam = _tekst(cel(pos["naam"]))
+            if "geldig vanaf" in titel_rij.lower():
+                # Nieuwe sectie (bijv. Entree) met eigen kopregel en eigen ingangsdatum.
+                m = re.search(r"geldig vanaf\s+(\d{1,2}-\d{1,2}-\d{4})", titel_rij, re.I)
+                geldig_vanaf_sectie = _datum(m.group(1)) if m else geldig_vanaf_sectie
+                domein = None
+            elif tekst_naam and tekst_naam.lower() == "opleidingsdomein":
+                volgt_domein = True
+            elif tekst_naam and volgt_domein:
+                domein = tekst_naam  # bijv. '1. Bouw en infra   79000'
+                volgt_domein = False
             continue
-        bron = {k: (rij[i] if i < len(rij) else None) for k, i in pos.items() if k}
-        rec = {
-            "crebo": _tekst(bron.get(toe["crebo"])),
-            "naam": _tekst(bron.get(toe["naam"])),
-            "niveau": _tekst(bron.get(toe["niveau"])) if "niveau" in toe else None,
-            "geldig_van": _datum(bron.get(toe["geldig_van"])) if "geldig_van" in toe else None,
-            "geldig_tot": _datum(bron.get(toe["geldig_tot"])) if "geldig_tot" in toe else None,
+        if dossier:
+            naam = _tekst(cel(dossier["naam"]))
+            code = _tekst(cel(dossier.get("code")))
+            if code and _is_code(code):
+                d_code, d_naam = code, naam
+            elif naam and naam != d_naam:
+                d_code, d_naam = None, naam
+        ve = vervallen.get(d_code) if d_code else None
+        uit.append({
+            "crebo": _tekst(cel(pos["crebo"])),
+            "naam": _tekst(cel(pos["naam"])),
+            "niveau": _tekst(cel(pos["niveau"])),
+            "prijsfactor": _getal(cel(pos.get("prijsfactor"))),
+            "soort_opleiding": _tekst(cel(pos.get("soort_opleiding"))),
+            "beroepsvereisten": _tekst(cel(pos.get("beroepsvereisten"))),
+            "leerweg": _tekst(cel(pos.get("leerweg"))),
+            "dossier_code": d_code,
+            "dossier_naam": d_naam,
+            "domein": re.sub(r"\s+", " ", domein) if domein else None,
+            "geldig_van": geldig_vanaf_sectie,
+            "geldig_tot": ve["einde_opleiding"] if ve else None,
+            "dossier_vervallen": ve,
             "editie": editie,
-            "bron": {k: (v.isoformat() if isinstance(v, (dt.date, dt.datetime)) else v) for k, v in bron.items()},
-        }
-        rijen.append(rec)
+            "bron": {koppen[j]: (cel(j).isoformat() if isinstance(cel(j), (dt.date, dt.datetime)) else cel(j))
+                     for j in koppen},
+        })
     return CreboLijst(
-        editie=editie, rijen=tuple(rijen), kolommen=tuple(k for k in koppen if k),
-        bron_url=bron_url, sha256=hashlib.sha256(content).hexdigest(), kolomtoewijzing=toe,
+        editie=editie, rijen=tuple(uit), kolommen=tuple(koppen.values()),
+        bron_url=bron_url, sha256=hashlib.sha256(content).hexdigest(),
+        geldig_vanaf=geldig_vanaf, vervallen=vervallen,
     )
 
 
