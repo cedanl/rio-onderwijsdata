@@ -132,3 +132,33 @@ class TestGecommitteerdeData:
 
     def test_catalogus_is_deterministisch(self):
         assert riodata.catalog(source="all") == riodata.catalog(source="all")
+
+
+class TestVerouderdMetBasisSchema:
+    """Review F1 route 1: de echte basisrecords bevatten zelf _kolommen/_kolomtypes."""
+
+    def _echt_basisrecord(self, ckan_id="p01hoinges"):
+        base = json.loads(files("riodata.data").joinpath("duo_resources.json").read_text(encoding="utf-8"))
+        return next(r for r in base if r["_ckan_id"] == ckan_id)
+
+    def test_verouderd_laat_geen_oude_afgeleide_velden_uit_de_basis_staan(self):
+        base = self._echt_basisrecord()
+        assert "_kolommen" in base                                    # de echte vorm: schema zit al in de basis
+        oude_verrijking = {**base, STAMP: stamp(base, VERRIJKT_DUO), "_kolommen": {"oud": 1}, "_kolomtypes": {"oud": "x"}}
+        gewijzigd = {**base, "periode": "2030-2031"}
+        (rec,) = merge([gewijzigd], [oude_verrijking], VERRIJKT_DUO)
+        assert rec[STATUS] == "verouderd"
+        for veld in _catalog.AFGELEID:
+            assert veld not in rec, veld
+        assert rec["periode"] == "2030-2031"          # bronvelden blijven
+
+    def test_zonder_verrijking_blijft_het_basisschema_staan(self):
+        base = self._echt_basisrecord()
+        (rec,) = merge([base], [], VERRIJKT_DUO)
+        assert rec["_kolommen"] == base["_kolommen"] and STATUS not in rec
+
+    def test_annotaties_uit_de_basis_blijven_bij_verouderd(self):
+        base = {"_rio_resource": "r", "tags": ["a"], "_kolomtypes": {"x": "tekst"}}
+        oud = {"_rio_resource": "r", "tags": ["b"], STAMP: stamp({**base, "bron": "oud"}, VERRIJKT_RIO)}
+        (rec,) = merge([base], [oud], VERRIJKT_RIO)
+        assert rec[STATUS] == "verouderd" and rec["tags"] == ["a"] and "_kolomtypes" not in rec

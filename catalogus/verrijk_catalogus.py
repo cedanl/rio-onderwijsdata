@@ -123,6 +123,7 @@ def enrich_duo_entry(entry: dict, annotaties: bool = False) -> dict:
     kolommen = {}
     kolomtypes = {}
     last_df_columns = []
+    mislukt = []
 
     for res_idx, res in enumerate(resources[:5]):
         res_naam = res.get("naam", f"resource_{res_idx}")
@@ -131,6 +132,7 @@ def enrich_duo_entry(entry: dict, annotaties: bool = False) -> dict:
             last_df_columns = list(df.columns)
         except Exception as e:
             print(f" WARN {res_naam}: {e}", end="")
+            mislukt.append(res_naam)
             continue
 
         res_kolommen = {}
@@ -160,6 +162,9 @@ def enrich_duo_entry(entry: dict, annotaties: bool = False) -> dict:
             kolommen[res_naam] = res_kolommen
             kolomtypes[res_naam] = res_types
 
+    if mislukt:
+        # Een deelresultaat is geen vers schema: de aanroeper behoudt de oude verrijking als verouderd.
+        raise RuntimeError(f"resources niet gelezen: {mislukt}")
     if kolommen:
         entry["_kolommen"] = kolommen
     if kolomtypes:
@@ -281,13 +286,20 @@ def process_source(entries, enrich_fn, output_path, args, source_name, verrijkt)
         print(f"[{idx}/{len(entries)}] {naam[:60]} ({status})", end="", flush=True)
 
         try:
-            enriched = enrich_fn(dict(entry), annotaties=args.annotaties)
+            # De lezer start zonder afgeleide velden uit het basisbestand: alles wat er na afloop in zit,
+            # is in deze run opgehaald (anders telt een oud schema als geslaagde aanwezigheidstest).
+            invoer = {k: v for k, v in entry.items() if k not in _catalog.AFGELEID}
+            enriched = enrich_fn(invoer, annotaties=args.annotaties)
             nieuw = {k: enriched[k] for k in verrijkt if k in enriched}
             if not any(k in nieuw for k in _catalog.AFGELEID):
                 # Niets uit de echte data gelezen: oude verrijking behouden, niet als actueel stempelen.
                 raise RuntimeError("geen schema-informatie opgehaald")
             nieuw[_catalog.STAMP] = _catalog.stamp(entry, verrijkt)
-            existing[entry_id] = {**existing.get(entry_id, {}), **nieuw}
+            # De afgeleide laag wordt vervangen, niet bijgemengd: oude sleutels (bijv. definities van
+            # verdwenen kolommen) mogen niet onder een nieuwe stempel blijven staan.
+            oud = {k: v for k, v in existing.get(entry_id, {}).items()
+                   if k not in _catalog.AFGELEID and k != _catalog.STAMP}
+            existing[entry_id] = {**oud, **nieuw}
             print(f" OK ({len(nieuw.get('_kolommen', {}))} kolommen)")
         except Exception as e:
             print(f" FOUT: {e}")

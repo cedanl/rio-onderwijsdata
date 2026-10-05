@@ -63,7 +63,9 @@ def merge(base: list[dict], enriched: list[dict], verrijkt: frozenset[str]) -> l
     - Volgorde en bestaan van records volgen het basisbestand.
     - Bronvelden komen altijd uit de basis; nieuwe basisvelden verschijnen direct.
     - Afgeleide velden en annotaties komen uit de verrijking, behalve als die verouderd is
-      (stempel past niet bij de bron): dan blijven ze weg en staat de status op ``verouderd``.
+      (stempel past niet bij de bron): dan blijft de verrijking weg, worden ook de afgeleide
+      velden uit het basisbestand (die bij een oude bron horen) verwijderd en staat de status
+      op ``verouderd``. Annotaties uit de basis blijven staan; die zijn geen schema.
     - Een verrijking zonder stempel (oudere bestanden) blijft gelden, als ``ongecontroleerd``.
     """
     per_id = {record_id(e): e for e in enriched if record_id(e)}
@@ -72,7 +74,10 @@ def merge(base: list[dict], enriched: list[dict], verrijkt: frozenset[str]) -> l
         e = per_id.get(record_id(b))
         status = verrijking_status(b, e, verrijkt)
         record = {k: v for k, v in b.items() if k not in (STAMP, STATUS)}
-        if e is not None and status != "verouderd":
+        if e is not None and status == "verouderd":
+            for k in AFGELEID:
+                record.pop(k, None)
+        elif e is not None:
             record.update({k: e[k] for k in verrijkt if k in e})
         if e is not None:
             record[STATUS] = status

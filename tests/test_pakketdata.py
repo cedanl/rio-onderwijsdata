@@ -1,5 +1,6 @@
 """Pakketdata: alle JSON-assets zijn parsebaar en elke bron levert een catalogus."""
 import json
+import re
 from importlib.resources import files
 
 import pytest
@@ -13,7 +14,13 @@ def test_alle_json_assets_zijn_geldig():
     bestanden = [f for f in files("riodata.data").iterdir() if f.name.endswith(".json")]
     assert len(bestanden) >= 9
     for f in bestanden:
-        assert isinstance(json.loads(f.read_text(encoding="utf-8")), list), f.name
+        data = json.loads(f.read_text(encoding="utf-8"))
+        # Elk asset volgens zijn eigen vorm: catalogusbestanden zijn lijsten van records; andere assets
+        # (bijv. een filtercontract) mogen een object zijn.
+        if re.search(r"_resources(_ai|_enriched)?\.json$", f.name):
+            assert isinstance(data, list), f.name
+        else:
+            assert isinstance(data, (list, dict)), f.name
 
 
 @pytest.mark.parametrize("bron", BRONNEN)
