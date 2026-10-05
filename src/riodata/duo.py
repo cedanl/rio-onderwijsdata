@@ -97,10 +97,12 @@ DUO_COLUMN_GLOSSARY_SCOPED: dict[str, dict[str, str]] = _samenvoegen(
     _scoped(_HO_1CIJFER, {
         "GESLACHT": "Geslacht: MAN, VROUW of ONBEKEND.",
         "SOORT_INSTELLING": "Soort instelling zoals gepubliceerd: 'reguliere inst.' of 'WO kleine univ.'.",
-        # VT/DT/DU: domein in de data (volledige scan); betekenis volgens de gangbare 1cijferHO-codes.
+        # VT/DT/DU: domein in de data (volledige scan) én letterlijk in de notes van p01-p04:
+        # "De betekenis van de waarden in het attribuut OPLEIDINGSVORM is VT voltijd onderwijs,
+        # DT deeltijd onderwijs en DU duaal onderwijs."
         "OPLEIDINGSVORM": (
-            "Opleidingsvorm: VT (voltijd), DT (deeltijd) of DU (duaal). De codes staan zo in de data; de "
-            "uitleg volgt de gangbare 1cijferHO-codes en staat niet in de dataset zelf."
+            "Opleidingsvorm hoger onderwijs: VT = voltijd, DT = deeltijd, DU = duaal "
+            "(bron: DUO-datasetbeschrijving)."
         ),
     }),
     _scoped(("p01hoinges", "p03hoinschr"), {
@@ -122,14 +124,14 @@ DUO_COLUMN_GLOSSARY_SCOPED: dict[str, dict[str, str]] = _samenvoegen(
             "Geen vooropleidingsdiploma."
         ),
     }},
-    # LEERWEG: volledige domeinen 2026-10-05. BBL en BOL volgen de gangbare mbo-termen; VT/DT
-    # (voltijd/deeltijd), EX (extraneus) en OVO zijn niet in de dataset zelf gedefinieerd.
+    # LEERWEG: volledige domeinen 2026-10-05. De codes zelf staan niet in de notes; die noemen wel
+    # de groepen "bol en bbl" en "examendeelnemers (niet-bekostigd)". VT/DT en OVO zijn niet gedefinieerd.
     _scoped(_MBO_1CIJFER, {
         "LEERWEG": (
             "Leerwegcode zoals gepubliceerd, o.a. BBL (beroepsbegeleidende leerweg), BOL, BOLVT en BOLDT "
-            "(beroepsopleidende leerweg; VT/DT = voltijd/deeltijd, afgeleid uit de code), EX (extraneus; "
-            "afgeleid) en in gediplomeerde-mbo-studenten ook OVO (betekenis niet in de bron). "
-            "Niet VOLTIJD/DEELTIJD/DUAAL."
+            "(beroepsopleidende leerweg; VT/DT = voltijd/deeltijd, afgeleid uit de code), EX "
+            "(examendeelnemers, niet-bekostigd; de notes noemen die groep, de code is afgeleid) en in "
+            "gediplomeerde-mbo-studenten ook OVO (betekenis niet in de bron). Niet VOLTIJD/DEELTIJD/DUAAL."
         ),
     }),
     _scoped(("mbo-studenten-per-instelling", "instromende-mbo-studenten"), {

@@ -15,14 +15,14 @@ Niet op PyPI: installeer vanaf GitHub op een vaste release-tag (gebruik niet `ma
 reproduceerbare omgevingen):
 
 ```bash
-pip install "riodata @ git+https://github.com/cedanl/rio-onderwijsdata@v0.4.0"             # alleen clients (httpx)
-pip install "riodata[analyse] @ git+https://github.com/cedanl/rio-onderwijsdata@v0.4.0"    # + pandas, matplotlib, openpyxl
-pip install "riodata[duo] @ git+https://github.com/cedanl/rio-onderwijsdata@v0.4.0"        # + openpyxl (DUO Excel)
-pip install "riodata[sbb] @ git+https://github.com/cedanl/rio-onderwijsdata@v0.4.0"        # + openpyxl (riodata.crebo)
-pip install "riodata[catalogus] @ git+https://github.com/cedanl/rio-onderwijsdata@v0.4.0"  # + anthropic, pyyaml
+pip install "riodata @ git+https://github.com/cedanl/rio-onderwijsdata@v0.4.1"             # alleen clients (httpx)
+pip install "riodata[analyse] @ git+https://github.com/cedanl/rio-onderwijsdata@v0.4.1"    # + pandas, matplotlib, openpyxl
+pip install "riodata[duo] @ git+https://github.com/cedanl/rio-onderwijsdata@v0.4.1"        # + openpyxl (DUO Excel)
+pip install "riodata[sbb] @ git+https://github.com/cedanl/rio-onderwijsdata@v0.4.1"        # + openpyxl (riodata.crebo)
+pip install "riodata[catalogus] @ git+https://github.com/cedanl/rio-onderwijsdata@v0.4.1"  # + anthropic, pyyaml
 ```
 
-Met uv: `uv add "riodata[analyse] @ git+https://github.com/cedanl/rio-onderwijsdata@v0.4.0"`.
+Met uv: `uv add "riodata[analyse] @ git+https://github.com/cedanl/rio-onderwijsdata@v0.4.1"`.
 Controle na installatie: `python -c "import riodata; print(riodata.__version__, riodata.contract.catalog_manifest()['inhoudshash'])"`.
 
 ## RIO LOD API
