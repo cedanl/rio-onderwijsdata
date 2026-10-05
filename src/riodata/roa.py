@@ -126,6 +126,9 @@ def load(
                     of file_id (int > 1000)
         **kwargs:   Doorgegeven aan pd.read_csv()
 
+    Bron-URL, checksum en encoding staan in ``df.attrs['bron']``. Download-, decodeer-,
+    parser- en schemafouten zijn aparte uitzonderingen (zie ``riodata._lezen``).
+
     Vereist pandas (uv add 'riodata[analyse]').
     """
     try:
@@ -143,14 +146,11 @@ def load(
     )
     r.raise_for_status()
 
-    content = r.content
-    for enc in ("utf-8-sig", "latin-1", "cp1252"):
-        try:
-            kw = {"sep": ";", "encoding": enc, **kwargs}
-            return pd.read_csv(io.BytesIO(content), **kw)
-        except (UnicodeDecodeError, Exception):
-            continue
-    raise RuntimeError(f"Kon ROA bestand {file_id} niet decoderen.")
+    from ._lezen import herkomst, lees_csv
+
+    df, enc = lees_csv(r.content, defaults={"sep": ";"}, **kwargs)
+    df.attrs["bron"] = {**herkomst(r.content, str(r.url)), "encoding": enc, "file_id": file_id}
+    return df
 
 
 # ── intern ────────────────────────────────────────────────────────────────────

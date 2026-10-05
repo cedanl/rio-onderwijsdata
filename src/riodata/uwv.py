@@ -100,7 +100,7 @@ def load(
     """Download en laad een UWV Open Match snapshot als DataFrame.
 
     Args:
-        date:     "latest" (meest recent), of datum als "YYYY-MM-DD" of "YYYYMMDD"
+        date:     "latest" (laatste historische snapshot, niet vandaag), of datum als "YYYY-MM-DD" of "YYYYMMDD"
         rec_type: Filter op "Vacature" of "Werkzoekende" (default: beide)
         **kwargs: Doorgegeven aan pd.read_csv()
 
@@ -123,25 +123,40 @@ def load(
     r = httpx.get(snap["url"], timeout=120, follow_redirects=True)
     r.raise_for_status()
 
-    zf = zipfile.ZipFile(io.BytesIO(r.content))
-    csvs = [n for n in zf.namelist() if n.endswith(".csv")]
+    from ._lezen import ParserFout, SchemaFout, controleer_omvang, herkomst, lees_csv
+
+    controleer_omvang(len(r.content), "UWV ZIP")
+    try:
+        zf = zipfile.ZipFile(io.BytesIO(r.content))
+    except zipfile.BadZipFile as e:
+        raise ParserFout(f"UWV-download is geen geldige ZIP: {e}") from e
+    csvs = [i for i in zf.infolist() if i.filename.lower().endswith(".csv")]
     if not csvs:
-        raise RuntimeError("Geen CSV gevonden in UWV ZIP.")
+        raise ParserFout(f"Geen CSV in UWV ZIP. Bestanden: {zf.namelist()}")
+    controleer_omvang(csvs[0].file_size, f"Uitgepakte CSV {csvs[0].filename}")
 
     with zf.open(csvs[0]) as f:
         raw = f.read()
 
-    for enc in ("utf-8-sig", "latin-1", "cp1252"):
-        try:
-            kw = {"sep": ";", "encoding": enc, "decimal": ",", "low_memory": False, **kwargs}
-            df = pd.read_csv(io.BytesIO(raw), **kw)
-            break
-        except UnicodeDecodeError:
-            continue
-    else:
-        raise RuntimeError("Kon UWV CSV niet decoderen.")
+    df, enc = lees_csv(raw, defaults={"sep": ";", "decimal": ",", "low_memory": False}, **kwargs)
+
+    peildatum = None
+    if "PEILDATUM" in df.columns and len(df):
+        peildatum = str(df["PEILDATUM"].dropna().astype(str).max()) if df["PEILDATUM"].notna().any() else None
+    df.attrs["snapshot"] = {
+        "gevraagd": date,
+        "peildatum": peildatum,
+        "created": snap["created"],
+        "status": "historisch_archief",
+        "opmerking": "Gearchiveerde UWV-snapshot (publicatie liep t/m mei 2023); geen actuele vacatures.",
+        **herkomst(r.content, snap["url"]),
+        "encoding": enc,
+        "bestand": csvs[0].filename,
+    }
 
     if rec_type:
+        if "REC_TYPE" not in df.columns:
+            raise SchemaFout(f"Kolom REC_TYPE ontbreekt voor filter rec_type. Aanwezig: {list(df.columns)}")
         df = df[df["REC_TYPE"].str.lower() == rec_type.lower()]
 
     return df
