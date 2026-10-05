@@ -52,7 +52,12 @@
         "format": "ODS"
       }
     ],
-    "_thema": "Kwaliteit"
+    "_thema": "Kwaliteit",
+    "_scope": {
+      "mbo_hbo_wo": "buiten_scope",
+      "reden": "Beschrijft PO/SO/VO, niet mbo/hbo/wo.",
+      "besluit": "scopebesluit RIO-05 (issue #18)"
+    }
   },
   {
     "leverancier": "Inspectie van het Onderwijs",
@@ -105,6 +110,11 @@
         "format": "ODS"
       }
     ],
-    "_thema": "Kwaliteit"
+    "_thema": "Kwaliteit",
+    "_scope": {
+      "mbo_hbo_wo": "buiten_scope",
+      "reden": "Beschrijft PO/SO/VO, niet mbo/hbo/wo.",
+      "besluit": "scopebesluit RIO-05 (issue #18)"
+    }
   }
 ]
