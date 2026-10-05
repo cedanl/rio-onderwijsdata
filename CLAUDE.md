@@ -81,7 +81,8 @@ duo.resources("studentprognoses-mbo-per-instelling")
 
 # Laad als DataFrame (vereist pandas)
 df = duo.load("studentprognoses-mbo-per-instelling", 0)          # index
-df = duo.load("p01hoinges", "wetenschappelijk")                   # naam-substring
+df = duo.load("p01hoinges", "b88721ef-9787-4299-afc7-5d74380d29ba")  # resource-UUID (stabiel)
+duo.resource_schemas("p01hoinges")                                # officiële kolomtypes, offline
 ```
 
 DUO-datasets bestaan uit meerdere CSV-bestanden per dimensie-combinatie
@@ -248,7 +249,15 @@ duo.resources("dataset-id")
 # Returns: [{"naam": ..., "url": ..., "format": ..., "id": ...}]
 
 duo.load("dataset-id", resource=0, skiprows=None, **kwargs)
-# Download en laad als DataFrame. resource: int (index) of str (naam-substring).
+# Download en laad als DataFrame. resource: int (index), resource-UUID, exacte naam of
+# unieke naam-substring. Ambigue substring → AmbigueResource met .opties.
+
+duo.resource_schemas("dataset-id") / duo.resource_schema("dataset-id", resource)
+# Offline schema per resource: Datastore-types, definities, volledig domein of steekproef.
+
+from riodata import contract
+contract.catalog_records(sector="mbo"); contract.get_dataset("duo:p01hoinges")
+# Datasetcontract (RIO-03): stabiele IDs, scopeprofiel, sectorselectie, capabilities.
 # Vereist pandas + openpyxl voor .xlsx; pandas is voldoende voor .csv.
 ```
 

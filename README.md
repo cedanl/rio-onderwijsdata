@@ -54,8 +54,30 @@ duo.resources("studentprognoses-mbo-per-instelling")
 # Data laden als DataFrame (vereist pandas)
 df = duo.load("studentprognoses-mbo-per-instelling", "mbo-studentenprognose_instelling")
 df = duo.load("p01hoinges", 1)           # WO ingeschrevenen per geslacht
-df = duo.load("p01hoinges", "wetenschappelijk")  # selectie op naam
+df = duo.load("p01hoinges", "b88721ef-9787-4299-afc7-5d74380d29ba")  # op CKAN resource-UUID (stabiel)
+# Een naam-substring die op meer resources past geeft AmbigueResource met de opties.
+
+# Officiële kolomtypes per resource (offline; '0106' blijft tekst)
+duo.resource_schemas("p01hoinges")
 ```
+
+## Datasetcontract
+
+Modelonafhankelijk contract voor alle zes bronnen, afgestemd op `onderwijsdata.contract` (CBS):
+
+```python
+from riodata import contract
+
+contract.catalog_records(sector="mbo")            # alleen datasets waar mbo 'supported' is
+contract.get_dataset("duo:p01hoinges")             # of de alias "p01hoinges"
+contract.get_resource("duo:p01hoinges", "c454d7e1-b9b1-4460-b9ff-55938c85788e")
+contract.scope_review()                            # dekking nog onbekend
+contract.catalog_manifest()                        # versie, inhoudshash, aantallen
+```
+
+Dekking is `supported`/`unsupported`/`unknown`, nooit afgeleid uit een ontbrekend veld. HO-breed
+(`ho_breed`) staat los van hbo en wo; `sectorselectie[sector].verplicht` zegt wanneer een sector
+alleen met een filter (RIO-type), resourcekeuze of rijselectie (DUO) leverbaar is.
 
 ## Broncontrole
 
