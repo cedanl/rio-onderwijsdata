@@ -7,9 +7,10 @@ from riodata import duo
 STARTJAAR_DATASETS = ("p01hoinges", "p02ho1ejrs", "p03hoinschr")
 
 
-def test_zonder_dataset_blijft_gedrag_gelijk():
-    defs = duo.column_definitions(["STUDIEJAAR", "ONBEKEND"])
-    assert defs == {"STUDIEJAAR": duo.DUO_COLUMN_GLOSSARY["STUDIEJAAR"]}
+def test_zonder_dataset_geen_studiejaardefinitie():
+    """STUDIEJAAR komt alleen in p01-p03 voor (als startjaar); 'YYYY/YYYY' klopte nergens."""
+    assert duo.column_definitions(["STUDIEJAAR", "ONBEKEND"]) == {}
+    assert "STUDIEJAAR" not in duo.DUO_COLUMN_GLOSSARY
 
 
 def test_studiejaar_p01_p02_p03_is_startjaar():
@@ -20,15 +21,17 @@ def test_studiejaar_p01_p02_p03_is_startjaar():
 
 
 def test_scope_lekt_niet_naar_andere_datasets():
-    assert duo.column_definitions(["STUDIEJAAR"], "functiemix")["STUDIEJAAR"] == duo.DUO_COLUMN_GLOSSARY["STUDIEJAAR"]
-    assert duo.column_definitions(["STUDIEJAAR"], "p04andere")["STUDIEJAAR"] == duo.DUO_COLUMN_GLOSSARY["STUDIEJAAR"]
-    assert duo.column_definitions(["OPLEIDINGSVORM"], "p01hoinges") == {}
+    assert duo.column_definitions(["STUDIEJAAR"], "functiemix") == {}
+    assert duo.column_definitions(["STUDIEJAAR"], "p04hogdipl") == {}
+    assert "VT (voltijd)" in duo.column_definitions(["OPLEIDINGSVORM"], "p01hoinges")["OPLEIDINGSVORM"]
+    assert duo.column_definitions(["OPLEIDINGSVORM"], "functiemix") == {}
 
 
 def test_opleidingsvorm_in_mbo_aanbod_zijn_geen_vt_dt_du_codes():
-    """Datastore (2026-10-05): KLASSIKAAL/COACHING/KLASSIKAAL_EN_ONLINE, geen VT/DT/DU."""
+    """Volledige scan (2026-10-05): zes vormen, geen VT/DT/DU."""
     tekst = duo.column_definitions(["OPLEIDINGSVORM"], "mbo_opleidingsaanbod")["OPLEIDINGSVORM"]
-    assert all(w in tekst for w in ("KLASSIKAAL", "COACHING", "KLASSIKAAL_EN_ONLINE"))
+    for w in ("KLASSIKAAL", "COACHING", "KLASSIKAAL_EN_ONLINE", "ONLINE", "LEZING", "ZELFSTUDIE"):
+        assert w in tekst
     assert "VT = voltijd" not in tekst
 
 
