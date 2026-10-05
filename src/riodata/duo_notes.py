@@ -88,6 +88,30 @@ def zoekkaart(teldefinitie: dict, publicatieregels: list[dict]) -> dict:
     }
 
 
+def zoekkaart_tijd(tijd: dict) -> dict:
+    """Compacte tijdclaims voor de zoekkaart, afgeleid uit ``_tijd`` (één bron, geen kopie).
+
+    Conflicten staan er altijd bij, zodat zoekkaart en details elkaar niet stil tegenspreken.
+    """
+    periode = tijd.get("periode") or {}
+    dekking = tijd.get("data_dekking") or {}
+    hp = tijd.get("historie_prognose")
+    uit = {
+        "periode": periode.get("waarde") or (f"{dekking['van']}-{dekking['tot']}" if dekking else None),
+        "soort": periode.get("soort"),
+        "peildatum": (tijd.get("peildatum") or {}).get("waarde")
+        or "; ".join((tijd.get("peildatum") or {}).get("bronnen") or []) or None,
+        "verversing": (tijd.get("verversing") or {}).get("waarde"),
+        "voorlopig": ((tijd.get("editie") or {}).get("voorlopig")) or [],
+        "conflicten": [c["reviewstatus"] for c in tijd.get("claims_in_conflict") or []],
+    }
+    if hp:
+        uit["historie_prognose"] = f"kolom {hp['kolom']}: historie {hp['historie']}, prognose {hp['prognose']}"
+    if dekking.get("resources_verschillen"):
+        uit["let_op"] = "resources dekken verschillende jaren; zie _tijd.data_dekking"
+    return uit
+
+
 # ── intern ────────────────────────────────────────────────────────────────────
 
 def _secties(tekst: str) -> dict[str, str]:

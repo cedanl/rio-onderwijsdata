@@ -127,7 +127,9 @@ class TestGecommitteerdeData:
         cat = {r["_ckan_id"]: r for r in riodata.catalog(source="duo")}
         for b in base:
             for k, v in b.items():
-                if k not in VERRIJKT_DUO:
+                if k == "_zoekkaart":  # krijgt bij het laden een afgeleid 'tijd'-deel uit _tijd
+                    assert {kk: cat[b["_ckan_id"]][k][kk] for kk in v} == v
+                elif k not in VERRIJKT_DUO:
                     assert cat[b["_ckan_id"]][k] == v
 
     def test_catalogus_is_deterministisch(self):

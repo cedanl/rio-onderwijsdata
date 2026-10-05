@@ -28,78 +28,130 @@ import httpx
 
 from .duo_notes import details_from_pkg
 
+# Algemene definities: alleen wat in elke dataset met deze kolom klopt. Controle tegen de
+# volledige domeinen in duo_resource_schemas.json (2026-10-05). Wat per dataset verschilt
+# (studiejaar, peildatum, codes) staat in DUO_COLUMN_GLOSSARY_SCOPED, niet hier.
 DUO_COLUMN_GLOSSARY: dict[str, str] = {
-    "STUDIEJAAR": "Studiejaar in formaat YYYY/YYYY (bijv. 2023/2024). Loopt van 1 augustus t/m 31 juli.",
     "BRIN_NUMMER": "Basisregistratie Instellingen-nummer: unieke code voor elke onderwijsinstelling.",
     "INSTELLINGSCODE_ACTUEEL": "Actuele BRIN-code van de instelling (kan afwijken van historische code bij fusie of naamswijziging).",
     "INSTELLINGSNAAM_ACTUEEL": "Actuele naam van de onderwijsinstelling zoals geregistreerd in de Basisregistratie Instellingen.",
-    "AANTAL_INGESCHREVENEN": "Aantal studenten ingeschreven op peildatum 1 oktober van het studiejaar.",
     "INSTROOM": "Eerstejaars inschrijvingen: studenten die voor het eerst staan ingeschreven in een opleiding of instelling.",
     "UITSTROOM": "Studenten die de opleiding verlaten, onderscheiden in gediplomeerd en niet-gediplomeerd uitstroom.",
     "GEDIPLOMEERDEN": "Studenten die in het studiejaar een diploma of getuigschrift hebben behaald.",
-    "GESLACHT": "Geslacht van de student: MAN, VROUW of ONBEKEND.",
-    "NIVEAU": "Opleidingsniveau (mbo: niveau 1 t/m 4; ho: associate degree, bachelor, master).",
-    "GEMEENTENUMMER": "CBS-gemeentecode (4 cijfers), conform de gemeentelijke indeling op de peildatum.",
+    "GESLACHT": "Geslacht zoals gepubliceerd; de codes verschillen per dataset (bijv. MAN/VROUW/ONBEKEND of M/V/O).",
+    "NIVEAU": "Opleidingsniveau zoals gepubliceerd; de codes verschillen per dataset (mbo: 1 t/m 4; ho: bijv. HBO-BA, WO-MA).",
+    "GEMEENTENUMMER": "CBS-gemeentecode als tekst. Meestal 4 cijfers met voorloopnullen (0106); "
+                      "sommige oudere bestanden publiceren zonder voorloopnullen.",
     "GEMEENTENAAM": "Naam van de gemeente conform CBS-gemeentelijke indeling.",
     "PROVINCIENAAM": "Naam van de provincie.",
     "ONDERDEEL": "Studierichting op hoofdniveau (bijv. TECHNIEK, ECONOMIE, GEZONDHEIDSZORG).",
     "SUBONDERDEEL": "Verfijning van ONDERDEEL op een gedetailleerder niveau.",
-    "SOORT_INSTELLING": "Type instelling: reguliere instelling, bijzonder of openbaar.",
-    "TYPE_HOGER_ONDERWIJS": "Opleidingstype binnen het hoger onderwijs: bachelor, master, associate degree of anders.",
     "OPLEIDINGSNAAM_ACTUEEL": "Actuele naam van de opleiding zoals geregistreerd in CROHO (ho) of CREBO (mbo).",
     "CROHO_ONDERDEEL": "Hoofdcluster van de opleiding in het Centraal Register Opleidingen Hoger Onderwijs (CROHO).",
     "CROHO_SUBONDERDEEL": "Subcluster van de opleiding in het CROHO.",
     "CREBO_CODE": "Opleidingscode in het Centraal Register Beroepsopleidingen (CREBO) voor mbo-opleidingen.",
     "CROHO_CODE": "Opleidingscode in het Centraal Register Opleidingen Hoger Onderwijs (CROHO) voor ho-opleidingen.",
     "OPLEIDINGSCODE_ACTUEEL": "Actuele opleidingscode: CREBO-code voor mbo, CROHO-code voor ho.",
-    "HERKOMST": "Geografische herkomst van de student: Nederland, EU/EEA, of niet-EU/EEA.",
     "NATIONALITEIT": "Nationaliteit van de student (bijv. Nederlandse, niet-Nederlandse).",
-    "LEEFTIJD": "Leeftijd van de student in jaren op 1 oktober van het studiejaar.",
-    "DIPLOMAJAAR": "Jaar waarin het vooropleidingsdiploma is behaald.",
-    "SOORT_DIPLOMA": "Type vooropleidingsdiploma van de student (bijv. HAVO, VWO, MBO niveau 4).",
+    "LEEFTIJD": "Leeftijd in jaren; het peilmoment staat in de dataset (zie _tijd), niet hier.",
 }
+
+# Vervallen als algemene definitie (2026-10-05), omdat de data ze tegenspreekt:
+# STUDIEJAAR ('YYYY/YYYY': alleen p01-p03 hebben de kolom, als startjaar), HERKOMST
+# (waarden VZP/VZP_MTGO, niet NL/EU), SOORT_INSTELLING, TYPE_HOGER_ONDERWIJS, DIPLOMAJAAR en
+# SOORT_DIPLOMA (in p04 het behaalde ho-diploma, geen vooropleiding) en AANTAL_INGESCHREVENEN
+# (peildatum per dataset). Ze staan nu alleen per dataset hieronder.
+
+_HO_1CIJFER = ("p01hoinges", "p02ho1ejrs", "p03hoinschr", "p04hogdipl")
+_MBO_1CIJFER = (
+    "mbo-studenten-per-instelling",
+    "mbo-studenten-per-sectorkamer-en-leerweg",
+    "instromende-mbo-studenten",
+    "gediplomeerde-mbo-studenten",
+)
+
+
+def _scoped(datasets: tuple[str, ...], defs: dict[str, str]) -> dict[str, dict[str, str]]:
+    return {d: dict(defs) for d in datasets}
+
+
+def _samenvoegen(*delen: dict[str, dict[str, str]]) -> dict[str, dict[str, str]]:
+    uit: dict[str, dict[str, str]] = {}
+    for deel in delen:
+        for d, defs in deel.items():
+            uit.setdefault(d, {}).update(defs)
+    return uit
 
 
 # Definities die alleen gelden voor een bepaalde dataset en die de algemene definitie
-# hierboven vervangen. Alleen opnemen wat uit de bron of uit de data is te onderbouwen.
-DUO_COLUMN_GLOSSARY_SCOPED: dict[str, dict[str, str]] = {
-    # STUDIEJAAR is hier numeriek (kolomtype 'numeriek'), geen 'YYYY/YYYY'-tekst.
-    **{
-        dataset: {
-            "STUDIEJAAR": (
-                "Startjaar van het studiejaar als geheel getal (2023 = studiejaar 2023/2024). "
-                "Peildatum 1 oktober."
-            ),
-        }
-        for dataset in ("p01hoinges", "p02ho1ejrs", "p03hoinschr")
-    },
-    # LEERWEG-waarden in de datastore (gecontroleerd 2026-10-05): o.a. BBL, BOLVT, EX; niet VOLTIJD/DEELTIJD/DUAAL.
-    # BOL en BBL volgen de gangbare mbo-termen; VT/DT (voltijd/deeltijd) en EX (extraneus) zijn afgeleid uit
-    # de code en het DUO-overzicht van leerwegen en niet in de dataset zelf gedefinieerd.
-    **{
-        dataset: {
-            "LEERWEG": (
-                "Leerwegcode zoals gepubliceerd, o.a. BBL (beroepsbegeleidende leerweg), BOLVT en BOLDT "
-                "(beroepsopleidende leerweg, voltijd resp. deeltijd; afgeleid uit de code) en EX (extraneus; "
-                "afgeleid). Niet VOLTIJD/DEELTIJD/DUAAL."
-            ),
-        }
-        for dataset in (
-            "mbo-studenten-per-instelling",
-            "mbo-studenten-per-sectorkamer-en-leerweg",
-            "instromende-mbo-studenten",
-            "gediplomeerde-mbo-studenten",
-        )
-    },
-    # OPLEIDINGSVORM in mbo_opleidingsaanbod_cohorten: KLASSIKAAL, COACHING, KLASSIKAAL_EN_ONLINE of leeg
-    # (gecontroleerd 2026-10-05 in de datastore). Dit zijn geen VT/DT/DU-codes.
-    "mbo_opleidingsaanbod": {
-        "OPLEIDINGSVORM": (
-            "Vorm waarin het cohort wordt gegeven, zoals gepubliceerd: KLASSIKAAL, COACHING of "
-            "KLASSIKAAL_EN_ONLINE; kan leeg zijn. Geen VT/DT/DU-codes."
+# hierboven vervangen. Alleen opnemen wat uit de bron (notes) of uit de data (volledige
+# scan, duo_resource_schemas.json) is te onderbouwen; afgeleide betekenissen staan als zodanig.
+DUO_COLUMN_GLOSSARY_SCOPED: dict[str, dict[str, str]] = _samenvoegen(
+    # STUDIEJAAR is hier numeriek (Datastore-type 'numeric', waarden 2021-2025), geen 'YYYY/YYYY'-tekst.
+    _scoped(("p01hoinges", "p02ho1ejrs", "p03hoinschr"), {
+        "STUDIEJAAR": (
+            "Startjaar van het studiejaar als geheel getal (2023 = studiejaar 2023/2024). "
+            "Peildatum 1 oktober."
         ),
-    },
-}
+    }),
+    _scoped(_HO_1CIJFER, {
+        "GESLACHT": "Geslacht: MAN, VROUW of ONBEKEND.",
+        "SOORT_INSTELLING": "Soort instelling zoals gepubliceerd: 'reguliere inst.' of 'WO kleine univ.'.",
+        # VT/DT/DU: domein in de data (volledige scan); betekenis volgens de gangbare 1cijferHO-codes.
+        "OPLEIDINGSVORM": (
+            "Opleidingsvorm: VT (voltijd), DT (deeltijd) of DU (duaal). De codes staan zo in de data; de "
+            "uitleg volgt de gangbare 1cijferHO-codes en staat niet in de dataset zelf."
+        ),
+    }),
+    _scoped(("p01hoinges", "p03hoinschr"), {
+        "TYPE_HOGER_ONDERWIJS": "Opleidingstype: bachelor, master of postmaster.",
+    }),
+    {"p02ho1ejrs": {"TYPE_HOGER_ONDERWIJS": "Opleidingstype; in deze dataset (eerstejaars) alleen bachelor."}},
+    {"p01hoinges": {
+        "AANTAL_INGESCHREVENEN": (
+            "Aantal ingeschrevenen (natuurlijke personen, hoofdinschrijvingen) op peildatum 1 oktober van het studiejaar."
+        ),
+    }},
+    {"p04hogdipl": {
+        "DIPLOMAJAAR": (
+            "Jaar van het behaalde ho-diploma zoals gepubliceerd (2020-2024: de laatste vijf diplomajaren). "
+            "Of dit een kalender- of studiejaar is, staat niet in de bron."
+        ),
+        "SOORT_DIPLOMA": (
+            "Soort behaald ho-diploma, bijv. 'wo bachelor', 'wo master', 'wo postmaster'. "
+            "Geen vooropleidingsdiploma."
+        ),
+    }},
+    # LEERWEG: volledige domeinen 2026-10-05. BBL en BOL volgen de gangbare mbo-termen; VT/DT
+    # (voltijd/deeltijd), EX (extraneus) en OVO zijn niet in de dataset zelf gedefinieerd.
+    _scoped(_MBO_1CIJFER, {
+        "LEERWEG": (
+            "Leerwegcode zoals gepubliceerd, o.a. BBL (beroepsbegeleidende leerweg), BOL, BOLVT en BOLDT "
+            "(beroepsopleidende leerweg; VT/DT = voltijd/deeltijd, afgeleid uit de code), EX (extraneus; "
+            "afgeleid) en in gediplomeerde-mbo-studenten ook OVO (betekenis niet in de bron). "
+            "Niet VOLTIJD/DEELTIJD/DUAAL."
+        ),
+    }),
+    _scoped(("mbo-studenten-per-instelling", "instromende-mbo-studenten"), {
+        "JAAR": (
+            "Jaar van de peildatum 1 oktober (2025 = 1 oktober 2025, studiejaar 2025/2026). "
+            "Cijfers over 2025 zijn voorlopig."
+        ),
+    }),
+    {"studentprognoses-mbo-per-instelling": {
+        "Jaar": "Kalenderjaar van de historie of prognose (2021-2040); zie kolom Type.",
+        "Type": "Historie (gerealiseerd, 2021-2025) of Prognose (2026-2040). Niet optellen over beide.",
+        "Versie": "Publicatieversie: 1 = februari/maart, 2 = april/mei. In het huidige bestand alleen 2.",
+        "Leerweg": "Leerweg in kleine letters: bbl of bol.",
+    }},
+    # OPLEIDINGSVORM in mbo_opleidingsaanbod_cohorten: volledige scan 2026-10-05. Geen VT/DT/DU-codes.
+    {"mbo_opleidingsaanbod": {
+        "OPLEIDINGSVORM": (
+            "Vorm waarin het cohort wordt gegeven, zoals gepubliceerd: KLASSIKAAL, KLASSIKAAL_EN_ONLINE, "
+            "ONLINE, COACHING, LEZING of ZELFSTUDIE; kan leeg zijn. Geen VT/DT/DU-codes."
+        ),
+    }},
+)
 
 
 def column_definitions(columns: list[str], dataset_id: str | None = None) -> dict[str, str]:

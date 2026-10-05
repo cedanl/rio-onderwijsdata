@@ -53,7 +53,12 @@ def catalog(source: str = "rio", ai: bool = True, live: bool = False) -> list[di
     def _duo():
         if live:
             return duo.catalog()
-        return _met_verrijking("duo_resources.json", "duo_resources_enriched.json", _catalog.VERRIJKT_DUO)
+        records = _met_verrijking("duo_resources.json", "duo_resources_enriched.json", _catalog.VERRIJKT_DUO)
+        from .duo_notes import zoekkaart_tijd
+        for r in records:
+            if r.get("_tijd"):
+                r["_zoekkaart"] = {**(r.get("_zoekkaart") or {}), "tijd": zoekkaart_tijd(r["_tijd"])}
+        return records
 
     def _roa():
         return json.loads(files("riodata.data").joinpath("roa_resources.json").read_text(encoding="utf-8"))

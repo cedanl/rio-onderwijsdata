@@ -872,12 +872,12 @@
     "leverancier": "DUO",
     "bron": "Adressen in het hoger onderwijs",
     "beschrijving": "Actuele stand van zaken in BRIN op het moment van aanmaak van de adreslevering.",
-    "periode": "Jaarlijks bijgewerkt (zie dataset voor peilmoment)",
+    "periode": "Actuele stand in RIO bij aanmaak van de levering",
     "onderwijstype": [
       "HO"
     ],
     "doel": "Deze readme.md hoort bij de volgende bestanden - instellingenho.csv - besturenho.csv",
-    "frequentie": "Onbekend",
+    "frequentie": "Maandelijks",
     "categorie": "HO",
     "sectie": "DUO Open Data",
     "documentatie": {
@@ -2057,15 +2057,52 @@
       }
     },
     "_kolomdefinities": {
-      "GEMEENTENUMMER": "CBS-gemeentecode (4 cijfers), conform de gemeentelijke indeling op de peildatum.",
+      "GEMEENTENUMMER": "CBS-gemeentecode als tekst. Meestal 4 cijfers met voorloopnullen (0106); sommige oudere bestanden publiceren zonder voorloopnullen.",
       "GEMEENTENAAM": "Naam van de gemeente conform CBS-gemeentelijke indeling."
+    },
+    "_tijd": {
+      "bron": {
+        "url": "https://onderwijsdata.duo.nl/api/3/action/package_show?id=adressen_ho",
+        "metadata_modified": "2026-10-02T16:30:44",
+        "opgehaald_op": "2026-10-05"
+      },
+      "periode": {
+        "waarde": null,
+        "soort": "actueel overzicht (geen waarnemingsperiode)",
+        "bronzin": "Actuele stand van zaken in RIO op het moment van aanmaak van de adreslevering."
+      },
+      "editie": null,
+      "peildatum": {
+        "waarde": "moment van aanmaak van de levering",
+        "bronzin": "op het moment van aanmaak van de adreslevering"
+      },
+      "verversing": {
+        "waarde": "maandelijks",
+        "bronzin": "CKAN extras.frequency = .../frequency/MONTHLY",
+        "opmerking": "alleen de CKAN-extra; de notes noemen geen frequentie"
+      },
+      "claims_in_conflict": [],
+      "eerdere_catalogusclaims": [
+        {
+          "veld": "periode",
+          "waarde": "Jaarlijks bijgewerkt (zie dataset voor peilmoment)",
+          "reviewstatus": "onjuist volgens bron (actuele stand, maandelijkse CKAN-frequentie)"
+        },
+        {
+          "veld": "frequentie",
+          "waarde": "Onbekend",
+          "reviewstatus": "onvolledig: CKAN-frequency is MONTHLY"
+        }
+      ],
+      "reviewstatus": "bronverificatie 2026-10-05",
+      "data_dekking": null
     }
   },
   {
     "leverancier": "DUO",
     "bron": "Eerstejaars ingeschrevenen hoger onderwijs in het domein hoger onderwijs",
     "beschrijving": "Het hoger beroepsonderwijs (hbo) en het wetenschappelijk onderwijs (wo) vormen samen het hoger onderwijs (ho).",
-    "periode": "2021/'22-2025/'26",
+    "periode": "studiejaren (startjaar) 2021-2025 (laatste vijf, volgens de data)",
     "onderwijstype": [
       "HO"
     ],
@@ -3109,24 +3146,100 @@
     "_kolomdefinities": {
       "STUDIEJAAR": "Startjaar van het studiejaar als geheel getal (2023 = studiejaar 2023/2024). Peildatum 1 oktober.",
       "PROVINCIENAAM": "Naam van de provincie.",
-      "GEMEENTENUMMER": "CBS-gemeentecode (4 cijfers), conform de gemeentelijke indeling op de peildatum.",
+      "GEMEENTENUMMER": "CBS-gemeentecode als tekst. Meestal 4 cijfers met voorloopnullen (0106); sommige oudere bestanden publiceren zonder voorloopnullen.",
       "GEMEENTENAAM": "Naam van de gemeente conform CBS-gemeentelijke indeling.",
-      "SOORT_INSTELLING": "Type instelling: reguliere instelling, bijzonder of openbaar.",
-      "TYPE_HOGER_ONDERWIJS": "Opleidingstype binnen het hoger onderwijs: bachelor, master, associate degree of anders.",
+      "SOORT_INSTELLING": "Soort instelling zoals gepubliceerd: 'reguliere inst.' of 'WO kleine univ.'.",
+      "TYPE_HOGER_ONDERWIJS": "Opleidingstype; in deze dataset (eerstejaars) alleen bachelor.",
       "INSTELLINGSCODE_ACTUEEL": "Actuele BRIN-code van de instelling (kan afwijken van historische code bij fusie of naamswijziging).",
       "INSTELLINGSNAAM_ACTUEEL": "Actuele naam van de onderwijsinstelling zoals geregistreerd in de Basisregistratie Instellingen.",
       "ONDERDEEL": "Studierichting op hoofdniveau (bijv. TECHNIEK, ECONOMIE, GEZONDHEIDSZORG).",
       "SUBONDERDEEL": "Verfijning van ONDERDEEL op een gedetailleerder niveau.",
-      "GESLACHT": "Geslacht van de student: MAN, VROUW of ONBEKEND.",
+      "GESLACHT": "Geslacht: MAN, VROUW of ONBEKEND.",
       "OPLEIDINGSCODE_ACTUEEL": "Actuele opleidingscode: CREBO-code voor mbo, CROHO-code voor ho.",
-      "OPLEIDINGSNAAM_ACTUEEL": "Actuele naam van de opleiding zoals geregistreerd in CROHO (ho) of CREBO (mbo)."
+      "OPLEIDINGSNAAM_ACTUEEL": "Actuele naam van de opleiding zoals geregistreerd in CROHO (ho) of CREBO (mbo).",
+      "OPLEIDINGSVORM": "Opleidingsvorm: VT (voltijd), DT (deeltijd) of DU (duaal). De codes staan zo in de data; de uitleg volgt de gangbare 1cijferHO-codes en staat niet in de dataset zelf."
+    },
+    "_tijd": {
+      "bron": {
+        "url": "https://onderwijsdata.duo.nl/api/3/action/package_show?id=p02ho1ejrs",
+        "metadata_modified": "2026-07-10T11:37:44",
+        "opgehaald_op": "2026-10-05"
+      },
+      "periode": {
+        "waarde": null,
+        "soort": "waarneming: laatste vijf studiejaren",
+        "bronzin": "De bestanden geven informatie over de laatste vijf studiejaren.",
+        "opmerking": "De notes noemen geen jaartallen; data_dekking geeft de jaren uit de data."
+      },
+      "editie": null,
+      "peildatum": {
+        "waarde": "1 oktober",
+        "bronzin": "op basis van de nieuwste versie van 1cijfer hoger onderwijs met peildatum 1 oktober"
+      },
+      "verversing": {
+        "waarde": "jaarlijks",
+        "bronzin": "De bestanden worden één keer per jaar geactualiseerd"
+      },
+      "claims_in_conflict": [],
+      "eerdere_catalogusclaims": [
+        {
+          "veld": "periode",
+          "waarde": "2021/'22-2025/'26",
+          "reviewstatus": "niet in de bron: de notes noemen geen jaartallen; de data loopt van 2021 tot 2025"
+        }
+      ],
+      "reviewstatus": "bronverificatie 2026-10-05",
+      "data_dekking": {
+        "van": 2021,
+        "tot": 2025,
+        "resources_verschillen": false,
+        "per_resource": {
+          "5338f63e-af6a-434c-8086-c4584767c3fc": {
+            "naam": "Eerstejaarsingeschrevenen hoger beroepsonderwijs inclusief geslacht in het domein hoger onderwijs",
+            "van": 2021,
+            "tot": 2025,
+            "bron": "kolom STUDIEJAAR (volledige scan)"
+          },
+          "2e0a58a1-f7aa-4ed6-9a76-65bc569edcfc": {
+            "naam": "Eerstejaarsingeschrevenen wetenschappelijk onderwijs inclusief geslacht in het domein hoger onderwijs",
+            "van": 2021,
+            "tot": 2025,
+            "bron": "kolom STUDIEJAAR (volledige scan)"
+          },
+          "0f594842-cca9-4f17-8cbc-e502dba408b4": {
+            "naam": "Eerstejaarsingeschrevenen hoger beroepsonderwijs niveau opleiding in het domein hoger onderwijs",
+            "van": 2021,
+            "tot": 2025,
+            "bron": "kolom STUDIEJAAR (volledige scan)"
+          },
+          "2ddccc54-ae20-45dd-ba0a-5af9a69ef713": {
+            "naam": "Eerstejaarsingeschrevenen hoger beroepsonderwijs inclusief opleidingsvorm in het domein hoger onderwijs",
+            "van": 2021,
+            "tot": 2025,
+            "bron": "kolom STUDIEJAAR (volledige scan)"
+          },
+          "5639a642-bf6a-4fad-a8ab-d4bf62010c0c": {
+            "naam": "Eerstejaarsingeschrevenen wetenschappelijk onderwijs inclusief opleidingsvorm in het domein hoger onderwijs",
+            "van": 2021,
+            "tot": 2025,
+            "bron": "kolom STUDIEJAAR (volledige scan)"
+          },
+          "1a67316d-db9f-415c-8057-8c47bee19d44": {
+            "naam": "Eerstejaarsingeschrevenen wetenschappelijk onderwijs niveau opleiding in het domein hoger onderwijs",
+            "van": 2021,
+            "tot": 2025,
+            "bron": "kolom STUDIEJAAR (volledige scan)"
+          }
+        },
+        "bron": "duo_resource_schemas.json"
+      }
     }
   },
   {
     "leverancier": "DUO",
     "bron": "Gediplomeerden in het hoger onderwijs in het domein soort diploma soort hoger onderwijs",
     "beschrijving": "Het hoger beroepsonderwijs (hbo) en het wetenschappelijk onderwijs (wo) vormen samen het hoger onderwijs (ho).",
-    "periode": "2020/'21-2024/'25",
+    "periode": "diplomajaren 2020-2024 (laatste vijf, volgens de data)",
     "onderwijstype": [
       "HO"
     ],
@@ -4229,19 +4342,95 @@
       }
     },
     "_kolomdefinities": {
-      "DIPLOMAJAAR": "Jaar waarin het vooropleidingsdiploma is behaald.",
+      "DIPLOMAJAAR": "Jaar van het behaalde ho-diploma zoals gepubliceerd (2020-2024: de laatste vijf diplomajaren). Of dit een kalender- of studiejaar is, staat niet in de bron.",
       "PROVINCIENAAM": "Naam van de provincie.",
-      "GEMEENTENUMMER": "CBS-gemeentecode (4 cijfers), conform de gemeentelijke indeling op de peildatum.",
+      "GEMEENTENUMMER": "CBS-gemeentecode als tekst. Meestal 4 cijfers met voorloopnullen (0106); sommige oudere bestanden publiceren zonder voorloopnullen.",
       "GEMEENTENAAM": "Naam van de gemeente conform CBS-gemeentelijke indeling.",
-      "SOORT_INSTELLING": "Type instelling: reguliere instelling, bijzonder of openbaar.",
+      "SOORT_INSTELLING": "Soort instelling zoals gepubliceerd: 'reguliere inst.' of 'WO kleine univ.'.",
       "INSTELLINGSCODE_ACTUEEL": "Actuele BRIN-code van de instelling (kan afwijken van historische code bij fusie of naamswijziging).",
       "INSTELLINGSNAAM_ACTUEEL": "Actuele naam van de onderwijsinstelling zoals geregistreerd in de Basisregistratie Instellingen.",
       "ONDERDEEL": "Studierichting op hoofdniveau (bijv. TECHNIEK, ECONOMIE, GEZONDHEIDSZORG).",
       "SUBONDERDEEL": "Verfijning van ONDERDEEL op een gedetailleerder niveau.",
-      "SOORT_DIPLOMA": "Type vooropleidingsdiploma van de student (bijv. HAVO, VWO, MBO niveau 4).",
-      "GESLACHT": "Geslacht van de student: MAN, VROUW of ONBEKEND.",
+      "SOORT_DIPLOMA": "Soort behaald ho-diploma, bijv. 'wo bachelor', 'wo master', 'wo postmaster'. Geen vooropleidingsdiploma.",
+      "GESLACHT": "Geslacht: MAN, VROUW of ONBEKEND.",
       "OPLEIDINGSCODE_ACTUEEL": "Actuele opleidingscode: CREBO-code voor mbo, CROHO-code voor ho.",
-      "OPLEIDINGSNAAM_ACTUEEL": "Actuele naam van de opleiding zoals geregistreerd in CROHO (ho) of CREBO (mbo)."
+      "OPLEIDINGSNAAM_ACTUEEL": "Actuele naam van de opleiding zoals geregistreerd in CROHO (ho) of CREBO (mbo).",
+      "OPLEIDINGSVORM": "Opleidingsvorm: VT (voltijd), DT (deeltijd) of DU (duaal). De codes staan zo in de data; de uitleg volgt de gangbare 1cijferHO-codes en staat niet in de dataset zelf."
+    },
+    "_tijd": {
+      "bron": {
+        "url": "https://onderwijsdata.duo.nl/api/3/action/package_show?id=p04hogdipl",
+        "metadata_modified": "2026-07-10T11:39:38",
+        "opgehaald_op": "2026-10-05"
+      },
+      "periode": {
+        "waarde": null,
+        "soort": "waarneming: laatste vijf diplomajaren",
+        "bronzin": "De bestanden geven informatie over de laatste vijf diplomajaren.",
+        "opmerking": "De notes noemen geen jaartallen; data_dekking geeft de jaren uit de data."
+      },
+      "editie": null,
+      "peildatum": {
+        "waarde": "1 oktober",
+        "bronzin": "op basis van de nieuwste versie van 1cijfer hoger onderwijs met peildatum 1 oktober"
+      },
+      "verversing": {
+        "waarde": "jaarlijks",
+        "bronzin": "De bestanden worden één keer per jaar geactualiseerd"
+      },
+      "claims_in_conflict": [],
+      "eerdere_catalogusclaims": [
+        {
+          "veld": "periode",
+          "waarde": "2020/'21-2024/'25",
+          "reviewstatus": "niet in de bron: de notes noemen geen jaartallen; DIPLOMAJAAR is in de bron niet als studiejaar gedefinieerd; de data loopt van 2020 tot 2024"
+        }
+      ],
+      "reviewstatus": "bronverificatie 2026-10-05",
+      "data_dekking": {
+        "van": 2020,
+        "tot": 2024,
+        "resources_verschillen": false,
+        "per_resource": {
+          "e7b2aabd-1c10-4990-a33c-bf558f02ed12": {
+            "naam": "Gediplomeerden hoger beroepsonderwijs inclusief geslacht",
+            "van": 2020,
+            "tot": 2024,
+            "bron": "kolom DIPLOMAJAAR (volledige scan)"
+          },
+          "4938e55f-45f5-4f74-a512-baa2db99f5a9": {
+            "naam": "Gediplomeerden wetenschappelijk onderwijs inclusief geslacht",
+            "van": 2020,
+            "tot": 2024,
+            "bron": "kolom DIPLOMAJAAR (volledige scan)"
+          },
+          "0488fa97-d0ba-4285-9569-19bf26050204": {
+            "naam": "Gediplomeerden hoger beroepsonderwijs niveau opleiding",
+            "van": 2020,
+            "tot": 2024,
+            "bron": "kolom DIPLOMAJAAR (volledige scan)"
+          },
+          "3f2541ca-6acd-4b98-ac08-7b68d05bb06a": {
+            "naam": "Gediplomeerden hoger beroepsonderwijs inclusief opleidingsvorm",
+            "van": 2020,
+            "tot": 2024,
+            "bron": "kolom DIPLOMAJAAR (volledige scan)"
+          },
+          "63dc7252-5538-42b1-98ac-19b8ba7522dd": {
+            "naam": "Gediplomeerden wetenschappelijk onderwijs inclusief opleidingsvorm in het domein hoger onderwijs",
+            "van": 2020,
+            "tot": 2024,
+            "bron": "kolom DIPLOMAJAAR (volledige scan)"
+          },
+          "b74aeac5-ea8c-4697-a909-3aaae7e25f09": {
+            "naam": "Gediplomeerden wetenschappelijk onderwijs niveau opleiding",
+            "van": 2020,
+            "tot": 2024,
+            "bron": "kolom DIPLOMAJAAR (volledige scan)"
+          }
+        },
+        "bron": "duo_resource_schemas.json"
+      }
     }
   },
   {
@@ -4633,14 +4822,14 @@
       }
     },
     "_kolomdefinities": {
-      "NIVEAU": "Opleidingsniveau (mbo: niveau 1 t/m 4; ho: associate degree, bachelor, master)."
+      "NIVEAU": "Opleidingsniveau zoals gepubliceerd; de codes verschillen per dataset (mbo: 1 t/m 4; ho: bijv. HBO-BA, WO-MA)."
     }
   },
   {
     "leverancier": "DUO",
     "bron": "Ingeschrevenen hoger onderwijs in het domein hoger onderwijs",
     "beschrijving": "Het hoger beroepsonderwijs (hbo) en het wetenschappelijk onderwijs (wo) vormen samen het hoger onderwijs (ho).",
-    "periode": "2021/'22-2025/'26",
+    "periode": "studiejaren (startjaar) 2021-2025 (laatste vijf, volgens de data)",
     "onderwijstype": [
       "HO"
     ],
@@ -5745,25 +5934,101 @@
     "_kolomdefinities": {
       "STUDIEJAAR": "Startjaar van het studiejaar als geheel getal (2023 = studiejaar 2023/2024). Peildatum 1 oktober.",
       "PROVINCIENAAM": "Naam van de provincie.",
-      "GEMEENTENUMMER": "CBS-gemeentecode (4 cijfers), conform de gemeentelijke indeling op de peildatum.",
+      "GEMEENTENUMMER": "CBS-gemeentecode als tekst. Meestal 4 cijfers met voorloopnullen (0106); sommige oudere bestanden publiceren zonder voorloopnullen.",
       "GEMEENTENAAM": "Naam van de gemeente conform CBS-gemeentelijke indeling.",
-      "SOORT_INSTELLING": "Type instelling: reguliere instelling, bijzonder of openbaar.",
-      "TYPE_HOGER_ONDERWIJS": "Opleidingstype binnen het hoger onderwijs: bachelor, master, associate degree of anders.",
+      "SOORT_INSTELLING": "Soort instelling zoals gepubliceerd: 'reguliere inst.' of 'WO kleine univ.'.",
+      "TYPE_HOGER_ONDERWIJS": "Opleidingstype: bachelor, master of postmaster.",
       "INSTELLINGSCODE_ACTUEEL": "Actuele BRIN-code van de instelling (kan afwijken van historische code bij fusie of naamswijziging).",
       "INSTELLINGSNAAM_ACTUEEL": "Actuele naam van de onderwijsinstelling zoals geregistreerd in de Basisregistratie Instellingen.",
       "ONDERDEEL": "Studierichting op hoofdniveau (bijv. TECHNIEK, ECONOMIE, GEZONDHEIDSZORG).",
       "SUBONDERDEEL": "Verfijning van ONDERDEEL op een gedetailleerder niveau.",
-      "GESLACHT": "Geslacht van de student: MAN, VROUW of ONBEKEND.",
-      "AANTAL_INGESCHREVENEN": "Aantal studenten ingeschreven op peildatum 1 oktober van het studiejaar.",
+      "GESLACHT": "Geslacht: MAN, VROUW of ONBEKEND.",
+      "AANTAL_INGESCHREVENEN": "Aantal ingeschrevenen (natuurlijke personen, hoofdinschrijvingen) op peildatum 1 oktober van het studiejaar.",
       "OPLEIDINGSCODE_ACTUEEL": "Actuele opleidingscode: CREBO-code voor mbo, CROHO-code voor ho.",
-      "OPLEIDINGSNAAM_ACTUEEL": "Actuele naam van de opleiding zoals geregistreerd in CROHO (ho) of CREBO (mbo)."
+      "OPLEIDINGSNAAM_ACTUEEL": "Actuele naam van de opleiding zoals geregistreerd in CROHO (ho) of CREBO (mbo).",
+      "OPLEIDINGSVORM": "Opleidingsvorm: VT (voltijd), DT (deeltijd) of DU (duaal). De codes staan zo in de data; de uitleg volgt de gangbare 1cijferHO-codes en staat niet in de dataset zelf."
+    },
+    "_tijd": {
+      "bron": {
+        "url": "https://onderwijsdata.duo.nl/api/3/action/package_show?id=p01hoinges",
+        "metadata_modified": "2026-07-10T11:37:18",
+        "opgehaald_op": "2026-10-05"
+      },
+      "periode": {
+        "waarde": null,
+        "soort": "waarneming: laatste vijf studiejaren",
+        "bronzin": "De bestanden geven informatie over de laatste vijf studiejaren.",
+        "opmerking": "De notes noemen geen jaartallen; data_dekking geeft de jaren uit de data."
+      },
+      "editie": null,
+      "peildatum": {
+        "waarde": "1 oktober",
+        "bronzin": "op basis van de nieuwste versie van 1cijfer hoger onderwijs met peildatum 1 oktober"
+      },
+      "verversing": {
+        "waarde": "jaarlijks",
+        "bronzin": "De bestanden worden één keer per jaar geactualiseerd"
+      },
+      "claims_in_conflict": [],
+      "eerdere_catalogusclaims": [
+        {
+          "veld": "periode",
+          "waarde": "2021/'22-2025/'26",
+          "reviewstatus": "niet in de bron: de notes noemen geen jaartallen; de data loopt van 2021 tot 2025"
+        }
+      ],
+      "reviewstatus": "bronverificatie 2026-10-05",
+      "data_dekking": {
+        "van": 2021,
+        "tot": 2025,
+        "resources_verschillen": false,
+        "per_resource": {
+          "c454d7e1-b9b1-4460-b9ff-55938c85788e": {
+            "naam": "Ingeschrevenen hoger beroepsonderwijs inclusief geslacht in het domein hoger onderwijs",
+            "van": 2021,
+            "tot": 2025,
+            "bron": "kolom STUDIEJAAR (volledige scan)"
+          },
+          "b88721ef-9787-4299-afc7-5d74380d29ba": {
+            "naam": "Ingeschrevenen wetenschappelijk onderwijs inclusief geslacht in het domein hoger onderwijs",
+            "van": 2021,
+            "tot": 2025,
+            "bron": "kolom STUDIEJAAR (volledige scan)"
+          },
+          "7761bd6a-b87b-4389-a943-829872116f92": {
+            "naam": "Ingeschrevenen hoger beroepsonderwijs niveau opleiding in het domein hoger onderwijs",
+            "van": 2021,
+            "tot": 2025,
+            "bron": "kolom STUDIEJAAR (volledige scan)"
+          },
+          "ef11448c-e8c3-4afe-899f-67f90a3c3be0": {
+            "naam": "Ingeschrevenen hoger beroepsonderwijs inclusief opleidingsvorm in het domein hoger onderwijs",
+            "van": 2021,
+            "tot": 2025,
+            "bron": "kolom STUDIEJAAR (volledige scan)"
+          },
+          "f9a16992-8f11-4579-809c-bcdbc93c9d2b": {
+            "naam": "Ingeschrevenen wetenschappelijk onderwijs inclusief opleidingsvorm in het domein hoger onderwijs",
+            "van": 2021,
+            "tot": 2025,
+            "bron": "kolom STUDIEJAAR (volledige scan)"
+          },
+          "6a7e10c1-6ae8-4949-89da-b6e59151698c": {
+            "naam": "Ingeschrevenen wetenschappelijk onderwijs niveau opleiding in het domein hoger onderwijs",
+            "van": 2021,
+            "tot": 2025,
+            "bron": "kolom STUDIEJAAR (volledige scan)"
+          }
+        },
+        "bron": "duo_resource_schemas.json"
+      }
     }
   },
   {
     "leverancier": "DUO",
     "bron": "Inschrijvingen in het hoger onderwijs",
     "beschrijving": "Het hoger beroepsonderwijs (hbo) en het wetenschappelijk onderwijs (wo) vormen samen het hoger onderwijs (ho).",
-    "periode": "2021/'22-2025/'26",
+    "periode": "studiejaren (startjaar) 2021-2025 (laatste vijf, volgens de data)",
     "onderwijstype": [
       "HO"
     ],
@@ -6868,17 +7133,93 @@
     "_kolomdefinities": {
       "STUDIEJAAR": "Startjaar van het studiejaar als geheel getal (2023 = studiejaar 2023/2024). Peildatum 1 oktober.",
       "PROVINCIENAAM": "Naam van de provincie.",
-      "GEMEENTENUMMER": "CBS-gemeentecode (4 cijfers), conform de gemeentelijke indeling op de peildatum.",
+      "GEMEENTENUMMER": "CBS-gemeentecode als tekst. Meestal 4 cijfers met voorloopnullen (0106); sommige oudere bestanden publiceren zonder voorloopnullen.",
       "GEMEENTENAAM": "Naam van de gemeente conform CBS-gemeentelijke indeling.",
-      "SOORT_INSTELLING": "Type instelling: reguliere instelling, bijzonder of openbaar.",
-      "TYPE_HOGER_ONDERWIJS": "Opleidingstype binnen het hoger onderwijs: bachelor, master, associate degree of anders.",
+      "SOORT_INSTELLING": "Soort instelling zoals gepubliceerd: 'reguliere inst.' of 'WO kleine univ.'.",
+      "TYPE_HOGER_ONDERWIJS": "Opleidingstype: bachelor, master of postmaster.",
       "INSTELLINGSCODE_ACTUEEL": "Actuele BRIN-code van de instelling (kan afwijken van historische code bij fusie of naamswijziging).",
       "INSTELLINGSNAAM_ACTUEEL": "Actuele naam van de onderwijsinstelling zoals geregistreerd in de Basisregistratie Instellingen.",
       "ONDERDEEL": "Studierichting op hoofdniveau (bijv. TECHNIEK, ECONOMIE, GEZONDHEIDSZORG).",
       "SUBONDERDEEL": "Verfijning van ONDERDEEL op een gedetailleerder niveau.",
-      "GESLACHT": "Geslacht van de student: MAN, VROUW of ONBEKEND.",
+      "GESLACHT": "Geslacht: MAN, VROUW of ONBEKEND.",
       "OPLEIDINGSCODE_ACTUEEL": "Actuele opleidingscode: CREBO-code voor mbo, CROHO-code voor ho.",
-      "OPLEIDINGSNAAM_ACTUEEL": "Actuele naam van de opleiding zoals geregistreerd in CROHO (ho) of CREBO (mbo)."
+      "OPLEIDINGSNAAM_ACTUEEL": "Actuele naam van de opleiding zoals geregistreerd in CROHO (ho) of CREBO (mbo).",
+      "OPLEIDINGSVORM": "Opleidingsvorm: VT (voltijd), DT (deeltijd) of DU (duaal). De codes staan zo in de data; de uitleg volgt de gangbare 1cijferHO-codes en staat niet in de dataset zelf."
+    },
+    "_tijd": {
+      "bron": {
+        "url": "https://onderwijsdata.duo.nl/api/3/action/package_show?id=p03hoinschr",
+        "metadata_modified": "2026-07-10T11:37:51",
+        "opgehaald_op": "2026-10-05"
+      },
+      "periode": {
+        "waarde": null,
+        "soort": "waarneming: laatste vijf studiejaren",
+        "bronzin": "De bestanden geven informatie over de laatste vijf studiejaren.",
+        "opmerking": "De notes noemen geen jaartallen; data_dekking geeft de jaren uit de data."
+      },
+      "editie": null,
+      "peildatum": {
+        "waarde": "1 oktober",
+        "bronzin": "op basis van de nieuwste versie van 1cijfer hoger onderwijs met peildatum 1 oktober"
+      },
+      "verversing": {
+        "waarde": "jaarlijks",
+        "bronzin": "De bestanden worden één keer per jaar geactualiseerd"
+      },
+      "claims_in_conflict": [],
+      "eerdere_catalogusclaims": [
+        {
+          "veld": "periode",
+          "waarde": "2021/'22-2025/'26",
+          "reviewstatus": "niet in de bron: de notes noemen geen jaartallen; de data loopt van 2021 tot 2025"
+        }
+      ],
+      "reviewstatus": "bronverificatie 2026-10-05",
+      "data_dekking": {
+        "van": 2021,
+        "tot": 2025,
+        "resources_verschillen": false,
+        "per_resource": {
+          "50c36789-8073-41ad-88bd-5dc178d091cb": {
+            "naam": "Inschrijvingen hoger beroepsonderwijs inclusief geslacht",
+            "van": 2021,
+            "tot": 2025,
+            "bron": "kolom STUDIEJAAR (volledige scan)"
+          },
+          "3cd18619-a881-4ec5-bba1-53cd47af712c": {
+            "naam": "Inschrijvingen wetenschappelijk onderwijs inclusief geslacht",
+            "van": 2021,
+            "tot": 2025,
+            "bron": "kolom STUDIEJAAR (volledige scan)"
+          },
+          "9ec2ffc8-6121-485f-acda-1838d8c44a93": {
+            "naam": "Inschrijvingen hoger beroepsonderwijs niveau opleiding",
+            "van": 2021,
+            "tot": 2025,
+            "bron": "kolom STUDIEJAAR (volledige scan)"
+          },
+          "6a012a57-4664-4e6c-bd4a-82c7e3f587cd": {
+            "naam": "Inschrijvingen hoger beroepsonderwijs inclusief opleidingsvorm",
+            "van": 2021,
+            "tot": 2025,
+            "bron": "kolom STUDIEJAAR (volledige scan)"
+          },
+          "2a95ae4e-3d9b-49cf-bebd-5a3e5a289e52": {
+            "naam": "Inschrijvingen wetenschappelijk onderwijs inclusief opleidingsvorm in het domein hoger onderwijs",
+            "van": 2021,
+            "tot": 2025,
+            "bron": "kolom STUDIEJAAR (volledige scan)"
+          },
+          "84b7bec1-0774-4e0a-bcdf-1ac460f2fc2e": {
+            "naam": "Inschrijvingen wetenschappelijk onderwijs niveau opleiding",
+            "van": 2021,
+            "tot": 2025,
+            "bron": "kolom STUDIEJAAR (volledige scan)"
+          }
+        },
+        "bron": "duo_resource_schemas.json"
+      }
     }
   },
   {
@@ -7296,7 +7637,7 @@
     },
     "_kolomdefinities": {
       "GEMEENTENAAM": "Naam van de gemeente conform CBS-gemeentelijke indeling.",
-      "NIVEAU": "Opleidingsniveau (mbo: niveau 1 t/m 4; ho: associate degree, bachelor, master).",
+      "NIVEAU": "Opleidingsniveau zoals gepubliceerd; de codes verschillen per dataset (mbo: 1 t/m 4; ho: bijv. HBO-BA, WO-MA).",
       "ONDERDEEL": "Studierichting op hoofdniveau (bijv. TECHNIEK, ECONOMIE, GEZONDHEIDSZORG).",
       "SUBONDERDEEL": "Verfijning van ONDERDEEL op een gedetailleerder niveau."
     }
@@ -7451,12 +7792,12 @@
     "leverancier": "DUO",
     "bron": "Adressen mbo",
     "beschrijving": "Actuele stand van zaken in BRIN op het moment van aanmaak van de adreslevering.",
-    "periode": "Jaarlijks bijgewerkt (zie dataset voor peilmoment)",
+    "periode": "Actuele stand in RIO bij aanmaak van de levering",
     "onderwijstype": [
       "MBO"
     ],
     "doel": "Deze readme.md hoort bij de volgende bestanden - instellingenmbo.csv - besturenmbo.csv",
-    "frequentie": "Onbekend",
+    "frequentie": "Maandelijks",
     "categorie": "MBO",
     "sectie": "DUO Open Data",
     "documentatie": {
@@ -8690,8 +9031,45 @@
       }
     },
     "_kolomdefinities": {
-      "GEMEENTENUMMER": "CBS-gemeentecode (4 cijfers), conform de gemeentelijke indeling op de peildatum.",
+      "GEMEENTENUMMER": "CBS-gemeentecode als tekst. Meestal 4 cijfers met voorloopnullen (0106); sommige oudere bestanden publiceren zonder voorloopnullen.",
       "GEMEENTENAAM": "Naam van de gemeente conform CBS-gemeentelijke indeling."
+    },
+    "_tijd": {
+      "bron": {
+        "url": "https://onderwijsdata.duo.nl/api/3/action/package_show?id=adressen_mbo",
+        "metadata_modified": "2026-10-02T16:32:27",
+        "opgehaald_op": "2026-10-05"
+      },
+      "periode": {
+        "waarde": null,
+        "soort": "actueel overzicht (geen waarnemingsperiode)",
+        "bronzin": "Actuele stand van zaken in RIO op het moment van aanmaak van de adreslevering."
+      },
+      "editie": null,
+      "peildatum": {
+        "waarde": "moment van aanmaak van de levering",
+        "bronzin": "op het moment van aanmaak van de adreslevering"
+      },
+      "verversing": {
+        "waarde": "maandelijks",
+        "bronzin": "CKAN extras.frequency = .../frequency/MONTHLY",
+        "opmerking": "alleen de CKAN-extra; de notes noemen geen frequentie"
+      },
+      "claims_in_conflict": [],
+      "eerdere_catalogusclaims": [
+        {
+          "veld": "periode",
+          "waarde": "Jaarlijks bijgewerkt (zie dataset voor peilmoment)",
+          "reviewstatus": "onjuist volgens bron (actuele stand, maandelijkse CKAN-frequentie)"
+        },
+        {
+          "veld": "frequentie",
+          "waarde": "Onbekend",
+          "reviewstatus": "onvolledig: CKAN-frequency is MONTHLY"
+        }
+      ],
+      "reviewstatus": "bronverificatie 2026-10-05",
+      "data_dekking": null
     }
   },
   {
@@ -8999,10 +9377,11 @@
           "reviewstatus": "onjuist volgens bron (dagelijks geactualiseerd)"
         }
       ],
-      "reviewstatus": "bronverificatie 2026-10-05"
+      "reviewstatus": "bronverificatie 2026-10-05",
+      "data_dekking": null
     },
     "_kolomdefinities": {
-      "OPLEIDINGSVORM": "Vorm waarin het cohort wordt gegeven, zoals gepubliceerd: KLASSIKAAL, COACHING of KLASSIKAAL_EN_ONLINE; kan leeg zijn. Geen VT/DT/DU-codes."
+      "OPLEIDINGSVORM": "Vorm waarin het cohort wordt gegeven, zoals gepubliceerd: KLASSIKAAL, KLASSIKAAL_EN_ONLINE, ONLINE, COACHING, LEZING of ZELFSTUDIE; kan leeg zijn. Geen VT/DT/DU-codes."
     }
   },
   {
@@ -11046,7 +11425,18 @@
         "waarde": "2021-2040",
         "soort": "prognose",
         "bronzin": "Deze gegevens hebben betrekking op de periode 2021-2040",
-        "opmerking": "De notes spreken van historische studentenaantallen en een prognose binnen deze periode; de grens tussen historische en voorspelde jaren staat niet in de metadata."
+        "opmerking": "De notes spreken van historische studentenaantallen en een prognose binnen deze periode; de grens staat niet in de metadata maar wel per rij in de data (kolom Type)."
+      },
+      "historie_prognose": {
+        "kolom": "Type",
+        "historie": "2021-2025",
+        "prognose": "2026-2040",
+        "versiekolom": "Versie",
+        "versies_in_bestand": [
+          "2"
+        ],
+        "bron": "data: mbo-studentenprognose_instelling en _onderwijslocatie volledig gelezen op 2026-10-05",
+        "let_op": "Filter op Type om historische en voorspelde rijen niet op te tellen."
       },
       "editie": {
         "publicatiedatum": "2026-04-29",
@@ -11084,9 +11474,220 @@
           "reviewstatus": "conflict met notes (twee keer per jaar)"
         }
       ],
-      "reviewstatus": "bronverificatie 2026-10-05"
+      "reviewstatus": "bronverificatie 2026-10-05",
+      "data_dekking": {
+        "van": 2021,
+        "tot": 2040,
+        "resources_verschillen": false,
+        "per_resource": {
+          "1c60b70a-8ba1-4523-90a9-60a7bf98a3a8": {
+            "naam": "mbo-studentenprognose_gemeente_leeftijdscategorie",
+            "van": 2021,
+            "tot": 2040,
+            "bron": "kolom Jaar (volledige scan)"
+          },
+          "8ac76eb7-ee3b-47e5-8d9a-1df89079fb83": {
+            "naam": "mbo-studentenprognose_gemeente_leerweg",
+            "van": 2021,
+            "tot": 2040,
+            "bron": "kolom Jaar (volledige scan)"
+          },
+          "dbe66d7a-e271-4801-9fe4-c2f94fb11c83": {
+            "naam": "mbo-studentenprognose_gemeente_sectorkamer",
+            "van": 2021,
+            "tot": 2040,
+            "bron": "kolom Jaar (volledige scan)"
+          },
+          "29b0675f-51a5-4d35-8c9a-8ea8695b70b2": {
+            "naam": "mbo-studentenprognose_instelling",
+            "van": 2021,
+            "tot": 2040,
+            "bron": "kolom Jaar (volledige scan)"
+          },
+          "e7ce4cf3-a8ff-40f9-8443-569faaa392ae": {
+            "naam": "mbo-studentenprognose_kwalificatieniveau",
+            "van": 2021,
+            "tot": 2040,
+            "bron": "kolom Jaar (volledige scan)"
+          },
+          "fec0987b-24ab-48af-88aa-3336dcd9ce0d": {
+            "naam": "mbo-studentenprognose_kwalificatieniveau_instelling",
+            "van": 2021,
+            "tot": 2040,
+            "bron": "kolom Jaar (volledige scan)"
+          },
+          "2e76d021-f92a-4699-92c7-68945027deb0": {
+            "naam": "mbo-studentenprognose_leeftijdscategorie",
+            "van": 2021,
+            "tot": 2040,
+            "bron": "kolom Jaar (volledige scan)"
+          },
+          "505f9c9b-567e-4445-8062-8965116f0e20": {
+            "naam": "mbo-studentenprognose_leeftijdscategorie_instelling",
+            "van": 2021,
+            "tot": 2040,
+            "bron": "kolom Jaar (volledige scan)"
+          },
+          "5d2149ee-4f42-44b6-a080-6b29350e73f3": {
+            "naam": "mbo-studentenprognose_leeftijdscategorie_kwalificatieniveau",
+            "van": 2021,
+            "tot": 2040,
+            "bron": "kolom Jaar (volledige scan)"
+          },
+          "19e14c57-64fb-4d96-ba16-c6a5a1018410": {
+            "naam": "mbo-studentenprognose_leeftijdscategorie_leerweg",
+            "van": 2021,
+            "tot": 2040,
+            "bron": "kolom Jaar (volledige scan)"
+          },
+          "ac783b50-7ea9-4a4f-8c5f-c19162f91ca7": {
+            "naam": "mbo-studentenprognose_leeftijdscategorie_sectorkamer",
+            "van": 2021,
+            "tot": 2040,
+            "bron": "kolom Jaar (volledige scan)"
+          },
+          "58b52f49-2360-4533-a5c1-403faaba2e0e": {
+            "naam": "mbo-studentenprognose_leerweg",
+            "van": 2021,
+            "tot": 2040,
+            "bron": "kolom Jaar (volledige scan)"
+          },
+          "bd2ca1c9-ae2d-42b4-9107-3d57ab284a39": {
+            "naam": "mbo-studentenprognose_leerweg_instelling",
+            "van": 2021,
+            "tot": 2040,
+            "bron": "kolom Jaar (volledige scan)"
+          },
+          "b6fa1832-106b-400e-8bed-5a6deb60146b": {
+            "naam": "mbo-studentenprognose_leerweg_kwalificatieniveau",
+            "van": 2021,
+            "tot": 2040,
+            "bron": "kolom Jaar (volledige scan)"
+          },
+          "d73ea32d-a7cd-40b5-ac21-5fbad0c81c14": {
+            "naam": "mbo-studentenprognose_sectorkamer",
+            "van": 2021,
+            "tot": 2040,
+            "bron": "kolom Jaar (volledige scan)"
+          },
+          "787e4ede-4ccf-44c5-a453-77db67229fd3": {
+            "naam": "mbo-studentenprognose_sectorkamer_instelling",
+            "van": 2021,
+            "tot": 2040,
+            "bron": "kolom Jaar (volledige scan)"
+          },
+          "0c842ae3-7e1c-4987-b987-cd53b15e74fa": {
+            "naam": "mbo-studentenprognose_sectorkamer_kwalificatieniveau",
+            "van": 2021,
+            "tot": 2040,
+            "bron": "kolom Jaar (volledige scan)"
+          },
+          "fc4dde3f-29d8-4155-b7fb-b64fa71cd9fa": {
+            "naam": "mbo-studentenprognose_sectorkamer_leerweg",
+            "van": 2021,
+            "tot": 2040,
+            "bron": "kolom Jaar (volledige scan)"
+          },
+          "d353136a-380b-4aa2-a2b8-f00068232902": {
+            "naam": "mbo-studentenprognose_gemeente_kwalificatieniveau",
+            "van": 2021,
+            "tot": 2040,
+            "bron": "kolom Jaar (volledige scan)"
+          },
+          "1ed16a73-4c5d-4949-a9d0-9f2a9dd4eceb": {
+            "naam": "mbo-studentenprognose_gemeente_instelling",
+            "van": 2021,
+            "tot": 2040,
+            "bron": "kolom Jaar (volledige scan)"
+          },
+          "8c7c551e-7c5d-43ed-b14c-0e8e22bfc61f": {
+            "naam": "mbo-studentenprognose_gemeente",
+            "van": 2021,
+            "tot": 2040,
+            "bron": "kolom Jaar (volledige scan)"
+          },
+          "ae752823-28e5-49c0-97c4-e3d6cc2ae960": {
+            "naam": "mbo-studentenprognose_kwalificatieniveau_onderwijslocatie",
+            "van": 2021,
+            "tot": 2040,
+            "bron": "kolom Jaar (volledige scan)"
+          },
+          "11d1a0dc-1239-47f0-b3ec-cab583940637": {
+            "naam": "mbo-studentenprognose_leeftijdscategorie_onderwijslocatie",
+            "van": 2021,
+            "tot": 2040,
+            "bron": "kolom Jaar (volledige scan)"
+          },
+          "2d05fb1c-f084-48d5-9bb9-799e311db486": {
+            "naam": "mbo-studentenprognose_leerweg_instelling",
+            "van": 2021,
+            "tot": 2040,
+            "bron": "kolom Jaar (volledige scan)"
+          },
+          "e6c59b71-74c3-40d4-896d-d25bf746b446": {
+            "naam": "mbo-studentenprognose_leerweg_onderwijslocatie",
+            "van": 2021,
+            "tot": 2040,
+            "bron": "kolom Jaar (volledige scan)"
+          },
+          "1a43381b-9567-451a-a0a5-bed82a22e0e6": {
+            "naam": "mbo-studentenprognose_onderwijslocatie",
+            "van": 2021,
+            "tot": 2040,
+            "bron": "kolom Jaar (volledige scan)"
+          },
+          "dbc3d4c0-3dde-4443-8c4b-b9e0ea1d31d8": {
+            "naam": "mbo-studentenprognose_sectorkamer_onderwijslocatie",
+            "van": 2021,
+            "tot": 2040,
+            "bron": "kolom Jaar (volledige scan)"
+          },
+          "514362f4-4d02-4caa-90b5-ac5bf3d3576d": {
+            "naam": "mbo-studentenprognose_arbeidsmarktregio",
+            "van": 2021,
+            "tot": 2040,
+            "bron": "kolom Jaar (volledige scan)"
+          },
+          "b1dfbd5d-6a1e-4149-bbcc-8c75d8347664": {
+            "naam": "mbo-studentenprognose_arbeidsmarktregio_instelling",
+            "van": 2021,
+            "tot": 2040,
+            "bron": "kolom Jaar (volledige scan)"
+          },
+          "73fedf35-7033-4215-988e-1079d9953fc6": {
+            "naam": "mbo-studentenprognose_arbeidsmarktregio_kwalificatieniveau",
+            "van": 2021,
+            "tot": 2040,
+            "bron": "kolom Jaar (volledige scan)"
+          },
+          "cbaa7b7e-9b9d-4520-8375-666086aaee44": {
+            "naam": "mbo-studentenprognose_arbeidsmarktregio_leeftijdscategorie",
+            "van": 2021,
+            "tot": 2040,
+            "bron": "kolom Jaar (volledige scan)"
+          },
+          "1fec2fa6-317c-4fc4-adb2-9a74a748155c": {
+            "naam": "mbo-studentenprognose_arbeidsmarktregio_leerweg",
+            "van": 2021,
+            "tot": 2040,
+            "bron": "kolom Jaar (volledige scan)"
+          },
+          "f8c10a2d-9024-42ff-aa43-0ee1b2c6ceb7": {
+            "naam": "mbo-studentenprognose_arbeidsmarktregio_sectorkamer",
+            "van": 2021,
+            "tot": 2040,
+            "bron": "kolom Jaar (volledige scan)"
+          }
+        },
+        "bron": "duo_resource_schemas.json"
+      }
     },
-    "_kolomdefinities": {}
+    "_kolomdefinities": {
+      "Jaar": "Kalenderjaar van de historie of prognose (2021-2040); zie kolom Type.",
+      "Type": "Historie (gerealiseerd, 2021-2025) of Prognose (2026-2040). Niet optellen over beide.",
+      "Versie": "Publicatieversie: 1 = februari/maart, 2 = april/mei. In het huidige bestand alleen 2.",
+      "Leerweg": "Leerweg in kleine letters: bbl of bol."
+    }
   },
   {
     "leverancier": "DUO",
@@ -11361,7 +11962,7 @@
     "leverancier": "DUO",
     "bron": "Gediplomeerde mbo-studenten",
     "beschrijving": "Het aantal gediplomeerde studenten in het mbo per instelling, plaats, sectorkamer, leerweg, opleiding, niveau, geslacht.",
-    "periode": "Jaarlijks bijgewerkt (zie dataset voor peilmoment)",
+    "periode": "2021-2025",
     "onderwijstype": [
       "Allen"
     ],
@@ -11552,8 +12153,58 @@
       "DIPVROUW2025": "numeriek (156 waarden)"
     },
     "_kolomdefinities": {
-      "LEERWEG": "Leerwegcode zoals gepubliceerd, o.a. BBL (beroepsbegeleidende leerweg), BOLVT en BOLDT (beroepsopleidende leerweg, voltijd resp. deeltijd; afgeleid uit de code) en EX (extraneus; afgeleid). Niet VOLTIJD/DEELTIJD/DUAAL.",
-      "NIVEAU": "Opleidingsniveau (mbo: niveau 1 t/m 4; ho: associate degree, bachelor, master)."
+      "LEERWEG": "Leerwegcode zoals gepubliceerd, o.a. BBL (beroepsbegeleidende leerweg), BOL, BOLVT en BOLDT (beroepsopleidende leerweg; VT/DT = voltijd/deeltijd, afgeleid uit de code), EX (extraneus; afgeleid) en in gediplomeerde-mbo-studenten ook OVO (betekenis niet in de bron). Niet VOLTIJD/DEELTIJD/DUAAL.",
+      "NIVEAU": "Opleidingsniveau zoals gepubliceerd; de codes verschillen per dataset (mbo: 1 t/m 4; ho: bijv. HBO-BA, WO-MA)."
+    },
+    "_tijd": {
+      "bron": {
+        "url": "https://onderwijsdata.duo.nl/api/3/action/package_show?id=gediplomeerde-mbo-studenten",
+        "metadata_modified": "2026-02-02T09:48:33",
+        "opgehaald_op": "2026-10-05"
+      },
+      "periode": {
+        "waarde": "2021-2025",
+        "soort": "waarneming",
+        "bronzin": "Deze gegevens hebben betrekking op de periode 2021-2025."
+      },
+      "editie": {
+        "voorlopig": [
+          "2025"
+        ],
+        "bronzin": "De gegevens over 1 oktober 2025 betreffen voorlopige cijfers. De gegevens over alle andere studiejaren betreffen definitieve cijfers."
+      },
+      "peildatum": {
+        "waarde": "1 oktober van het studiejaar",
+        "bronzin": "op peildatum 1 oktober van het studiejaar"
+      },
+      "verversing": {
+        "waarde": "jaarlijks",
+        "bronzin": "CKAN extras.frequency = .../frequency/ANNUAL",
+        "opmerking": "alleen de CKAN-extra; de notes noemen geen frequentie"
+      },
+      "claims_in_conflict": [],
+      "eerdere_catalogusclaims": [
+        {
+          "veld": "periode",
+          "waarde": "Jaarlijks bijgewerkt (zie dataset voor peilmoment)",
+          "reviewstatus": "onvolledig: de notes noemen 2021-2025"
+        }
+      ],
+      "reviewstatus": "bronverificatie 2026-10-05",
+      "data_dekking": {
+        "van": 2021,
+        "tot": 2025,
+        "resources_verschillen": false,
+        "per_resource": {
+          "aa057440-a653-41c4-8d73-d63cb0556135": {
+            "naam": "Gediplomeerden",
+            "van": 2021,
+            "tot": 2025,
+            "bron": "jaartal in kolomnamen (bijv. JAAR_2021, DIPMAN2021)"
+          }
+        },
+        "bron": "duo_resource_schemas.json"
+      }
     }
   },
   {
@@ -11658,15 +12309,13 @@
       "HERKOMST": "tekst; steekproef",
       "STADIUM": "tekst; steekproef"
     },
-    "_kolomdefinities": {
-      "HERKOMST": "Geografische herkomst van de student: Nederland, EU/EEA, of niet-EU/EEA."
-    }
+    "_kolomdefinities": {}
   },
   {
     "leverancier": "DUO",
     "bron": "Instromende mbo-studenten",
     "beschrijving": "Het aantal (nieuwe) instromende studenten onderverdeeld in bestanden per jaar.",
-    "periode": "Jaarlijks bijgewerkt (zie dataset voor peilmoment)",
+    "periode": "2021-2025",
     "onderwijstype": [
       "Allen"
     ],
@@ -12998,8 +13647,113 @@
       }
     },
     "_kolomdefinities": {
-      "NIVEAU": "Opleidingsniveau (mbo: niveau 1 t/m 4; ho: associate degree, bachelor, master).",
-      "LEERWEG": "Leerwegcode zoals gepubliceerd, o.a. BBL (beroepsbegeleidende leerweg), BOLVT en BOLDT (beroepsopleidende leerweg, voltijd resp. deeltijd; afgeleid uit de code) en EX (extraneus; afgeleid). Niet VOLTIJD/DEELTIJD/DUAAL."
+      "NIVEAU": "Opleidingsniveau zoals gepubliceerd; de codes verschillen per dataset (mbo: 1 t/m 4; ho: bijv. HBO-BA, WO-MA).",
+      "LEERWEG": "Leerwegcode zoals gepubliceerd, o.a. BBL (beroepsbegeleidende leerweg), BOL, BOLVT en BOLDT (beroepsopleidende leerweg; VT/DT = voltijd/deeltijd, afgeleid uit de code), EX (extraneus; afgeleid) en in gediplomeerde-mbo-studenten ook OVO (betekenis niet in de bron). Niet VOLTIJD/DEELTIJD/DUAAL.",
+      "JAAR": "Jaar van de peildatum 1 oktober (2025 = 1 oktober 2025, studiejaar 2025/2026). Cijfers over 2025 zijn voorlopig."
+    },
+    "_tijd": {
+      "bron": {
+        "url": "https://onderwijsdata.duo.nl/api/3/action/package_show?id=instromende-mbo-studenten",
+        "metadata_modified": "2026-02-02T10:10:24",
+        "opgehaald_op": "2026-10-05"
+      },
+      "periode": {
+        "waarde": "2021-2025",
+        "soort": "waarneming",
+        "bronzin": "Deze gegevens hebben betrekking op de periode 2021-2025."
+      },
+      "editie": {
+        "voorlopig": [
+          "2025"
+        ],
+        "bronzin": "De gegevens over 1 oktober 2025 betreffen voorlopige cijfers. De gegevens over alle andere studiejaren betreffen definitieve cijfers."
+      },
+      "peildatum": {
+        "waarde": "1 oktober van het studiejaar",
+        "bronzin": "op peildatum 1 oktober van het studiejaar"
+      },
+      "verversing": {
+        "waarde": "jaarlijks",
+        "bronzin": "CKAN extras.frequency = .../frequency/ANNUAL",
+        "opmerking": "alleen de CKAN-extra; de notes noemen geen frequentie"
+      },
+      "claims_in_conflict": [],
+      "eerdere_catalogusclaims": [
+        {
+          "veld": "periode",
+          "waarde": "Jaarlijks bijgewerkt (zie dataset voor peilmoment)",
+          "reviewstatus": "onvolledig: de notes noemen 2021-2025"
+        }
+      ],
+      "reviewstatus": "bronverificatie 2026-10-05",
+      "data_dekking": {
+        "van": 2021,
+        "tot": 2025,
+        "resources_verschillen": true,
+        "per_resource": {
+          "49498b8b-f8d8-4585-b2ca-1a11c95f6dcd": {
+            "naam": "2021 nieuw-instromende-studenten-per-instelling-hoofdgroep-leerweg-beroepsopleiding-niveau-vooropleiding",
+            "van": 2021,
+            "tot": 2021,
+            "bron": "jaartal in resourcenaam"
+          },
+          "27338ecd-da65-4bd3-85c5-ca7b3a213d9f": {
+            "naam": "2021 nieuw-instromende-studenten-per-instelling-niveau-leerweg-beroepsopleiding-met-soorten-instroom",
+            "van": 2021,
+            "tot": 2021,
+            "bron": "kolom JAAR (volledige scan)"
+          },
+          "0c6e7e5f-da10-4b9b-8d88-165459e9c0eb": {
+            "naam": "2022 nieuw-instromende-studenten-per-instelling-hoofdgroep-leerweg-beroepsopleiding-niveau-vooropleiding",
+            "van": 2022,
+            "tot": 2022,
+            "bron": "jaartal in resourcenaam"
+          },
+          "4c92ba29-dd5d-4639-8432-b49af11cd716": {
+            "naam": "2022 nieuw-instromende-studenten-per-instelling-niveau-leerweg-beroepsopleiding-met-soorten-instroom",
+            "van": 2022,
+            "tot": 2022,
+            "bron": "kolom JAAR (volledige scan)"
+          },
+          "006ad0f5-b02c-4bad-b966-970e460937c6": {
+            "naam": "2023 nieuw-instromende-studenten-per-instelling-hoofdgroep-leerweg-beroepsopleiding-niveau-vooropleiding",
+            "van": 2023,
+            "tot": 2023,
+            "bron": "jaartal in resourcenaam"
+          },
+          "c439fbbc-3a02-4c8e-a7f4-672db50e0427": {
+            "naam": "2023 nieuw-instromende-studenten-per-instelling-niveau-leerweg-beroepsopleiding-met-soorten-instroom",
+            "van": 2023,
+            "tot": 2023,
+            "bron": "kolom JAAR (volledige scan)"
+          },
+          "3d88cd62-7b2f-4602-b242-3c4051f64cd3": {
+            "naam": "2024 nieuw-instromende-studenten-per-instelling-hoofdgroep-leerweg-beroepsopleiding-niveau-vooropleiding",
+            "van": 2024,
+            "tot": 2024,
+            "bron": "jaartal in resourcenaam"
+          },
+          "b66983af-5ab1-45f5-9683-afc5836da84b": {
+            "naam": "2024 nieuw-instromende-studenten-per-instelling-niveau-leerweg-beroepsopleiding-met-soorten-instroom",
+            "van": 2024,
+            "tot": 2024,
+            "bron": "kolom JAAR (volledige scan)"
+          },
+          "cdb82e0e-3fff-4839-b4a0-8b852bc3f212": {
+            "naam": "2025 nieuw-instromende-studenten-per-instelling-hoofdgroep-leerweg-beroepsopleiding-niveau-vooropleiding",
+            "van": 2025,
+            "tot": 2025,
+            "bron": "jaartal in resourcenaam"
+          },
+          "9c9d219f-242a-4406-bf4d-60a8f76f34f5": {
+            "naam": "2025 nieuw-instromende-studenten-per-instelling-niveau-leerweg-beroepsopleiding-met-soorten-instroom",
+            "van": 2025,
+            "tot": 2025,
+            "bron": "kolom JAAR (volledige scan)"
+          }
+        },
+        "bron": "duo_resource_schemas.json"
+      }
     }
   },
   {
@@ -14085,15 +14839,84 @@
       }
     },
     "_kolomdefinities": {
-      "LEERWEG": "Leerwegcode zoals gepubliceerd, o.a. BBL (beroepsbegeleidende leerweg), BOLVT en BOLDT (beroepsopleidende leerweg, voltijd resp. deeltijd; afgeleid uit de code) en EX (extraneus; afgeleid). Niet VOLTIJD/DEELTIJD/DUAAL.",
-      "NIVEAU": "Opleidingsniveau (mbo: niveau 1 t/m 4; ho: associate degree, bachelor, master)."
+      "JAAR": "Jaar van de peildatum 1 oktober (2025 = 1 oktober 2025, studiejaar 2025/2026). Cijfers over 2025 zijn voorlopig.",
+      "LEERWEG": "Leerwegcode zoals gepubliceerd, o.a. BBL (beroepsbegeleidende leerweg), BOL, BOLVT en BOLDT (beroepsopleidende leerweg; VT/DT = voltijd/deeltijd, afgeleid uit de code), EX (extraneus; afgeleid) en in gediplomeerde-mbo-studenten ook OVO (betekenis niet in de bron). Niet VOLTIJD/DEELTIJD/DUAAL.",
+      "NIVEAU": "Opleidingsniveau zoals gepubliceerd; de codes verschillen per dataset (mbo: 1 t/m 4; ho: bijv. HBO-BA, WO-MA)."
+    },
+    "_tijd": {
+      "bron": {
+        "url": "https://onderwijsdata.duo.nl/api/3/action/package_show?id=mbo-studenten-per-instelling",
+        "metadata_modified": "2026-02-02T09:53:31",
+        "opgehaald_op": "2026-10-05"
+      },
+      "periode": {
+        "waarde": "2021-2025",
+        "soort": "waarneming",
+        "bronzin": "Deze gegevens hebben betrekking op de periode 2021-2025."
+      },
+      "editie": {
+        "voorlopig": [
+          "2025"
+        ],
+        "bronzin": "De gegevens over 1 oktober 2025 betreffen voorlopige cijfers. De gegevens over alle andere studiejaren betreffen definitieve cijfers."
+      },
+      "peildatum": {
+        "waarde": "1 oktober van het studiejaar",
+        "bronzin": "op peildatum 1 oktober van het studiejaar"
+      },
+      "verversing": {
+        "waarde": "jaarlijks",
+        "bronzin": "CKAN extras.frequency = .../frequency/ANNUAL",
+        "opmerking": "alleen de CKAN-extra; de notes noemen geen frequentie"
+      },
+      "claims_in_conflict": [],
+      "eerdere_catalogusclaims": [],
+      "reviewstatus": "bronverificatie 2026-10-05",
+      "data_dekking": {
+        "van": 2021,
+        "tot": 2025,
+        "resources_verschillen": false,
+        "per_resource": {
+          "0f1fba7c-5003-459d-8845-20ff055b9dc1": {
+            "naam": "Studenten per instelling bevoegd gezag plaats gemeente provincie van de instelling en leerweg",
+            "van": 2021,
+            "tot": 2025,
+            "bron": "kolom JAAR (volledige scan)"
+          },
+          "8d25e951-92ed-48ca-b4a9-4185f4835748": {
+            "naam": "Student per instelling bevoegd gezag plaats gemeente provincie van de instelling en sectorkamer",
+            "van": 2021,
+            "tot": 2025,
+            "bron": "kolom JAAR (volledige scan)"
+          },
+          "2442d620-b5ac-42ba-92ea-f7b3c31e918e": {
+            "naam": "Studenten per instelling bevoegd gezag gemeente instelling leerweg beroepsopleiding verblijfsjaar",
+            "van": 2021,
+            "tot": 2025,
+            "bron": "jaartal in kolomnamen (bijv. JAAR_2021, DIPMAN2021)"
+          },
+          "4ca1ec61-61aa-46f2-b01f-b657633fadf0": {
+            "naam": "Studenten per instelling plaats instelling leerweg woongemeente woonprovincie leeftijdscategorie",
+            "van": 2021,
+            "tot": 2025,
+            "bron": "jaartal in kolomnamen (bijv. JAAR_2021, DIPMAN2021)"
+          },
+          "99053b39-5852-4645-914c-d6d16421b266": {
+            "naam": "Studenten per instelling bevoegd gezag plaats van de instelling beroepsopleiding woonprovincie",
+            "van": 2021,
+            "tot": 2025,
+            "bron": "jaartal in kolomnamen (bijv. JAAR_2021, DIPMAN2021)"
+          }
+        },
+        "bron": "duo_resource_schemas.json"
+      }
     }
   },
   {
     "leverancier": "DUO",
     "bron": "Mbo-studenten per sectorkamer en leerweg",
     "beschrijving": "Het aantal mbo-studenten per sectorkamer, leerweg in combinatie met verschillende variabelen.",
-    "periode": "Jaarlijks bijgewerkt (zie dataset voor peilmoment)",
+    "periode": "2021-2025",
     "onderwijstype": [
       "Allen"
     ],
@@ -14490,8 +15313,82 @@
       }
     },
     "_kolomdefinities": {
-      "LEERWEG": "Leerwegcode zoals gepubliceerd, o.a. BBL (beroepsbegeleidende leerweg), BOLVT en BOLDT (beroepsopleidende leerweg, voltijd resp. deeltijd; afgeleid uit de code) en EX (extraneus; afgeleid). Niet VOLTIJD/DEELTIJD/DUAAL.",
-      "NIVEAU": "Opleidingsniveau (mbo: niveau 1 t/m 4; ho: associate degree, bachelor, master)."
+      "LEERWEG": "Leerwegcode zoals gepubliceerd, o.a. BBL (beroepsbegeleidende leerweg), BOL, BOLVT en BOLDT (beroepsopleidende leerweg; VT/DT = voltijd/deeltijd, afgeleid uit de code), EX (extraneus; afgeleid) en in gediplomeerde-mbo-studenten ook OVO (betekenis niet in de bron). Niet VOLTIJD/DEELTIJD/DUAAL.",
+      "NIVEAU": "Opleidingsniveau zoals gepubliceerd; de codes verschillen per dataset (mbo: 1 t/m 4; ho: bijv. HBO-BA, WO-MA)."
+    },
+    "_tijd": {
+      "bron": {
+        "url": "https://onderwijsdata.duo.nl/api/3/action/package_show?id=mbo-studenten-per-sectorkamer-en-leerweg",
+        "metadata_modified": "2026-02-02T09:56:39",
+        "opgehaald_op": "2026-10-05"
+      },
+      "periode": {
+        "waarde": "2021-2025",
+        "soort": "waarneming",
+        "bronzin": "Deze gegevens hebben betrekking op de periode 2021-2025."
+      },
+      "editie": {
+        "voorlopig": [
+          "2025"
+        ],
+        "bronzin": "De gegevens over 1 oktober 2025 betreffen voorlopige cijfers. De gegevens over alle andere studiejaren betreffen definitieve cijfers."
+      },
+      "peildatum": {
+        "waarde": "1 oktober van het studiejaar",
+        "bronzin": "op peildatum 1 oktober van het studiejaar"
+      },
+      "verversing": {
+        "waarde": "jaarlijks",
+        "bronzin": "CKAN extras.frequency = .../frequency/ANNUAL",
+        "opmerking": "alleen de CKAN-extra; de notes noemen geen frequentie"
+      },
+      "claims_in_conflict": [],
+      "eerdere_catalogusclaims": [
+        {
+          "veld": "periode",
+          "waarde": "Jaarlijks bijgewerkt (zie dataset voor peilmoment)",
+          "reviewstatus": "onvolledig: de notes noemen 2021-2025"
+        }
+      ],
+      "reviewstatus": "bronverificatie 2026-10-05",
+      "data_dekking": {
+        "van": 2021,
+        "tot": 2025,
+        "resources_verschillen": false,
+        "per_resource": {
+          "da6669b9-5894-4ba6-9ba4-bfd42f8d3387": {
+            "naam": "Studenten per sectorkamer leerweg niveau woonprovincie",
+            "van": 2021,
+            "tot": 2025,
+            "bron": "jaartal in kolomnamen (bijv. JAAR_2021, DIPMAN2021)"
+          },
+          "ef08d2f4-ab61-4167-aa89-c08528a03581": {
+            "naam": "Studenten per sectorkamer leerweg niveau woonprovincie leeftijdscategorie",
+            "van": 2021,
+            "tot": 2025,
+            "bron": "jaartal in kolomnamen (bijv. JAAR_2021, DIPMAN2021)"
+          },
+          "44a2a5e0-8218-44ed-bc5b-33b4bcceb480": {
+            "naam": "Studenten per sectorkamer leerweg niveau woongemeente woonprovincie",
+            "van": 2021,
+            "tot": 2025,
+            "bron": "jaartal in kolomnamen (bijv. JAAR_2021, DIPMAN2021)"
+          },
+          "08d9a87a-caa5-4961-9be8-3103d63b10bb": {
+            "naam": "Studenten per leerweg niveau woongemeente woonprovincie leeftijdscategorie",
+            "van": 2021,
+            "tot": 2025,
+            "bron": "jaartal in kolomnamen (bijv. JAAR_2021, DIPMAN2021)"
+          },
+          "51bea174-cc7f-44aa-b1b8-a6cf0893c79a": {
+            "naam": "Studenten per leerweg opleiding verblijfsjaar",
+            "van": 2021,
+            "tot": 2025,
+            "bron": "jaartal in kolomnamen (bijv. JAAR_2021, DIPMAN2021)"
+          }
+        },
+        "bron": "duo_resource_schemas.json"
+      }
     }
   },
   {
@@ -23183,8 +24080,7 @@
       }
     },
     "_kolomdefinities": {
-      "NIVEAU": "Opleidingsniveau (mbo: niveau 1 t/m 4; ho: associate degree, bachelor, master).",
-      "HERKOMST": "Geografische herkomst van de student: Nederland, EU/EEA, of niet-EU/EEA.",
+      "NIVEAU": "Opleidingsniveau zoals gepubliceerd; de codes verschillen per dataset (mbo: 1 t/m 4; ho: bijv. HBO-BA, WO-MA).",
       "GEMEENTENAAM": "Naam van de gemeente conform CBS-gemeentelijke indeling.",
       "ONDERDEEL": "Studierichting op hoofdniveau (bijv. TECHNIEK, ECONOMIE, GEZONDHEIDSZORG).",
       "SUBONDERDEEL": "Verfijning van ONDERDEEL op een gedetailleerder niveau."
@@ -24226,7 +25122,7 @@
       }
     },
     "_kolomdefinities": {
-      "GEMEENTENUMMER": "CBS-gemeentecode (4 cijfers), conform de gemeentelijke indeling op de peildatum.",
+      "GEMEENTENUMMER": "CBS-gemeentecode als tekst. Meestal 4 cijfers met voorloopnullen (0106); sommige oudere bestanden publiceren zonder voorloopnullen.",
       "GEMEENTENAAM": "Naam van de gemeente conform CBS-gemeentelijke indeling."
     }
   },
@@ -24463,8 +25359,8 @@
       }
     },
     "_kolomdefinities": {
-      "GESLACHT": "Geslacht van de student: MAN, VROUW of ONBEKEND.",
-      "LEEFTIJD": "Leeftijd van de student in jaren op 1 oktober van het studiejaar."
+      "GESLACHT": "Geslacht zoals gepubliceerd; de codes verschillen per dataset (bijv. MAN/VROUW/ONBEKEND of M/V/O).",
+      "LEEFTIJD": "Leeftijd in jaren; het peilmoment staat in de dataset (zie _tijd), niet hier."
     }
   },
   {
@@ -24656,7 +25552,7 @@
       "AANTAL_LEERLINGEN": "numeriek (603 waarden)"
     },
     "_kolomdefinities": {
-      "GESLACHT": "Geslacht van de student: MAN, VROUW of ONBEKEND."
+      "GESLACHT": "Geslacht zoals gepubliceerd; de codes verschillen per dataset (bijv. MAN/VROUW/ONBEKEND of M/V/O)."
     }
   },
   {
@@ -24820,7 +25716,7 @@
       "AANTAL_LEERLINGEN": "numeriek; steekproef"
     },
     "_kolomdefinities": {
-      "LEEFTIJD": "Leeftijd van de student in jaren op 1 oktober van het studiejaar."
+      "LEEFTIJD": "Leeftijd in jaren; het peilmoment staat in de dataset (zie _tijd), niet hier."
     }
   },
   {
@@ -25997,7 +26893,7 @@
       }
     },
     "_kolomdefinities": {
-      "GEMEENTENUMMER": "CBS-gemeentecode (4 cijfers), conform de gemeentelijke indeling op de peildatum.",
+      "GEMEENTENUMMER": "CBS-gemeentecode als tekst. Meestal 4 cijfers met voorloopnullen (0106); sommige oudere bestanden publiceren zonder voorloopnullen.",
       "GEMEENTENAAM": "Naam van de gemeente conform CBS-gemeentelijke indeling."
     }
   },
@@ -27592,9 +28488,9 @@
       }
     },
     "_kolomdefinities": {
-      "GEMEENTENUMMER": "CBS-gemeentecode (4 cijfers), conform de gemeentelijke indeling op de peildatum.",
-      "GESLACHT": "Geslacht van de student: MAN, VROUW of ONBEKEND.",
-      "LEEFTIJD": "Leeftijd van de student in jaren op 1 oktober van het studiejaar."
+      "GEMEENTENUMMER": "CBS-gemeentecode als tekst. Meestal 4 cijfers met voorloopnullen (0106); sommige oudere bestanden publiceren zonder voorloopnullen.",
+      "GESLACHT": "Geslacht zoals gepubliceerd; de codes verschillen per dataset (bijv. MAN/VROUW/ONBEKEND of M/V/O).",
+      "LEEFTIJD": "Leeftijd in jaren; het peilmoment staat in de dataset (zie _tijd), niet hier."
     }
   },
   {
@@ -27753,7 +28649,7 @@
       }
     },
     "_kolomdefinities": {
-      "GESLACHT": "Geslacht van de student: MAN, VROUW of ONBEKEND."
+      "GESLACHT": "Geslacht zoals gepubliceerd; de codes verschillen per dataset (bijv. MAN/VROUW/ONBEKEND of M/V/O)."
     }
   },
   {
@@ -29011,7 +29907,7 @@
       }
     },
     "_kolomdefinities": {
-      "GEMEENTENUMMER": "CBS-gemeentecode (4 cijfers), conform de gemeentelijke indeling op de peildatum.",
+      "GEMEENTENUMMER": "CBS-gemeentecode als tekst. Meestal 4 cijfers met voorloopnullen (0106); sommige oudere bestanden publiceren zonder voorloopnullen.",
       "GEMEENTENAAM": "Naam van de gemeente conform CBS-gemeentelijke indeling."
     }
   },
@@ -29317,7 +30213,7 @@
       "AANTAL LEERLINGEN": "numeriek; steekproef"
     },
     "_kolomdefinities": {
-      "GEMEENTENUMMER": "CBS-gemeentecode (4 cijfers), conform de gemeentelijke indeling op de peildatum.",
+      "GEMEENTENUMMER": "CBS-gemeentecode als tekst. Meestal 4 cijfers met voorloopnullen (0106); sommige oudere bestanden publiceren zonder voorloopnullen.",
       "GEMEENTENAAM": "Naam van de gemeente conform CBS-gemeentelijke indeling."
     }
   },
