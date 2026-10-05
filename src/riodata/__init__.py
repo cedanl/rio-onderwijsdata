@@ -2,6 +2,7 @@ __version__ = "0.3.0"
 
 from .client import fetch, get, related
 from . import duo, roa, uwv, inspectie, sbb
+from . import _catalog
 
 
 def catalog(source: str = "rio", ai: bool = True, live: bool = False) -> list[dict]:
@@ -24,23 +25,27 @@ def catalog(source: str = "rio", ai: bool = True, live: bool = False) -> list[di
 
     data_dir = files("riodata.data")
 
+    def _read(filename):
+        return json.loads(data_dir.joinpath(filename).read_text(encoding="utf-8"))
+
+    def _met_verrijking(base_file, enriched_file, verrijkt):
+        # Bronvelden komen altijd uit het basisbestand; verrijking wordt eroverheen gelegd.
+        base = _read(base_file)
+        try:
+            enriched = _read(enriched_file)
+        except FileNotFoundError:
+            return base
+        return _catalog.merge(base, enriched, verrijkt)
+
     def _rio():
         if ai:
-            try:
-                return json.loads(data_dir.joinpath("rio_resources_enriched.json").read_text(encoding="utf-8"))
-            except FileNotFoundError:
-                pass
-        filename = "rio_resources_ai.json" if ai else "rio_resources.json"
-        return json.loads(data_dir.joinpath(filename).read_text(encoding="utf-8"))
+            return _met_verrijking("rio_resources_ai.json", "rio_resources_enriched.json", _catalog.VERRIJKT_RIO)
+        return _read("rio_resources.json")
 
     def _duo():
         if live:
             return duo.catalog()
-        try:
-            return json.loads(data_dir.joinpath("duo_resources_enriched.json").read_text(encoding="utf-8"))
-        except FileNotFoundError:
-            pass
-        return json.loads(data_dir.joinpath("duo_resources.json").read_text(encoding="utf-8"))
+        return _met_verrijking("duo_resources.json", "duo_resources_enriched.json", _catalog.VERRIJKT_DUO)
 
     def _roa():
         return json.loads(files("riodata.data").joinpath("roa_resources.json").read_text(encoding="utf-8"))

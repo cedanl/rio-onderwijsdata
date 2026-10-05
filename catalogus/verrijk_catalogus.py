@@ -8,6 +8,13 @@ Gebruik:
   uv run python catalogus/verrijk_catalogus.py --source rio
   uv run python catalogus/verrijk_catalogus.py --source all
   uv run python catalogus/verrijk_catalogus.py --source duo --limit 5
+  uv run python catalogus/verrijk_catalogus.py --source duo --no-skip-existing   # eenmalige migratie
+  uv run python catalogus/verrijk_catalogus.py --source duo --annotaties         # ook samenvatting/niet_geschikt_voor
+
+Het uitvoerbestand bevat per record alleen afgeleide velden en annotaties, plus een
+`_verrijking`-stempel (inputhash + schemaversie) van de bron waaruit ze zijn gemaakt.
+Bronvelden komen bij het inladen altijd uit het basisbestand (zie riodata._catalog).
+Een record wordt alleen overgeslagen als die stempel nog bij de bron past.
 """
 import argparse
 import json
@@ -16,6 +23,8 @@ import sys
 from pathlib import Path
 
 sys.path.insert(0, str(Path(__file__).parent.parent / "src"))
+
+from riodata import _catalog  # noqa: E402
 
 DATA_DIR = Path(__file__).parent.parent / "src" / "riodata" / "data"
 DUO_INPUT = DATA_DIR / "duo_resources.json"
@@ -30,6 +39,12 @@ def parse_args():
     p = argparse.ArgumentParser(description="Verrijkt DUO/RIO catalogus met data-metadata.")
     p.add_argument("--source", choices=["duo", "rio", "all"], default="all")
     p.add_argument("--no-skip-existing", action="store_true")
+    p.add_argument(
+        "--annotaties",
+        action="store_true",
+        help="Genereer ook samenvatting en niet_geschikt_voor. Standaard uit: de chat scoort "
+        "niet_geschikt_voor positief, dus vul die pas na de chat-fix (CHAT-04).",
+    )
     p.add_argument("--limit", type=int, default=None)
     return p.parse_args()
 
@@ -88,7 +103,7 @@ def build_samenvatting(entry: dict) -> str:
 # ─── DUO ──────────────────────────────────────────────────────────────────
 
 
-def enrich_duo_entry(entry: dict) -> dict:
+def enrich_duo_entry(entry: dict, annotaties: bool = False) -> dict:
     """Verrijk één DUO entry met kolommen, types en top-waarden uit de echte data."""
     from riodata import duo as _duo
 
@@ -108,6 +123,7 @@ def enrich_duo_entry(entry: dict) -> dict:
     kolommen = {}
     kolomtypes = {}
     last_df_columns = []
+    mislukt = []
 
     for res_idx, res in enumerate(resources[:5]):
         res_naam = res.get("naam", f"resource_{res_idx}")
@@ -116,6 +132,7 @@ def enrich_duo_entry(entry: dict) -> dict:
             last_df_columns = list(df.columns)
         except Exception as e:
             print(f" WARN {res_naam}: {e}", end="")
+            mislukt.append(res_naam)
             continue
 
         res_kolommen = {}
@@ -145,6 +162,9 @@ def enrich_duo_entry(entry: dict) -> dict:
             kolommen[res_naam] = res_kolommen
             kolomtypes[res_naam] = res_types
 
+    if mislukt:
+        # Een deelresultaat is geen vers schema: de aanroeper behoudt de oude verrijking als verouderd.
+        raise RuntimeError(f"resources niet gelezen: {mislukt}")
     if kolommen:
         entry["_kolommen"] = kolommen
     if kolomtypes:
@@ -157,8 +177,9 @@ def enrich_duo_entry(entry: dict) -> dict:
     except Exception as e:
         print(f" WARN defs: {e}", end="")
 
-    entry.setdefault("niet_geschikt_voor", build_niet_geschikt_voor(entry))
-    entry.setdefault("samenvatting", build_samenvatting(entry))
+    if annotaties:
+        entry.setdefault("niet_geschikt_voor", build_niet_geschikt_voor(entry))
+        entry.setdefault("samenvatting", build_samenvatting(entry))
 
     return entry
 
@@ -166,7 +187,7 @@ def enrich_duo_entry(entry: dict) -> dict:
 # ─── RIO ──────────────────────────────────────────────────────────────────
 
 
-def enrich_rio_entry(entry: dict) -> dict:
+def enrich_rio_entry(entry: dict, annotaties: bool = False) -> dict:
     """Verrijk één RIO entry met veldnamen, types en voorbeeldwaarden."""
     from riodata import fetch
 
@@ -227,8 +248,9 @@ def enrich_rio_entry(entry: dict) -> dict:
     if veldtypes:
         entry["_kolomtypes"] = {k: v or "onbekend" for k, v in veldtypes.items()}
 
-    entry.setdefault("niet_geschikt_voor", build_niet_geschikt_voor(entry))
-    entry.setdefault("samenvatting", build_samenvatting(entry))
+    if annotaties:
+        entry.setdefault("niet_geschikt_voor", build_niet_geschikt_voor(entry))
+        entry.setdefault("samenvatting", build_samenvatting(entry))
 
     return entry
 
@@ -236,12 +258,11 @@ def enrich_rio_entry(entry: dict) -> dict:
 # ─── Main ─────────────────────────────────────────────────────────────────
 
 
-def process_source(entries, enrich_fn, output_path, args, source_name):
+def process_source(entries, enrich_fn, output_path, args, source_name, verrijkt):
     existing = {}
     if output_path.exists():
-        existing_list = load_json(output_path)
-        for e in existing_list:
-            eid = e.get("_ckan_id") or e.get("_rio_resource")
+        for e in load_json(output_path):
+            eid = _catalog.record_id(e)
             if eid:
                 existing[eid] = e
 
@@ -250,9 +271,10 @@ def process_source(entries, enrich_fn, output_path, args, source_name):
     failed = 0
 
     for idx, entry in enumerate(entries, 1):
-        entry_id = entry.get("_ckan_id") or entry.get("_rio_resource") or str(idx)
+        entry_id = _catalog.record_id(entry) or str(idx)
 
-        if not args.no_skip_existing and entry_id in existing and existing[entry_id].get("_kolomtypes"):
+        status = _catalog.verrijking_status(entry, existing.get(entry_id), verrijkt)
+        if not args.no_skip_existing and status == "actueel":
             skipped += 1
             continue
 
@@ -261,30 +283,44 @@ def process_source(entries, enrich_fn, output_path, args, source_name):
 
         processed += 1
         naam = entry.get("bron", entry_id)
-        print(f"[{idx}/{len(entries)}] {naam[:60]}", end="", flush=True)
+        print(f"[{idx}/{len(entries)}] {naam[:60]} ({status})", end="", flush=True)
 
         try:
-            enriched = enrich_fn(dict(entry))
-            existing[entry_id] = enriched
-            n_cols = len(enriched.get("_kolommen", {}))
-            print(f" OK ({n_cols} kolommen)")
+            # De lezer start zonder afgeleide velden uit het basisbestand: alles wat er na afloop in zit,
+            # is in deze run opgehaald (anders telt een oud schema als geslaagde aanwezigheidstest).
+            invoer = {k: v for k, v in entry.items() if k not in _catalog.AFGELEID}
+            enriched = enrich_fn(invoer, annotaties=args.annotaties)
+            nieuw = {k: enriched[k] for k in verrijkt if k in enriched}
+            if not any(k in nieuw for k in _catalog.AFGELEID):
+                # Niets uit de echte data gelezen: oude verrijking behouden, niet als actueel stempelen.
+                raise RuntimeError("geen schema-informatie opgehaald")
+            nieuw[_catalog.STAMP] = _catalog.stamp(entry, verrijkt)
+            # De afgeleide laag wordt vervangen, niet bijgemengd: oude sleutels (bijv. definities van
+            # verdwenen kolommen) mogen niet onder een nieuwe stempel blijven staan.
+            oud = {k: v for k, v in existing.get(entry_id, {}).items()
+                   if k not in _catalog.AFGELEID and k != _catalog.STAMP}
+            existing[entry_id] = {**oud, **nieuw}
+            print(f" OK ({len(nieuw.get('_kolommen', {}))} kolommen)")
         except Exception as e:
             print(f" FOUT: {e}")
             failed += 1
             continue
 
         if processed % 5 == 0:
-            _save(entries, existing, output_path)
+            _save(entries, existing, output_path, verrijkt)
 
-    _save(entries, existing, output_path)
+    _save(entries, existing, output_path, verrijkt)
     print(f"\n{source_name}: {processed} verrijkt, {skipped} overgeslagen, {failed} mislukt")
 
 
-def _save(entries, existing, output_path):
+def _save(entries, existing, output_path, verrijkt):
+    """Schrijf per record bronvelden uit de basis plus de bijbehorende verrijking."""
     output_list = []
     for e in entries:
-        eid = e.get("_ckan_id") or e.get("_rio_resource")
-        output_list.append(existing.get(eid, e))
+        bron = {k: v for k, v in e.items() if k not in verrijkt}
+        oud = existing.get(_catalog.record_id(e)) or {}
+        verrijking = {k: oud[k] for k in (*verrijkt, _catalog.STAMP) if k in oud}
+        output_list.append({**bron, **verrijking})
     save_json(output_list, output_path)
 
 
@@ -294,12 +330,12 @@ def main():
     if args.source in ("duo", "all"):
         print("=== DUO datasets ===")
         duo_data = load_json(DUO_INPUT)
-        process_source(duo_data, enrich_duo_entry, DUO_OUTPUT, args, "DUO")
+        process_source(duo_data, enrich_duo_entry, DUO_OUTPUT, args, "DUO", _catalog.VERRIJKT_DUO)
 
     if args.source in ("rio", "all"):
         print("\n=== RIO resources ===")
         rio_data = load_json(RIO_INPUT)
-        process_source(rio_data, enrich_rio_entry, RIO_OUTPUT, args, "RIO")
+        process_source(rio_data, enrich_rio_entry, RIO_OUTPUT, args, "RIO", _catalog.VERRIJKT_RIO)
 
     print("\nKlaar.")
 

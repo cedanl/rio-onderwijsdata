@@ -5,7 +5,12 @@ on:
     branches: [main]
     paths:
       - data/02-prepared/rio_resources_ai.json
+      - src/riodata/data/rio_resources_ai.json
+      - src/riodata/data/rio_resources_enriched.json
       - src/riodata/data/duo_resources.json
+      - src/riodata/data/duo_resources_enriched.json
+      - src/riodata/_catalog.py
+      - src/riodata/__init__.py
       - src/riodata/data/roa_resources.json
       - src/riodata/data/uwv_resources.json
       - voorbeelden/manifest.json
@@ -19,10 +24,17 @@ jobs:
     steps:
       - uses: actions/checkout@v4
 
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+
+      - name: Exporteer RIO- en DUO-catalogus uit het package
+        run: |
+          pip install .
+          python catalogus/exporteer_site.py
+
       - name: Kopieer resources naar docs/
         run: |
-          cp data/02-prepared/rio_resources_ai.json docs/data.json
-          cp src/riodata/data/duo_resources.json docs/duo_data.json
           cp src/riodata/data/roa_resources.json docs/roa_data.json
           cp src/riodata/data/uwv_resources.json docs/uwv_data.json
 
