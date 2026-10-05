@@ -8,6 +8,8 @@ except PackageNotFoundError:  # broncode zonder installatie
 from .client import fetch, get, related
 from . import duo, roa, uwv, inspectie, sbb, crebo
 from . import _catalog
+from . import contract
+from ._resolutie import AmbigueResource, ResourceNietGevonden
 from ._filtercontract import filtercontract, typewaarden, valideer_filters
 
 
@@ -85,4 +87,4 @@ def catalog(source: str = "rio", ai: bool = True, live: bool = False) -> list[di
     )
 
 
-__all__ = ["fetch", "get", "related", "catalog", "filtercontract", "typewaarden", "valideer_filters", "duo", "roa", "uwv", "inspectie", "sbb", "crebo", "__version__"]
+__all__ = ["fetch", "get", "related", "catalog", "filtercontract", "typewaarden", "valideer_filters", "duo", "roa", "uwv", "inspectie", "sbb", "crebo", "contract", "AmbigueResource", "ResourceNietGevonden", "__version__"]

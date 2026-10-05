@@ -136,18 +136,5 @@ def _get_meta(dataset_id: str) -> dict:
 def _pick_resource(res_list: list[dict], resource: int | str, dataset_id: str) -> dict:
     if not res_list:
         raise RuntimeError(f"Geen bestanden voor '{dataset_id}'.")
-    if isinstance(resource, int):
-        if resource >= len(res_list):
-            raise IndexError(
-                f"Dataset '{dataset_id}' heeft {len(res_list)} bestanden, "
-                f"index {resource} bestaat niet."
-            )
-        return res_list[resource]
-    matches = [r for r in res_list if resource.lower() in r["naam"].lower()]
-    if not matches:
-        namen = [r["naam"] for r in res_list]
-        raise ValueError(
-            f"Geen bestand met '{resource}' in dataset '{dataset_id}'. "
-            f"Beschikbaar: {namen}"
-        )
-    return matches[0]
+    from ._resolutie import kies
+    return kies(res_list, resource, dataset_id, id_key=None)

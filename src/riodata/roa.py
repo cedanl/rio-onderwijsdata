@@ -26,82 +26,21 @@ import httpx
 DATAVERSE_BASE = "https://dataverse.nl/api"
 
 # DOI's van de ROA datasets op DataverseNL
-_DATASETS: dict[str, dict] = {
-    "ais2030": {
-        "doi": "doi:10.34894/DVQTOG",
-        "naam": "AIS tot 2030",
-        "beschrijving": (
-            "ROA Arbeidsmarktinformatiesysteem: middellange-termijn arbeidsmarktprognoses "
-            "per opleiding en beroep tot 2030, plus kerncijfers schoolverlatersonderzoeken."
-        ),
-        "editie": "2025",
-        "resources": {
-            "arbeidsmarkt":   572235,
-            "toelichting":    565548,
-            "uitkomsten":     566770,
-            "schoolverlaters": 565551,
-        },
-    },
-    "ais2028": {
-        "doi": "doi:10.34894/UIQHCI",
-        "naam": "AIS tot 2028",
-        "beschrijving": (
-            "ROA Arbeidsmarktinformatiesysteem editie 2023 en 2024: "
-            "prognoses per opleiding en beroep tot 2028."
-        ),
-        "editie": "2024",
-        "resources": {
-            "arbeidsmarkt_2023":   425745,
-            "arbeidsmarkt_2024":   425747,
-            "toelichting_2023":    425746,
-            "toelichting_2024":    425742,
-        },
-    },
-}
-
-
 def catalog() -> list[dict]:
-    """Geef beschikbare ROA datasets als catalogusrecords."""
-    records = []
-    for dataset_id, meta in _DATASETS.items():
-        resources = [
-            {"naam": naam, "file_id": fid, "url": f"{DATAVERSE_BASE}/access/datafile/{fid}"}
-            for naam, fid in meta["resources"].items()
-        ]
-        records.append({
-            "leverancier": "ROA",
-            "bron": meta["naam"],
-            "beschrijving": meta["beschrijving"],
-            "periode": f"Editie {meta['editie']}",
-            "onderwijstype": ["Allen"],
-            "doel": "Arbeidsmarktprognoses en schoolverlatersonderzoek per opleiding en beroep",
-            "frequentie": "Jaarlijks",
-            "categorie": "Arbeidsmarkt",
-            "sectie": "ROA / DataverseNL",
-            "documentatie": {
-                "tekst": meta["naam"],
-                "url": f"https://doi.org/{meta['doi'].replace('doi:', '')}",
-            },
-            "filters": ["opleiding", "beroep", "regio"],
-            "sub_resources": [],
-            "voorbeeldvragen": [
-                f"Wat zijn de arbeidsmarktperspectieven voor MBO-gediplomeerden tot {meta['editie'][:4]}?",
-                "Welke opleidingen hebben de beste arbeidsmarktkansen?",
-                "Hoe verhoudt de uitstroom van schoolverlaters zich tot de vraag per beroep?",
-            ],
-            "tags": ["roa", "arbeidsmarkt", "prognose", "schoolverlaters", "opleiding", "beroep"],
-            "combineerbaar_met": [
-                "DUO (diplomering per opleiding)",
-                "CBS (arbeidsdeelname naar onderwijsniveau)",
-                "RIO (aangeboden opleidingen)",
-            ],
-            "_rio_resource": None,
-            "_ckan_id": None,
-            "_roa_id": dataset_id,
-            "_resources": resources,
-            "_thema": "Arbeidsmarkt",
-        })
-    return records
+    """Geef beschikbare ROA datasets als catalogusrecords (lokale snapshot).
+
+    ``roa_resources.json`` is de enige resourcebron: de loader leest dezelfde lijst.
+    """
+    import json
+    from importlib.resources import files
+    return json.loads(files("riodata.data").joinpath("roa_resources.json").read_text(encoding="utf-8"))
+
+
+def _datasets() -> dict[str, dict]:
+    return {
+        r["_roa_id"]: {"naam": r["bron"], "resources": {x["naam"]: x["file_id"] for x in r["_resources"]}}
+        for r in catalog()
+    }
 
 
 def resources(dataset_id: str) -> list[dict]:
@@ -156,31 +95,19 @@ def load(
 # ── intern ────────────────────────────────────────────────────────────────────
 
 def _get_meta(dataset_id: str) -> dict:
-    if dataset_id not in _DATASETS:
+    datasets = _datasets()
+    if dataset_id not in datasets:
         raise ValueError(
-            f"Onbekende dataset '{dataset_id}'. Kies uit: {list(_DATASETS)}"
+            f"Onbekende dataset '{dataset_id}'. Kies uit: {list(datasets)}"
         )
-    return _DATASETS[dataset_id]
+    return datasets[dataset_id]
 
 
 def _pick_file_id(meta: dict, resource: int | str, dataset_id: str) -> int:
     res = meta["resources"]
-    names = list(res.keys())
-    ids = list(res.values())
-
-    if isinstance(resource, int) and resource > 1000:
+    if isinstance(resource, int) and not isinstance(resource, bool) and resource > 1000:
         # Directe file_id meegegeven
         return resource
-    if isinstance(resource, int):
-        if resource >= len(names):
-            raise IndexError(
-                f"Dataset '{dataset_id}' heeft {len(names)} resources, index {resource} bestaat niet."
-            )
-        return ids[resource]
-    # String: zoek op naam-substring
-    matches = [name for name in names if resource.lower() in name.lower()]
-    if not matches:
-        raise ValueError(
-            f"Geen resource met '{resource}' in dataset '{dataset_id}'. Beschikbaar: {names}"
-        )
-    return res[matches[0]]
+    from ._resolutie import kies
+    items = [{"naam": naam, "file_id": fid} for naam, fid in res.items()]
+    return kies(items, resource, dataset_id, id_key="file_id")["file_id"]

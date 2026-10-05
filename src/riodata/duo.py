@@ -16,10 +16,14 @@ Gebruik:
     # Data laden als DataFrame
     df = duo.load("01voins-v1")        # eerste resource (index 0)
     df = duo.load("p01hoinges", 1)     # tweede resource
-    df = duo.load("p01hoinges", "Ingeschrevenen hbo geslacht")  # op naam
+    df = duo.load("p01hoinges", "c454d7e1-b9b1-4460-b9ff-55938c85788e")  # op UUID (stabiel)
+    duo.resource_schemas("p01hoinges")  # officiële kolomtypes per resource, offline
 """
 from __future__ import annotations
 import io
+import json
+from functools import lru_cache
+
 import httpx
 
 from .duo_notes import details_from_pkg
@@ -167,7 +171,8 @@ def load(
 
     Args:
         dataset_id: CKAN package-naam, bijv. "01voins-v1" of "p01hoinges"
-        resource:   Index (int) of naam-substring (str) van de resource (default: 0)
+        resource:   Index (int), CKAN resource-UUID, exacte naam of unieke naam-substring (str).
+                    Een substring die op meerdere resources past geeft ``AmbigueResource``.
         skiprows:   Rijen overslaan boven de echte header (zelden nodig bij CSV)
         **kwargs:   Doorgegeven aan pd.read_csv() of pd.read_excel()
 
@@ -185,6 +190,7 @@ def load(
     res = _pick_resource(res_list, resource, dataset_id)
     url = res["url"]
     fmt = res["format"].lower()
+    schema = _schema_voor(dataset_id, res["id"])
 
     r = httpx.get(url, timeout=120, follow_redirects=True)
     r.raise_for_status()
@@ -193,13 +199,86 @@ def load(
     if "csv" in fmt:
         if skiprows is not None:
             kwargs["skiprows"] = skiprows
+        if schema and "dtype" not in kwargs:
+            # Codes als tekst lezen zoals de Datastore ze typeert: '0106' blijft '0106'.
+            tekst = {k["naam"]: str for k in schema["kolommen"] if k["type"] == "text"}
+            if tekst:
+                kwargs["dtype"] = tekst
         # DUO CSV-bestanden gebruiken komma als scheidingsteken en aanhalingstekens
-        return pd.read_csv(content, **kwargs)
+        df = pd.read_csv(content, **kwargs)
     else:
         kw = {"sheet_name": 0, **kwargs}
         if skiprows is not None:
             kw["skiprows"] = skiprows
-        return pd.read_excel(content, **kw)
+        df = pd.read_excel(content, **kw)
+    df.attrs["bron"] = {
+        "dataset_id": dataset_id,
+        "resource_id": res["id"],
+        "resource_naam": res["naam"],
+        "url": url,
+        "schema_sha256": schema["schema_sha256"] if schema else None,
+    }
+    return df
+
+
+# ── resource-schema's (offline, RIO-10) ───────────────────────────────────────
+
+def resource_schemas(dataset_id: str) -> list[dict]:
+    """Schema's van alle resources van een dataset, uit de meegeleverde snapshot.
+
+    Per resource: ``resource_id`` (CKAN-UUID, stabiel), bronmetadata (formaat, MIME,
+    grootte, hash, ``last_modified``), ``kolommen`` met het officiële Datastore-type,
+    ``definities`` die voor déze resource gelden, ``waarden`` (``volledige_scan`` met
+    ``domein`` óf ``steekproef`` met alleen ``voorbeeldwaarden``) en ``inspectie.status``.
+    ``technisch_aantal_rijen`` is alleen een laadcontrole, geen telling van personen.
+
+    Lege lijst als de dataset niet in de snapshot staat. Geen netwerk nodig.
+    """
+    ds = _schema_snapshot()["datasets"].get(dataset_id)
+    if not ds:
+        return []
+    return [_met_definities(dataset_id, r) for r in ds["resources"]]
+
+
+def resource_schema(dataset_id: str, resource: int | str) -> dict:
+    """Schema van één resource: op UUID, index, exacte naam of unieke naam-substring.
+
+    Een ambigue substring geeft ``AmbigueResource`` met de opties; een onbekende
+    dataset of resource geeft ``ResourceNietGevonden``.
+    """
+    from ._resolutie import ResourceNietGevonden, kies
+    schemas = resource_schemas(dataset_id)
+    if not schemas:
+        raise ResourceNietGevonden(f"Dataset '{dataset_id}' staat niet in de schema-snapshot.", [])
+    items = [{**s, "id": s["resource_id"]} for s in schemas]
+    gekozen = kies(items, resource, dataset_id, id_key="id")
+    gekozen.pop("id")
+    return gekozen
+
+
+def _met_definities(dataset_id: str, res: dict) -> dict:
+    uit = json.loads(json.dumps(res))
+    uit["definities"] = column_definitions([k["naam"] for k in res["kolommen"]], dataset_id)
+    return uit
+
+
+def _schema_voor(dataset_id: str, resource_id: str) -> dict | None:
+    """Snapshot-schema van een resource, alleen als de UUID exact overeenkomt."""
+    ds = _schema_snapshot()["datasets"].get(dataset_id) or {}
+    for r in ds.get("resources", []):
+        if r["resource_id"] == resource_id and r["inspectie"]["status"] == "ok":
+            return r
+    return None
+
+
+@lru_cache(maxsize=1)
+def _schema_snapshot() -> dict:
+    from importlib.resources import files
+    try:
+        tekst = files("riodata.data").joinpath("duo_resource_schemas.json").read_text(encoding="utf-8")
+    except FileNotFoundError:
+        return {"datasets": {}}
+    return json.loads(tekst)
 
 
 def search(query: str) -> list[dict]:
@@ -290,19 +369,5 @@ def _groups_to_categorie(groups: list[str]) -> str:
 
 
 def _pick_resource(res_list: list[dict], resource: int | str, dataset_id: str) -> dict:
-    if isinstance(resource, int):
-        if resource >= len(res_list):
-            raise IndexError(
-                f"Dataset '{dataset_id}' heeft {len(res_list)} resources, "
-                f"index {resource} bestaat niet."
-            )
-        return res_list[resource]
-    # String: zoek op naam-substring (case-insensitive)
-    matches = [r for r in res_list if resource.lower() in r["naam"].lower()]
-    if not matches:
-        namen = [r["naam"] for r in res_list]
-        raise ValueError(
-            f"Geen resource met '{resource}' in dataset '{dataset_id}'. "
-            f"Beschikbaar: {namen}"
-        )
-    return matches[0]
+    from ._resolutie import kies
+    return kies(res_list, resource, dataset_id, id_key="id")
