@@ -73,7 +73,6 @@
     "_rio_resource": "organisatorische-eenheden",
     "_thema": "Instellingen",
     "_geo_niveau": [],
-    "samenvatting": "Register van alle onderwijsbesturen, -instellingen en -aanbieders in het Nederlandse onderwijs, dagelijks bijgewerkt via de RIO LOD API. Bevat per organisatorische eenheid de BRIN-code, naam, type (bestuur/instelling/aanbieder) en inbedrijfdatum, met HATEOAS-links naar opleidingen, locaties, erkenningen en contactgegevens. De resource telt ruim 20.000 records en vormt het fundament voor het koppelen van onderwijsdata aan specifieke instellingen.",
     "niet_geschikt_voor": [
       "Studentenaantallen of inschrijfgegevens — daarvoor is de resource 'aangeboden-opleidingen' of DUO-studentdata nodig",
       "Financiële gegevens of bekostigingsbedragen — deze resource bevat geen budgetten of subsidies",
@@ -83,16 +82,6 @@
       "Historische tijdreeksen — de resource toont het actuele register; voor historische snapshots moet je datumGeldigOp gebruiken",
       "Specifieke opleidingsinformatie zoals lesgeld, studieduur of toelatingseisen"
     ],
-    "_kolomtypes": {
-      "id": "tekst",
-      "code": "tekst",
-      "inbedrijfdatum": "tekst",
-      "uitbedrijfdatum": "onbekend",
-      "naam": "tekst",
-      "internationaleNaam": "tekst",
-      "type": "tekst",
-      "eigenOnderwijsaanbiedersleutel": "tekst"
-    },
     "waardenbereik": {
       "periode": "Actueel register, dagelijks bijgewerkt om 05:30 UTC; historische snapshots beschikbaar via datumGeldigOp-parameter",
       "meetwaarden": [
@@ -230,6 +219,17 @@
         "SVO"
       ]
     },
+    "_kolomtypes": {
+      "id": "tekst",
+      "code": "tekst",
+      "inbedrijfdatum": "tekst",
+      "uitbedrijfdatum": "onbekend",
+      "naam": "tekst",
+      "internationaleNaam": "tekst",
+      "type": "tekst",
+      "eigenOnderwijsaanbiedersleutel": "tekst"
+    },
+    "samenvatting": "Register van alle onderwijsbesturen, -instellingen en -aanbieders in het Nederlandse onderwijs, dagelijks bijgewerkt via de RIO LOD API. Bevat per organisatorische eenheid de BRIN-code, naam, type (bestuur/instelling/aanbieder) en inbedrijfdatum, met HATEOAS-links naar opleidingen, locaties, erkenningen en contactgegevens. De resource telt ruim 20.000 records en vormt het fundament voor het koppelen van onderwijsdata aan specifieke instellingen.",
     "_verrijking_status": "ongecontroleerd"
   },
   {
@@ -307,7 +307,6 @@
     "_rio_resource": "erkenningen",
     "_thema": "Instellingen",
     "_geo_niveau": [],
-    "samenvatting": "Register van formele erkenningen van onderwijsorganisaties op bestuursniveau in Nederland, dagelijks bijgewerkt via de RIO LOD API. Bevat per erkenning de volledige naam, het type erkenning, bekostigingscode, de toepasselijke wet (WVO, WPO, WHW, WEB, WNLQF), de erkennende instantie en het soort organisatie. De resource biedt HATEOAS-links naar onderliggende sub-resources zoals licenties, locatiegebruiken en financieringsbesluiten, en vormt de schakel tussen institutionele registratie en bekostigings-/toezichtregelingen.",
     "niet_geschikt_voor": [
       "Studentenaantallen, inschrijfgegevens of leerlingenprognoses — daarvoor zijn DUO-studentdata of de resource aangeboden-opleidingen nodig",
       "Financiële gegevens, begrotingen of bekostigingsbedragen — deze resource bevat alleen de bekostigingscode, niet de bedragen",
@@ -318,27 +317,6 @@
       "Kwaliteitsoordelen, accreditatie-uitkomsten of NVAO-beoordelingen",
       "Historische tijdreeksen over meerdere jaren — de resource toont het actuele register; voor snapshots moet je datumGeldigOp gebruiken"
     ],
-    "_kolomtypes": {
-      "id": "tekst",
-      "type": "tekst",
-      "code": "tekst",
-      "inBedrijfdatum": "onbekend",
-      "uitBedrijfdatum": "onbekend",
-      "begindatum": "tekst",
-      "einddatum": "onbekend",
-      "verkorteNaam": "onbekend",
-      "volledigeNaam": "tekst",
-      "richtingen": "onbekend",
-      "grondslag": "onbekend",
-      "vrijheidVanOnderwijs": "onbekend",
-      "bekostigingscode": "tekst",
-      "wet": "tekst",
-      "erkenner": "tekst",
-      "hoofdSoOnderwijssoort": "onbekend",
-      "soCluster": "onbekend",
-      "kenmerk": "onbekend",
-      "soort": "tekst"
-    },
     "waardenbereik": {
       "periode": "Actueel register, dagelijks bijgewerkt om 05:30 UTC; historische snapshots beschikbaar via datumGeldigOp-parameter",
       "meetwaarden": [
@@ -494,6 +472,28 @@
         "PTCL"
       ]
     },
+    "_kolomtypes": {
+      "id": "tekst",
+      "type": "tekst",
+      "code": "tekst",
+      "inBedrijfdatum": "onbekend",
+      "uitBedrijfdatum": "onbekend",
+      "begindatum": "tekst",
+      "einddatum": "onbekend",
+      "verkorteNaam": "onbekend",
+      "volledigeNaam": "tekst",
+      "richtingen": "onbekend",
+      "grondslag": "onbekend",
+      "vrijheidVanOnderwijs": "onbekend",
+      "bekostigingscode": "tekst",
+      "wet": "tekst",
+      "erkenner": "tekst",
+      "hoofdSoOnderwijssoort": "onbekend",
+      "soCluster": "onbekend",
+      "kenmerk": "onbekend",
+      "soort": "tekst"
+    },
+    "samenvatting": "Register van formele erkenningen van onderwijsorganisaties op bestuursniveau in Nederland, dagelijks bijgewerkt via de RIO LOD API. Bevat per erkenning de volledige naam, het type erkenning, bekostigingscode, de toepasselijke wet (WVO, WPO, WHW, WEB, WNLQF), de erkennende instantie en het soort organisatie. De resource biedt HATEOAS-links naar onderliggende sub-resources zoals licenties, locatiegebruiken en financieringsbesluiten, en vormt de schakel tussen institutionele registratie en bekostigings-/toezichtregelingen.",
     "_verrijking_status": "ongecontroleerd"
   },
   {
@@ -561,7 +561,6 @@
     "_rio_resource": "contactadressen",
     "_thema": "Instellingen",
     "_geo_niveau": [],
-    "samenvatting": "Contactgegevens van organisatorische eenheden in het Nederlandse onderwijs: e-mailadres, telefoonnummer, webadres, fax, contactnaam en fysiek adres (straat, postcode, plaats). Per instelling meerdere contactadressen mogelijk (ALGEMEEN, POSTNL, BEZOEKNL). Geschikt voor het vinden van contactpersonen, het valideren van adresgegevens en het koppelen van instellingen aan hun locatiegegevens.",
     "niet_geschikt_voor": [
       "Studentenaantallen of prognoses — geen leerling- of studentgegevens",
       "Opleidingsinformatie — geen koppeling naar opleidingen of diploma's",
@@ -571,18 +570,6 @@
       "Personeelsgegevens — geen medewerkers, vacatures of arbeidsvoorwaarden",
       "Vergelijkingen tussen instellingen op onderwijsprestaties"
     ],
-    "_kolomtypes": {
-      "id": "tekst",
-      "context": "tekst",
-      "subcontextnummer": "tekst",
-      "subcontext": "tekst",
-      "eMailadres": "tekst",
-      "faxnummer": "onbekend",
-      "webadres": "tekst",
-      "telefoonnummer": "tekst",
-      "contactnaam": "tekst",
-      "types": "lijst"
-    },
     "waardenbereik": {
       "periode": "Actueel (dagelijks bijgewerkt om 05:30, geen historische data via dit endpoint)",
       "meetwaarden": [
@@ -753,6 +740,19 @@
       ],
       "types": []
     },
+    "_kolomtypes": {
+      "id": "tekst",
+      "context": "tekst",
+      "subcontextnummer": "tekst",
+      "subcontext": "tekst",
+      "eMailadres": "tekst",
+      "faxnummer": "onbekend",
+      "webadres": "tekst",
+      "telefoonnummer": "tekst",
+      "contactnaam": "tekst",
+      "types": "lijst"
+    },
+    "samenvatting": "Contactgegevens van organisatorische eenheden in het Nederlandse onderwijs: e-mailadres, telefoonnummer, webadres, fax, contactnaam en fysiek adres (straat, postcode, plaats). Per instelling meerdere contactadressen mogelijk (ALGEMEEN, POSTNL, BEZOEKNL). Geschikt voor het vinden van contactpersonen, het valideren van adresgegevens en het koppelen van instellingen aan hun locatiegegevens.",
     "_verrijking_status": "ongecontroleerd"
   },
   {
@@ -820,7 +820,6 @@
     "_rio_resource": "onderwijslocaties",
     "_thema": "Locaties",
     "_geo_niveau": [],
-    "samenvatting": "Register van ruim 13.500 fysieke onderwijslocaties in Nederland met adres en GPS-coördinaten. Elk record bevat een unieke onderwijslocatiecode (formaat 999X999), BAG-adresgegevens en GPS-posities. Ideaal voor geografische analyses, kaartvisualisaties en het in kaart brengen van de spreiding van onderwijsaanbod over het land.",
     "niet_geschikt_voor": [
       "Informatie over welke opleidingen op een locatie worden aangeboden (gebruik aangeboden-opleidingen via sub-resource)",
       "Aantallen leerlingen of studenten per locatie",
@@ -830,18 +829,6 @@
       "Historische locatiegegevens (alleen actuele stand, tenzij datumGeldigOp wordt gebruikt)",
       "Capaciteit, oppervlakte of bouwkenmerken van gebouwen"
     ],
-    "_kolomtypes": {
-      "id": "tekst",
-      "onderwijslocatiecode": "tekst",
-      "gpsLatitude": "float",
-      "gpsLongitude": "float",
-      "bag-id": "tekst",
-      "straatnaam": "tekst",
-      "huisnummer": "integer",
-      "huisnummertoevoeging": "tekst",
-      "postcode": "tekst",
-      "plaatsnaam": "tekst"
-    },
     "waardenbereik": {
       "periode": "Actueel (dagelijks bijgewerkt om 05:30). Historische snapshots beschikbaar via datumGeldigOp-filter",
       "meetwaarden": [
@@ -1112,6 +1099,19 @@
         "Zevenaar"
       ]
     },
+    "_kolomtypes": {
+      "id": "tekst",
+      "onderwijslocatiecode": "tekst",
+      "gpsLatitude": "float",
+      "gpsLongitude": "float",
+      "bag-id": "tekst",
+      "straatnaam": "tekst",
+      "huisnummer": "integer",
+      "huisnummertoevoeging": "tekst",
+      "postcode": "tekst",
+      "plaatsnaam": "tekst"
+    },
+    "samenvatting": "Register van ruim 13.500 fysieke onderwijslocaties in Nederland met adres en GPS-coördinaten. Elk record bevat een unieke onderwijslocatiecode (formaat 999X999), BAG-adresgegevens en GPS-posities. Ideaal voor geografische analyses, kaartvisualisaties en het in kaart brengen van de spreiding van onderwijsaanbod over het land.",
     "_verrijking_status": "ongecontroleerd"
   },
   {
@@ -1177,7 +1177,6 @@
     "_geo_niveau": [
       "gemeente"
     ],
-    "samenvatting": "Deze resource bevat de koppeling tussen onderwijslocaties en de organisaties die ze gebruiken, waarmee inzichtelijk wordt welke instellingen op welke fysieke locaties onderwijs aanbieden. De gegevens zijn actueel en dagelijks bijgewerkt, en bieden granulariteit op het niveau van individuele locatie-gebruiksrelaties. Doelgroep zijn beleidsmedewerkers, data-analisten en onderzoekers die de geografische spreiding van onderwijsaanbod willen analyseren.",
     "niet_geschikt_voor": [
       "Het bevat geen informatie over de grootte of capaciteit van locaties.",
       "Het geeft geen inzicht in de onderwijskwaliteit of prestaties op locatieniveau.",
@@ -1185,12 +1184,6 @@
       "Het is niet geschikt voor het achterhalen van leerlingenaantallen per locatie.",
       "Het bevat geen financiële gegevens over locaties."
     ],
-    "_kolomtypes": {
-      "id": "tekst",
-      "inBedrijfdatum": "tekst",
-      "uitBedrijfdatum": "onbekend",
-      "eigenOnderwijslocatiegebruikSleutel": "onbekend"
-    },
     "waardenbereik": {
       "periode": "Actueel (dagelijks bijgewerkt), met historische data via datumGeldigOp filter.",
       "meetwaarden": "Unieke koppelingen tussen locaties en organisaties, met inBedrijfdatum en uitBedrijfdatum.",
@@ -1238,6 +1231,13 @@
       "uitBedrijfdatum": [],
       "eigenOnderwijslocatiegebruikSleutel": []
     },
+    "_kolomtypes": {
+      "id": "tekst",
+      "inBedrijfdatum": "tekst",
+      "uitBedrijfdatum": "onbekend",
+      "eigenOnderwijslocatiegebruikSleutel": "onbekend"
+    },
+    "samenvatting": "Deze resource bevat de koppeling tussen onderwijslocaties en de organisaties die ze gebruiken, waarmee inzichtelijk wordt welke instellingen op welke fysieke locaties onderwijs aanbieden. De gegevens zijn actueel en dagelijks bijgewerkt, en bieden granulariteit op het niveau van individuele locatie-gebruiksrelaties. Doelgroep zijn beleidsmedewerkers, data-analisten en onderzoekers die de geografische spreiding van onderwijsaanbod willen analyseren.",
     "_verrijking_status": "ongecontroleerd"
   },
   {
@@ -1323,7 +1323,6 @@
     "_rio_resource": "aangeboden-opleidingen",
     "_thema": "Aanbod",
     "_geo_niveau": [],
-    "samenvatting": "De resource 'aangeboden-opleidingen' bevat het concrete opleidingsaanbod van alle onderwijsinstellingen in Nederland, gekoppeld aan specifieke locaties en organisatorische eenheden. Elke record vertegenwoordigt één aanbieding van een opleiding met metadata zoals startdatum, type (BO, MBO, HBO, WO), eigennaam en opleidingscode. De granulariteit is op het niveau van individuele opleidingsaanbiedingen per locatie, waarmee gedetailleerde analyses van aanbodpatronen per instelling, regio of opleidingstype mogelijk zijn.",
     "niet_geschikt_voor": [
       "Studentenaantallen of inschrijfgegevens — deze resource bevat alleen het aangebodene, niet de daadwerkelijke inschrijvingen",
       "Cijfers, kwaliteitsoordelen of prestatiegegevens van opleidingen",
@@ -1333,44 +1332,6 @@
       "Historische data ouder dan de huidige stand via datumGeldigOp — de resource bevat primair actuele gegevens",
       "Gedetailleerde opleidingsinhoud, lesprogramma's of kwalificatiedossiers — daarvoor is de sub-resource opleiding of opleidingserkenningen nodig"
     ],
-    "_kolomtypes": {
-      "id": "tekst",
-      "aangebodenOpleidingcode": "tekst",
-      "eigennaam": "tekst",
-      "eigennaamEngels": "tekst",
-      "eigenAangebodenOpleidingsleutel": "tekst",
-      "afwijkendeOpleidingsduureenheid": "tekst",
-      "afwijkendeOpleidingsduuromvang": "integer",
-      "startdatum": "tekst",
-      "eersteInstroomdatum": "tekst",
-      "laatsteInstroomdatum": "onbekend",
-      "einddatum": "tekst",
-      "type": "tekst",
-      "omschrijving": "tekst",
-      "basisonderwijsdoelgroep": "tekst",
-      "bijzondereInrichting": "onbekend",
-      "doorlopendeLeerlijnBoVo": "onbekend",
-      "onderwijsconcept": "tekst",
-      "leertraject": "tekst",
-      "mboniveau": "tekst",
-      "toelatingseisen": "tekst",
-      "toegankelijkheid": "tekst",
-      "doorlopendeLeerlijnVmboMbo": "tekst",
-      "voertaal": "lijst",
-      "website": "tekst",
-      "niveau": "onbekend",
-      "opleidingskenmerk": "onbekend",
-      "eigennaamKort": "onbekend",
-      "deficientie": "onbekend",
-      "versneldTraject": "tekst",
-      "propedeutischeFase": "tekst",
-      "eisenWerkzaamheden": "onbekend",
-      "buitenlandsePartner": "onbekend",
-      "vorm": "tekst",
-      "studiekeuzecheck": "tekst",
-      "eigennaamDuits": "onbekend",
-      "doelgroeponderwijs": "lijst"
-    },
     "waardenbereik": {
       "periode": "Actueel (dagelijks bijgewerkt om 05:30). Historische snapshots beschikbaar via datumGeldigOp filter.",
       "meetwaarden": [
@@ -1630,6 +1591,45 @@
       "eigennaamDuits": [],
       "doelgroeponderwijs": []
     },
+    "_kolomtypes": {
+      "id": "tekst",
+      "aangebodenOpleidingcode": "tekst",
+      "eigennaam": "tekst",
+      "eigennaamEngels": "tekst",
+      "eigenAangebodenOpleidingsleutel": "tekst",
+      "afwijkendeOpleidingsduureenheid": "tekst",
+      "afwijkendeOpleidingsduuromvang": "integer",
+      "startdatum": "tekst",
+      "eersteInstroomdatum": "tekst",
+      "laatsteInstroomdatum": "onbekend",
+      "einddatum": "tekst",
+      "type": "tekst",
+      "omschrijving": "tekst",
+      "basisonderwijsdoelgroep": "tekst",
+      "bijzondereInrichting": "onbekend",
+      "doorlopendeLeerlijnBoVo": "onbekend",
+      "onderwijsconcept": "tekst",
+      "leertraject": "tekst",
+      "mboniveau": "tekst",
+      "toelatingseisen": "tekst",
+      "toegankelijkheid": "tekst",
+      "doorlopendeLeerlijnVmboMbo": "tekst",
+      "voertaal": "lijst",
+      "website": "tekst",
+      "niveau": "onbekend",
+      "opleidingskenmerk": "onbekend",
+      "eigennaamKort": "onbekend",
+      "deficientie": "onbekend",
+      "versneldTraject": "tekst",
+      "propedeutischeFase": "tekst",
+      "eisenWerkzaamheden": "onbekend",
+      "buitenlandsePartner": "onbekend",
+      "vorm": "tekst",
+      "studiekeuzecheck": "tekst",
+      "eigennaamDuits": "onbekend",
+      "doelgroeponderwijs": "lijst"
+    },
+    "samenvatting": "De resource 'aangeboden-opleidingen' bevat het concrete opleidingsaanbod van alle onderwijsinstellingen in Nederland, gekoppeld aan specifieke locaties en organisatorische eenheden. Elke record vertegenwoordigt één aanbieding van een opleiding met metadata zoals startdatum, type (BO, MBO, HBO, WO), eigennaam en opleidingscode. De granulariteit is op het niveau van individuele opleidingsaanbiedingen per locatie, waarmee gedetailleerde analyses van aanbodpatronen per instelling, regio of opleidingstype mogelijk zijn.",
     "_verrijking_status": "ongecontroleerd"
   },
   {
@@ -1655,7 +1655,8 @@
       "aanmeldperiode",
       "beginAanmeldperiode",
       "eindeAanmeldperiode",
-      "datumGeldigOp"
+      "datumGeldigOp",
+      "status"
     ],
     "sub_resources": [],
     "voorbeeldvragen": [
@@ -1698,7 +1699,6 @@
     "_rio_resource": "aangeboden-opleiding-cohorten",
     "_thema": "Aanbod",
     "_geo_niveau": [],
-    "samenvatting": "Deze resource bevat instroomcohorten per aangeboden MBO-opleiding, met aanmeldperiodes, instroommomenten, opleidingsvorm en of er toestemming vereist is voor aanmelding. Ideaal voor analyse van instroomplanning, cohortaanbod en toelatingscondities per opleiding. Granulariteit: individueel cohort per aangeboden opleiding.",
     "niet_geschikt_voor": [
       "Aantal daadwerkelijk ingeschreven studenten per cohort (geen inschrijfdata)",
       "Uitstroom- of diplomagegevens",
@@ -1707,23 +1707,6 @@
       "HO-cohorten — alleen MBO (AANGEBODENMBOOPLEIDINGCOHORT)",
       "Onderwijslocatie of fysieke vestiging per cohort"
     ],
-    "_kolomtypes": {
-      "id": "tekst",
-      "code": "tekst",
-      "status": "tekst",
-      "beginAanmeldperiode": "tekst",
-      "eindeAanmeldperiode": "tekst",
-      "instroommoment": "tekst",
-      "beginInstroomperiode": "tekst",
-      "eindeInstroomperiode": "onbekend",
-      "toestemmingVereistVoorAanmelding": "tekst",
-      "toelichtingVereisteToestemming": "onbekend",
-      "deelnemersplaatsen": "integer",
-      "opleidingseinddatum": "tekst",
-      "type": "tekst",
-      "opleidingsvorm": "tekst",
-      "toegangscodeCohort": "onbekend"
-    },
     "waardenbereik": {
       "periode": "Actueel (dagelijks bijgewerkt om 05:30); voorbeeldrecords tonen cohorten van 2022–2024",
       "meetwaarden": [
@@ -1909,6 +1892,24 @@
       ],
       "toegangscodeCohort": []
     },
+    "_kolomtypes": {
+      "id": "tekst",
+      "code": "tekst",
+      "status": "tekst",
+      "beginAanmeldperiode": "tekst",
+      "eindeAanmeldperiode": "tekst",
+      "instroommoment": "tekst",
+      "beginInstroomperiode": "tekst",
+      "eindeInstroomperiode": "onbekend",
+      "toestemmingVereistVoorAanmelding": "tekst",
+      "toelichtingVereisteToestemming": "onbekend",
+      "deelnemersplaatsen": "integer",
+      "opleidingseinddatum": "tekst",
+      "type": "tekst",
+      "opleidingsvorm": "tekst",
+      "toegangscodeCohort": "onbekend"
+    },
+    "samenvatting": "Deze resource bevat instroomcohorten per aangeboden MBO-opleiding, met aanmeldperiodes, instroommomenten, opleidingsvorm en of er toestemming vereist is voor aanmelding. Ideaal voor analyse van instroomplanning, cohortaanbod en toelatingscondities per opleiding. Granulariteit: individueel cohort per aangeboden opleiding.",
     "_verrijking_status": "ongecontroleerd"
   },
   {
@@ -1928,7 +1929,8 @@
       "url": "https://lod.onderwijsregistratie.nl/api/rio/v2/opleidingen"
     },
     "filters": [
-      "datumGeldigOp"
+      "datumGeldigOp",
+      "opleidingseenheidtype"
     ],
     "sub_resources": [],
     "voorbeeldvragen": [
@@ -1974,7 +1976,6 @@
     "_rio_resource": "opleidingen",
     "_thema": "Opleidingsstructuur",
     "_geo_niveau": [],
-    "samenvatting": "Officieel register van alle opleidingen in het Nederlandse onderwijsstelsel, van basisonderwijs tot en met universitair onderwijs. Bevat unieke opleidingseenheidcodes (CREBO voor VMBO/MBO, CROHO voor HBO/WO) met namen, niveaus en diplomeringsoorten. Ideaal voor het in kaart brengen van het opleidingslandschap en het koppelen van opleidingen aan aangeboden varianten en erkenningen.",
     "niet_geschikt_voor": [
       "Studentenaantallen of instroomcijfers — hiervoor zijn andere resources nodig",
       "Instellingspecifieke informatie — dit is een centraal opleidingsregister",
@@ -1985,32 +1986,6 @@
       "Specificaties van diploma's of kwalificatiedossiers",
       "Informatie over leerlingen of studenten"
     ],
-    "_kolomtypes": {
-      "waardedocumentsoort": "tekst",
-      "nLQF": "tekst",
-      "eQF": "tekst",
-      "iSCED": "onbekend",
-      "type": "tekst",
-      "id": "tekst",
-      "opleidingseenheidcode": "tekst",
-      "afkorting": "tekst",
-      "opleidingsherkomst": "tekst",
-      "internationaleNaamEngels": "tekst",
-      "volledigeNaam": "tekst",
-      "korteNaam": "tekst",
-      "opheffingsdatum": "tekst",
-      "startdatum": "tekst",
-      "begindatum": "tekst",
-      "einddatum": "tekst",
-      "eigenOpleidingseenheidsleutel": "tekst",
-      "omschrijving": "tekst",
-      "niveau": "tekst",
-      "eigenaar": "tekst",
-      "soort": "tekst",
-      "graad": "tekst",
-      "studielast": "integer",
-      "studielasteenheid": "tekst"
-    },
     "waardenbereik": {
       "periode": "Actueel register, dagelijks bijgewerkt; historische snapshots via datumGeldigOp",
       "meetwaarden": [
@@ -2311,6 +2286,33 @@
         "ECTS_PUNT"
       ]
     },
+    "_kolomtypes": {
+      "waardedocumentsoort": "tekst",
+      "nLQF": "tekst",
+      "eQF": "tekst",
+      "iSCED": "onbekend",
+      "type": "tekst",
+      "id": "tekst",
+      "opleidingseenheidcode": "tekst",
+      "afkorting": "tekst",
+      "opleidingsherkomst": "tekst",
+      "internationaleNaamEngels": "tekst",
+      "volledigeNaam": "tekst",
+      "korteNaam": "tekst",
+      "opheffingsdatum": "tekst",
+      "startdatum": "tekst",
+      "begindatum": "tekst",
+      "einddatum": "tekst",
+      "eigenOpleidingseenheidsleutel": "tekst",
+      "omschrijving": "tekst",
+      "niveau": "tekst",
+      "eigenaar": "tekst",
+      "soort": "tekst",
+      "graad": "tekst",
+      "studielast": "integer",
+      "studielasteenheid": "tekst"
+    },
+    "samenvatting": "Officieel register van alle opleidingen in het Nederlandse onderwijsstelsel, van basisonderwijs tot en met universitair onderwijs. Bevat unieke opleidingseenheidcodes (CREBO voor VMBO/MBO, CROHO voor HBO/WO) met namen, niveaus en diplomeringsoorten. Ideaal voor het in kaart brengen van het opleidingslandschap en het koppelen van opleidingen aan aangeboden varianten en erkenningen.",
     "_verrijking_status": "ongecontroleerd"
   },
   {
@@ -2378,7 +2380,6 @@
     "_rio_resource": "opleidingsfasen",
     "_thema": "Opleidingsstructuur",
     "_geo_niveau": [],
-    "samenvatting": "Deze resource bevat het register van opleidingsfasen in het Nederlandse onderwijs, zoals propedeuse, bachelor, master, maar ook onderbouw- en bovenbouwfases in het VO en BAO. Elke fase heeft een unieke code, naam, afkorting en is gekoppeld aan specifieke onderwijsniveaus (niveaus). De resource wordt dagelijks bijgewerkt en biedt via sub-resources verbinding met aangeboden opleidingen, erkenningen en relaties tussen fases.",
     "niet_geschikt_voor": [
       "Het aantal studenten per opleidingsfase (daarvoor: studentaantallen of prognoses)",
       "Kwantitatieve prestatiecijfers of slaagpercentages",
@@ -2387,23 +2388,6 @@
       "Locatiegegevens van instellingen die de fase aanbieden (daarvoor: onderwijslocaties)",
       "Tijdreeksen of historische veranderingen in slaagpercentages"
     ],
-    "_kolomtypes": {
-      "niveaus": "lijst",
-      "type": "tekst",
-      "id": "tekst",
-      "opleidingseenheidcode": "tekst",
-      "afkorting": "tekst",
-      "opleidingsherkomst": "tekst",
-      "internationaleNaamEngels": "onbekend",
-      "volledigeNaam": "tekst",
-      "korteNaam": "tekst",
-      "opheffingsdatum": "onbekend",
-      "startdatum": "tekst",
-      "begindatum": "tekst",
-      "einddatum": "onbekend",
-      "eigenOpleidingseenheidsleutel": "onbekend",
-      "omschrijving": "onbekend"
-    },
     "waardenbereik": {
       "periode": "Actueel register, dagelijks bijgewerkt om 05:30; historische snapshots via datumGeldigOp",
       "meetwaarden": [
@@ -2612,6 +2596,24 @@
       "eigenOpleidingseenheidsleutel": [],
       "omschrijving": []
     },
+    "_kolomtypes": {
+      "niveaus": "lijst",
+      "type": "tekst",
+      "id": "tekst",
+      "opleidingseenheidcode": "tekst",
+      "afkorting": "tekst",
+      "opleidingsherkomst": "tekst",
+      "internationaleNaamEngels": "onbekend",
+      "volledigeNaam": "tekst",
+      "korteNaam": "tekst",
+      "opheffingsdatum": "onbekend",
+      "startdatum": "tekst",
+      "begindatum": "tekst",
+      "einddatum": "onbekend",
+      "eigenOpleidingseenheidsleutel": "onbekend",
+      "omschrijving": "onbekend"
+    },
+    "samenvatting": "Deze resource bevat het register van opleidingsfasen in het Nederlandse onderwijs, zoals propedeuse, bachelor, master, maar ook onderbouw- en bovenbouwfases in het VO en BAO. Elke fase heeft een unieke code, naam, afkorting en is gekoppeld aan specifieke onderwijsniveaus (niveaus). De resource wordt dagelijks bijgewerkt en biedt via sub-resources verbinding met aangeboden opleidingen, erkenningen en relaties tussen fases.",
     "_verrijking_status": "ongecontroleerd"
   },
   {
@@ -2681,7 +2683,6 @@
     "_rio_resource": "opleidingsgroepen",
     "_thema": "Opleidingsstructuur",
     "_geo_niveau": [],
-    "samenvatting": "Deze resource bevat opleidingsgroepen: clusters van verwante opleidingen binnen een onderwijsinstelling of sector. Elke groep heeft een unieke code, afkorting en naam, met metadata over geldigheidsperiode en herkomst. De resource wordt dagelijks bijgewerkt en biedt via sub-resources toegang tot onderliggende opleidingen, erkenningen en fasen. Geschikt voor analyse van onderwijsstructuur en sectorindeling op instellingsniveau.",
     "niet_geschikt_voor": [
       "Studentaantallen of inschrijfgegevens (geen leerlingdata)",
       "Financiële gegevens of subsidies per opleiding",
@@ -2691,22 +2692,6 @@
       "Aanmeld- of toelatingsgegevens",
       "Arbeidsmarktuitkomsten per opleiding"
     ],
-    "_kolomtypes": {
-      "type": "tekst",
-      "id": "tekst",
-      "opleidingseenheidcode": "tekst",
-      "afkorting": "tekst",
-      "opleidingsherkomst": "tekst",
-      "internationaleNaamEngels": "onbekend",
-      "volledigeNaam": "tekst",
-      "korteNaam": "tekst",
-      "opheffingsdatum": "onbekend",
-      "startdatum": "tekst",
-      "begindatum": "tekst",
-      "einddatum": "onbekend",
-      "eigenOpleidingseenheidsleutel": "onbekend",
-      "omschrijving": "onbekend"
-    },
     "waardenbereik": {
       "periode": "Actueel (dagelijks bijgewerkt) + historisch via datumGeldigOp-filter",
       "meetwaarden": [
@@ -2894,6 +2879,23 @@
       "eigenOpleidingseenheidsleutel": [],
       "omschrijving": []
     },
+    "_kolomtypes": {
+      "type": "tekst",
+      "id": "tekst",
+      "opleidingseenheidcode": "tekst",
+      "afkorting": "tekst",
+      "opleidingsherkomst": "tekst",
+      "internationaleNaamEngels": "onbekend",
+      "volledigeNaam": "tekst",
+      "korteNaam": "tekst",
+      "opheffingsdatum": "onbekend",
+      "startdatum": "tekst",
+      "begindatum": "tekst",
+      "einddatum": "onbekend",
+      "eigenOpleidingseenheidsleutel": "onbekend",
+      "omschrijving": "onbekend"
+    },
+    "samenvatting": "Deze resource bevat opleidingsgroepen: clusters van verwante opleidingen binnen een onderwijsinstelling of sector. Elke groep heeft een unieke code, afkorting en naam, met metadata over geldigheidsperiode en herkomst. De resource wordt dagelijks bijgewerkt en biedt via sub-resources toegang tot onderliggende opleidingen, erkenningen en fasen. Geschikt voor analyse van onderwijsstructuur en sectorindeling op instellingsniveau.",
     "_verrijking_status": "ongecontroleerd"
   },
   {
@@ -2955,7 +2957,6 @@
     "_rio_resource": "opleidingsonderdelen",
     "_thema": "Opleidingsstructuur",
     "_geo_niveau": [],
-    "samenvatting": "Deze resource bevat afzonderlijke onderdelen en modules binnen een opleiding in het Nederlandse onderwijs. Het register biedt gedetailleerde informatie over opleidingscomponenten zoals taalvaardigheden (lezen, luisteren, spreken) op specifieke niveaus. De data wordt dagelijks bijgewerkt en is relevant voor onderwijsinstellingen die hun opleidingsaanbod op componentniveau willen analyseren. De resource is ideaal voor het inzichtelijk maken van de samenstelling van opleidingen en het vergelijken van opleidingscomponenten tussen instellingen.",
     "niet_geschikt_voor": [
       "Het vinden van specifieke instellingen of locaties (gebruik organisatorische-eenheden of onderwijslocaties)",
       "Het ophalen van studentenaantallen of prognoses (gebruik DUO-data)",
@@ -2963,26 +2964,6 @@
       "Het opvragen van toelatingseisen of instroomprofielen",
       "Het analyseren van diplomaverkregen of slagingspercentages"
     ],
-    "_kolomtypes": {
-      "studielast": "integer",
-      "studielasteenheid": "tekst",
-      "waardedocumentsoort": "onbekend",
-      "type": "tekst",
-      "id": "tekst",
-      "opleidingseenheidcode": "tekst",
-      "afkorting": "tekst",
-      "opleidingsherkomst": "tekst",
-      "internationaleNaamEngels": "onbekend",
-      "volledigeNaam": "tekst",
-      "korteNaam": "tekst",
-      "opheffingsdatum": "onbekend",
-      "startdatum": "tekst",
-      "begindatum": "tekst",
-      "einddatum": "onbekend",
-      "eigenOpleidingseenheidsleutel": "onbekend",
-      "omschrijving": "onbekend",
-      "niveau": "tekst"
-    },
     "waardenbereik": {
       "periode": "Actueel (dagelijks bijgewerkt om 05:30), historisch beschikbaar via datumGeldigOp",
       "meetwaarden": [
@@ -3168,6 +3149,27 @@
         "VO-VWO"
       ]
     },
+    "_kolomtypes": {
+      "studielast": "integer",
+      "studielasteenheid": "tekst",
+      "waardedocumentsoort": "onbekend",
+      "type": "tekst",
+      "id": "tekst",
+      "opleidingseenheidcode": "tekst",
+      "afkorting": "tekst",
+      "opleidingsherkomst": "tekst",
+      "internationaleNaamEngels": "onbekend",
+      "volledigeNaam": "tekst",
+      "korteNaam": "tekst",
+      "opheffingsdatum": "onbekend",
+      "startdatum": "tekst",
+      "begindatum": "tekst",
+      "einddatum": "onbekend",
+      "eigenOpleidingseenheidsleutel": "onbekend",
+      "omschrijving": "onbekend",
+      "niveau": "tekst"
+    },
+    "samenvatting": "Deze resource bevat afzonderlijke onderdelen en modules binnen een opleiding in het Nederlandse onderwijs. Het register biedt gedetailleerde informatie over opleidingscomponenten zoals taalvaardigheden (lezen, luisteren, spreken) op specifieke niveaus. De data wordt dagelijks bijgewerkt en is relevant voor onderwijsinstellingen die hun opleidingsaanbod op componentniveau willen analyseren. De resource is ideaal voor het inzichtelijk maken van de samenstelling van opleidingen en het vergelijken van opleidingscomponenten tussen instellingen.",
     "_verrijking_status": "ongecontroleerd"
   },
   {
@@ -3245,7 +3247,6 @@
     "_rio_resource": "opleidingserkenningen",
     "_thema": "Licenties en erkenningen",
     "_geo_niveau": [],
-    "samenvatting": "Formele erkenningen van opleidingen door erkennende instanties (in de regel OCW). De resource bevat metadata over welke opleidingscode erkend is, op basis van welke wet, in welk stelsel (BO, BOCN, CREBO) en met welke licentieerwijze. Geschikt voor beleidsmedewerkers die willen nagaan of een opleiding erkend is, onder welk wettelijk kader en sinds wanneer, inclusief koppeling naar gerelateerde financieringsbesluiten en opleidingsonderdelen.",
     "niet_geschikt_voor": [
       "Het ophalen van concrete opleidingsinformatie zoals leerwegen, studielast of certificering — gebruik daarvoor de sub-resource opleiding of opleidingsonderdeel",
       "Het opzoeken van specifieke instellingen of BRIN-codes — koppel via organisatorische-eenheden",
@@ -3253,21 +3254,6 @@
       "Real-time informatie over het aantal studenten per opleiding — hiervoor zijn andere bronnen geschikter",
       "Het identificeren van examenprogramma's — gebruik de sub-resource examenlicenties"
     ],
-    "_kolomtypes": {
-      "id": "tekst",
-      "erkendeopleidingscode": "tekst",
-      "ingangsdatum": "tekst",
-      "einddatum": "onbekend",
-      "ministerie": "tekst",
-      "opleidingsstelsel": "tekst",
-      "wet": "lijst",
-      "erkenner": "tekst",
-      "type": "tekst",
-      "licentieerwijze": "tekst",
-      "instroomeinddatum": "onbekend",
-      "prijsfactorBekostiging": "float",
-      "toegestaneLeerweg": "onbekend"
-    },
     "waardenbereik": {
       "periode": "Actueel; wordt dagelijks bijgewerkt. Historische snapshots mogelijk via datumGeldigOp-parameter.",
       "meetwaarden": [
@@ -3387,6 +3373,22 @@
       ],
       "toegestaneLeerweg": []
     },
+    "_kolomtypes": {
+      "id": "tekst",
+      "erkendeopleidingscode": "tekst",
+      "ingangsdatum": "tekst",
+      "einddatum": "onbekend",
+      "ministerie": "tekst",
+      "opleidingsstelsel": "tekst",
+      "wet": "lijst",
+      "erkenner": "tekst",
+      "type": "tekst",
+      "licentieerwijze": "tekst",
+      "instroomeinddatum": "onbekend",
+      "prijsfactorBekostiging": "float",
+      "toegestaneLeerweg": "onbekend"
+    },
+    "samenvatting": "Formele erkenningen van opleidingen door erkennende instanties (in de regel OCW). De resource bevat metadata over welke opleidingscode erkend is, op basis van welke wet, in welk stelsel (BO, BOCN, CREBO) en met welke licentieerwijze. Geschikt voor beleidsmedewerkers die willen nagaan of een opleiding erkend is, onder welk wettelijk kader en sinds wanneer, inclusief koppeling naar gerelateerde financieringsbesluiten en opleidingsonderdelen.",
     "_verrijking_status": "ongecontroleerd"
   },
   {
@@ -3440,26 +3442,12 @@
     "_rio_resource": "onderwijslicenties",
     "_thema": "Licenties en erkenningen",
     "_geo_niveau": [],
-    "samenvatting": "Deze resource bevat informatie over onderwijslicenties die instellingen het recht geven om onderwijs aan te bieden. De licenties bevatten gegevens over het type licentie, bekostiging, herkomst (bijv. NVAO, VZP_MTGO), stadium en looptijden. De data wordt dagelijks bijgewerkt en is beschikbaar op instellings-/licentieniveau.",
     "niet_geschikt_voor": [
       "Kwantitatieve analyses van studentenaantallen",
       "Vergelijkingen van kwaliteitsindicatoren tussen instellingen",
       "Historische trends ouder dan 10 jaar",
       "Gedetailleerde financiële analyses van bekostigingsbedragen"
     ],
-    "_kolomtypes": {
-      "type": "tekst",
-      "bekostigd": "boolean",
-      "id": "tekst",
-      "licentiecode": "tekst",
-      "herkomst": "tekst",
-      "stadium": "tekst",
-      "begindatum": "tekst",
-      "einddatum": "tekst",
-      "vorm": "lijst",
-      "leerweg": "tekst",
-      "erkendOpleidingskenmerk": "onbekend"
-    },
     "waardenbereik": {
       "periode": "actueel, dagelijks bijgewerkt",
       "meetwaarden": [
@@ -3590,6 +3578,20 @@
       ],
       "erkendOpleidingskenmerk": []
     },
+    "_kolomtypes": {
+      "type": "tekst",
+      "bekostigd": "boolean",
+      "id": "tekst",
+      "licentiecode": "tekst",
+      "herkomst": "tekst",
+      "stadium": "tekst",
+      "begindatum": "tekst",
+      "einddatum": "tekst",
+      "vorm": "lijst",
+      "leerweg": "tekst",
+      "erkendOpleidingskenmerk": "onbekend"
+    },
+    "samenvatting": "Deze resource bevat informatie over onderwijslicenties die instellingen het recht geven om onderwijs aan te bieden. De licenties bevatten gegevens over het type licentie, bekostiging, herkomst (bijv. NVAO, VZP_MTGO), stadium en looptijden. De data wordt dagelijks bijgewerkt en is beschikbaar op instellings-/licentieniveau.",
     "_verrijking_status": "ongecontroleerd"
   },
   {
@@ -3649,7 +3651,6 @@
     "_rio_resource": "examenlicenties",
     "_thema": "Licenties en erkenningen",
     "_geo_niveau": [],
-    "samenvatting": "Register van examenlicenties die instellingen het recht geven om examens af te nemen voor erkende opleidingen. Bevat per licentie de herkomst, het stadium, een begindatum en optionele einddatum, met een koppeling naar de bijbehorende opleidingserkenning. Data is actueel en dagelijks bijgewerkt. Geschikt voor het inzichtelijk maken van welke instellingen over welke examenbevoegdheden beschikken en hoe die zich in de tijd ontwikkelen.",
     "niet_geschikt_voor": [
       "Het achterhalen van specifieke examenvragen, toetsmateriaal of slaagpercentages",
       "Inzicht in het aantal studenten dat een examen heeft afgelegd",
@@ -3658,14 +3659,6 @@
       "Analyse van examenuitslagen, cijfers of rendementen",
       "Direct inzicht in welke opleiding aan een licentie is gekoppeld (vereist opleidingserkenning-sub-resource)"
     ],
-    "_kolomtypes": {
-      "id": "tekst",
-      "licentiecode": "tekst",
-      "herkomst": "tekst",
-      "stadium": "tekst",
-      "begindatum": "tekst",
-      "einddatum": "tekst"
-    },
     "waardenbereik": {
       "periode": "Actueel; dagelijks bijgewerkt om 05:30. Historische snapshots via datumGeldigOp",
       "meetwaarden": [
@@ -3780,6 +3773,15 @@
         "2031-08-01"
       ]
     },
+    "_kolomtypes": {
+      "id": "tekst",
+      "licentiecode": "tekst",
+      "herkomst": "tekst",
+      "stadium": "tekst",
+      "begindatum": "tekst",
+      "einddatum": "tekst"
+    },
+    "samenvatting": "Register van examenlicenties die instellingen het recht geven om examens af te nemen voor erkende opleidingen. Bevat per licentie de herkomst, het stadium, een begindatum en optionele einddatum, met een koppeling naar de bijbehorende opleidingserkenning. Data is actueel en dagelijks bijgewerkt. Geschikt voor het inzichtelijk maken van welke instellingen over welke examenbevoegdheden beschikken en hoe die zich in de tijd ontwikkelen.",
     "_verrijking_status": "ongecontroleerd"
   }
 ]
