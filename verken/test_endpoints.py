@@ -133,7 +133,7 @@ except Exception as e:
 print("\n=== Bestaand: RIO LOD API ===")
 try:
     r = httpx.get(
-        "https://lod.onderwijsregistratie.nl/api/rio/v2/organisatorische-eenheden",
+        "https://lod.onderwijsregistratie.nl/api/rio/v3/organisatorische-eenheden",
         params={"pageSize": 1},
         timeout=15,
     )

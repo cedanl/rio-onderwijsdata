@@ -2,7 +2,7 @@
 
 Dit is een Python package voor twee bronnen van Nederlandse onderwijsdata:
 
-1. **RIO LOD API v2** — dagelijks bijgewerkt register van instellingen en opleidingen
+1. **RIO LOD API v3** — dagelijks bijgewerkt register van instellingen en opleidingen (typefilters heten `type`; cohorten, contactadressen en onderwijslocatiegebruiken alleen als sub-resource)
 2. **DUO Open Data** — 56 datasets via onderwijsdata.duo.nl (CKAN API)
 
 Hieronder staat hoe je als AI-assistent een nieuwe analyse maakt van A tot Z.
@@ -20,7 +20,7 @@ src/riodata/
     rio_resources.json    Catalogus: zelfde resources, zonder AI-verrijking
     duo_resources.json    Catalogus: 56 DUO-datasets (gegenereerd uit CKAN)
 data/02-prepared/         bron-JSONs voor de RIO-catalogus
-RIO_LOD_API_v2.yml        OpenAPI spec van de RIO API
+RIO_LOD_API_v3.yml        OpenAPI spec van de RIO API (v3)
 voorbeelden/
   manifest.json           Bron voor alle voorbeelden op de site
   output/                 Plots (.png) en interpretaties (INTERPRETATIE.md)
@@ -104,7 +104,7 @@ Minimale structuur voor een **RIO-analyse**:
 ```python
 """
 Titel van de analyse
-Resource(s): RIO LOD API v2 — onderwijslocaties
+Resource(s): RIO LOD API v3 — onderwijslocaties
 Centrale vraag: ...
 """
 import pandas as pd

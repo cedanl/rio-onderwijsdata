@@ -68,6 +68,7 @@ def test_nietgecontroleerde_bronnen_worden_expliciet_genoemd(tmp_path):
                          spec_pad=tmp_path / "ontbreekt.yml", contract_pad=tmp_path / "ontbreekt.json")
     # review F8: een stil overgeslagen contractcheck moet zichtbaar zijn
     assert set(m["niet_gecontroleerd"]) == {"rio_contract", "rio_live", "sbb", "roa", "uwv", "inspectie"}
+    assert m["niet_gecontroleerd"][0] == "rio_live"  # zonder statussen is RIO live niet gecontroleerd
     assert "rio_contract" not in m["bronnen"]
 
 
@@ -160,3 +161,44 @@ def test_onvolledige_inventaris_overschrijft_het_manifest_niet(tmp_path, monkeyp
     monkeypatch.setattr(httpx, "Client", Client)
     assert bc.main(["--manifest", str(pad), "--schrijf"]) == 1
     assert pad.read_text() == '{"oud": true}'
+
+
+def test_rio_live_statussen_anders_dan_200_zijn_review():
+    m, meld = bc.controleer(None, duo_pkgs=[pkg("a")], catalogus_ids={"a"}, nu=T1,
+                            rio_statussen={"erkenningen": 200, "opleidingen": 410, "onderwijslocaties": 0})
+    assert "rio_live" not in m["niet_gecontroleerd"]
+    assert m["bronnen"]["rio_live"]["aantal"] == 3
+    assert meld == [
+        "RIO: onderwijslocaties antwoordt HTTP 0 op https://lod.onderwijsregistratie.nl/api/rio/v3/onderwijslocaties?pageSize=1",
+        "RIO: opleidingen antwoordt HTTP 410 op https://lod.onderwijsregistratie.nl/api/rio/v3/opleidingen?pageSize=1",
+    ]
+
+
+def test_rio_live_alle_200_geeft_geen_melding():
+    m, meld = bc.controleer(None, duo_pkgs=[pkg("a")], catalogus_ids={"a"}, nu=T1, rio_statussen={"erkenningen": 200})
+    assert meld == [] and m["bronnen"]["rio_live"]["items"] == {"erkenningen": 200}
+
+
+def test_ping_rio_vraagt_alleen_lijstresources(tmp_path):
+    contract = {"resources": {"erkenningen": {"lijst_endpoint": True}, "contactadressen": {"lijst_endpoint": False, "via": []},
+                              "opleidingen": {}}}
+    pad = tmp_path / "c.json"
+    pad.write_text(json.dumps(contract), encoding="utf-8")
+
+    class Antwoord:
+        def __init__(self, code):
+            self.status_code = code
+
+    class Client:
+        def __init__(self):
+            self.urls = []
+
+        def get(self, url, params=None, timeout=None):
+            self.urls.append(url)
+            if url.endswith("/opleidingen"):
+                raise OSError("time-out")
+            return Antwoord(200)
+
+    client = Client()
+    assert bc.ping_rio(client, pad) == {"erkenningen": 200, "opleidingen": 0}
+    assert all("/api/rio/v3/" in u for u in client.urls) and not any("contactadressen" in u for u in client.urls)

@@ -58,9 +58,11 @@ _JOIN_SLEUTELS = (
     ("GEMEENTENUMMER", "cbs_gemeentecode"),
     ("GEMEENTECODE", "cbs_gemeentecode"),
 )
-# ID-formaat per RIO-resource, uit het pad-parameter ``id`` van ``/{resource}/{id}`` in
-# RIO_LOD_API_v2.yml (test_rio_id_formaten_gelijk_aan_de_spec). Alleen drie zijn een UUID;
-# een opleidings-ID als '1002O5001-SBB-MIDDENKADEROPLEIDING' is opaak.
+# ID-formaat per RIO-resource. De v2-spec legde ze vast in het pad-parameter ``id`` van
+# ``/{resource}/{id}``; de v3-spec (RIO_LOD_API_v3.yml) noemt geen formaten meer, maar de API
+# valideert ze nog wel (GGM-003) en de records dragen ze (test_rio_id_formaten_gelijk_aan_de_spec,
+# tests/test_rio_live.py). Alleen drie zijn een UUID; een opleidings-ID als
+# '1002O5001-SBB-MIDDENKADEROPLEIDING' is opaak.
 _RIO_ID_FORMATEN = {
     "aangeboden-opleidingen": "uuid",
     "examenlicenties": "uuid",

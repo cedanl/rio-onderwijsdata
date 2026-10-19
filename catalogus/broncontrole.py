@@ -10,7 +10,10 @@ Wat het doet (en wat niet):
 - **RIO-contract**: hash van de meegeleverde OpenAPI-spec tegen het filtercontract (offline). Een
   nieuwe spec die het contract niet meer dekt is een reviewmelding. Dit vereist PR #28 (het
   filtercontract); ontbreekt dat bestand, dan staat ``rio_contract`` in ``niet_gecontroleerd``.
-- RIO live, SBB, ROA, UWV en Inspectie worden nog **niet** gecontroleerd.
+- **RIO live**: één GET (``pageSize=1``) per lijst-resource uit het contract. Elke andere status
+  dan 200 is een reviewmelding; zo valt een verwijderde API-versie (v2 gaf vanaf 19-10-2026 een
+  410) op bij de eerstvolgende controle in plaats van bij een gebruiker.
+- SBB, ROA, UWV en Inspectie worden nog **niet** gecontroleerd.
 
 Het manifest houdt vier tijdstempels apart: ``laatste_succesvolle_controle`` (wanneer wij
 keken), ``bron_laatst_gewijzigd`` (wat de bron zelf meldt), ``catalogus_gebouwd`` (wanneer de
@@ -31,6 +34,7 @@ from pathlib import Path
 
 ROOT = Path(__file__).resolve().parent.parent
 DATA = ROOT / "src" / "riodata" / "data"
+RIO_BASE = "https://lod.onderwijsregistratie.nl/api/rio/v3"
 MANIFEST = Path(__file__).resolve().parent / "bronmanifest.json"
 CKAN = "https://onderwijsdata.duo.nl/api/3/action/package_search"
 SCHEMA_VERSIE = 1
@@ -135,9 +139,41 @@ def fetch_duo(client) -> list[dict]:
     return pkgs
 
 
+def rio_live_inventaris(statussen: dict[str, int]) -> dict:
+    """Per lijst-resource de HTTP-status van één GET met ``pageSize=1``."""
+    return {
+        "aantal": len(statussen),
+        "bron_laatst_gewijzigd": None,
+        "inhoud_sha256": hashlib.sha256(json.dumps(statussen, sort_keys=True).encode()).hexdigest(),
+        "items": dict(sorted(statussen.items())),
+    }
+
+
+def meldingen_rio_live(nieuw: dict) -> list[str]:
+    return [
+        f"RIO: {resource} antwoordt HTTP {status} op {RIO_BASE}/{resource}?pageSize=1"
+        for resource, status in nieuw["items"].items() if status != 200
+    ]
+
+
+def ping_rio(client, contract_pad: Path = DATA / "rio_filtercontract.json") -> dict[str, int]:
+    """Eén GET per lijst-resource uit het contract; een netwerkfout telt als status 0."""
+    contract = json.loads(contract_pad.read_text(encoding="utf-8"))
+    statussen = {}
+    for resource, res in contract["resources"].items():
+        if not res.get("lijst_endpoint", True):
+            continue
+        try:
+            statussen[resource] = client.get(f"{RIO_BASE}/{resource}", params={"pageSize": 1}, timeout=30).status_code
+        except Exception:  # DNS, time-out: de resource antwoordt niet
+            statussen[resource] = 0
+    return statussen
+
+
 def controleer(oud_manifest: dict | None, *, duo_pkgs: list[dict], catalogus_ids: set[str],
-               spec_pad: Path = ROOT / "RIO_LOD_API_v2.yml",
+               spec_pad: Path = ROOT / "RIO_LOD_API_v3.yml",
                contract_pad: Path = DATA / "rio_filtercontract.json",
+               rio_statussen: dict[str, int] | None = None,
                nu: dt.datetime | None = None, catalogus_gebouwd: str | None = None) -> tuple[dict, list[str]]:
     """Bouw het nieuwe manifest en de reviewmeldingen. Pure functie, zonder netwerk."""
     nu = nu or dt.datetime.now(dt.timezone.utc)
@@ -145,7 +181,7 @@ def controleer(oud_manifest: dict | None, *, duo_pkgs: list[dict], catalogus_ids
     duo = duo_inventaris(duo_pkgs)
     bronnen = {"duo_ckan": duo}
     meldingen = meldingen_duo(oud.get("duo_ckan"), duo, catalogus_ids)
-    niet_gecontroleerd = ["rio_live", "sbb", "roa", "uwv", "inspectie"]
+    niet_gecontroleerd = ["sbb", "roa", "uwv", "inspectie"]
     if contract_pad.exists() and spec_pad.exists():
         rio = rio_contract_inventaris(spec_pad, contract_pad)
         bronnen["rio_contract"] = rio
@@ -153,6 +189,12 @@ def controleer(oud_manifest: dict | None, *, duo_pkgs: list[dict], catalogus_ids
     else:
         # Zonder het filtercontract (PR #28) of de spec is er niets te vergelijken: expliciet melden.
         niet_gecontroleerd.insert(0, "rio_contract")
+    if rio_statussen is not None:
+        live = rio_live_inventaris(rio_statussen)
+        bronnen["rio_live"] = live
+        meldingen += meldingen_rio_live(live)
+    else:
+        niet_gecontroleerd.insert(0, "rio_live")
     stempel = nu.isoformat(timespec="seconds")
     for b in bronnen.values():
         b["laatste_succesvolle_controle"] = stempel
@@ -180,7 +222,8 @@ def main(argv: list[str] | None = None) -> int:
     try:
         with httpx.Client() as client:
             pkgs = fetch_duo(client)
-        manifest, meldingen = controleer(oud, duo_pkgs=pkgs, catalogus_ids=_catalogus_ids())
+            rio_statussen = ping_rio(client)
+        manifest, meldingen = controleer(oud, duo_pkgs=pkgs, catalogus_ids=_catalogus_ids(), rio_statussen=rio_statussen)
     except Exception as e:  # netwerk of CKAN-fout: manifest blijft zoals het was
         print(f"Controle mislukt, manifest ongewijzigd: {e}", file=sys.stderr)
         return 1

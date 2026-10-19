@@ -1,10 +1,11 @@
-"""RIO-filtercontract: queryparameters per resource, afgeleid uit de OpenAPI-spec.
+"""RIO-filtercontract: queryparameters per resource, afgeleid uit de OpenAPI-spec (v3).
 
 Het contract (``data/rio_filtercontract.json``) wordt gegenereerd door
 ``catalogus/genereer_filtercontract.py``. Enums, types en formats komen uit de spec,
 niet uit voorbeeldrecords. Filters die wel in de catalogus staan maar niet in de spec
-(``datumGeldigOp`` op cohorten) staan onder ``catalogus_zonder_spec``: live ondersteuning
-is daarvoor niet vastgesteld.
+staan onder ``catalogus_zonder_spec``: live ondersteuning is daarvoor niet vastgesteld.
+Een resource zonder lijst-endpoint in v3 (``lijst_endpoint`` false) is alleen als
+sub-resource op te halen; ``via`` noemt de paden en ``filters`` zijn die van dat pad.
 """
 from __future__ import annotations
 
@@ -46,6 +47,11 @@ def filters(resource: str) -> dict[str, dict]:
     return {f["naam"]: f for f in _resource(resource)["filters"]}
 
 
+def lijstresources() -> list[str]:
+    """De resources met een lijst-endpoint (``fetch``); de rest is alleen als sub-resource op te halen."""
+    return [naam for naam, res in filtercontract()["resources"].items() if res.get("lijst_endpoint", True)]
+
+
 def typewaarden(resource: str, sector: str, filter_naam: str | None = None) -> list[str]:
     """Waarden van het type-filter die bij een sector horen, volgens de spec-enum.
 
@@ -81,6 +87,10 @@ def valideer_filters(resource: str, params: dict) -> list[dict]:
     bekend = filters(resource)
     zonder_spec = {f["naam"]: f["status"] for f in _resource(resource).get("catalogus_zonder_spec", [])}
     problemen = []
+    if not _resource(resource).get("lijst_endpoint", True):
+        via = ", ".join(_resource(resource).get("via", [])) or "onbekend"
+        problemen.append({"filter": "", "probleem": "geen lijst-endpoint",
+                          "herstel": f"RIO v3 heeft geen lijst-endpoint /{resource}; alleen als sub-resource ({via})"})
     for naam, waarde in params.items():
         if naam in _resource(resource)["paginering"]:
             if naam in ("page", "pageSize") and (isinstance(waarde, bool) or not isinstance(waarde, int) or waarde < 0):

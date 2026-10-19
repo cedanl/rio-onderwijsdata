@@ -10,10 +10,10 @@
     "categorie": "Instellingen",
     "sectie": "Institutionele Registers",
     "documentatie": {
-      "tekst": "RIO LOD API v2 — organisatorische-eenheden",
-      "url": "https://lod.onderwijsregistratie.nl/api/rio/v2/organisatorische-eenheden"
+      "tekst": "RIO LOD API v3 — organisatorische-eenheden",
+      "url": "https://lod.onderwijsregistratie.nl/api/rio/v3/organisatorische-eenheden"
     },
-    "filters": ["organisatorischeEenheidType", "onderwijslocatiegebruikId", "aangebodenOpleidingId", "instellingserkenningId", "datumGeldigOp"],
+    "filters": ["type", "onderwijslocatiegebruikId", "aangebodenOpleidingId", "instellingserkenningId", "datumGeldigOp"],
     "sub_resources": ["aangeboden-opleidingen", "contactadressen", "erkenningen", "onderwijslocatiegebruiken", "organisatierelaties"],
     "voorbeeldvragen": [
       "Hoeveel actieve MBO-instellingen zijn er in Nederland?",
@@ -36,10 +36,10 @@
     "categorie": "Instellingen",
     "sectie": "Institutionele Registers",
     "documentatie": {
-      "tekst": "RIO LOD API v2 — erkenningen",
-      "url": "https://lod.onderwijsregistratie.nl/api/rio/v2/erkenningen"
+      "tekst": "RIO LOD API v3 — erkenningen",
+      "url": "https://lod.onderwijsregistratie.nl/api/rio/v3/erkenningen"
     },
-    "filters": ["erkenningtype", "volledigeNaam", "plaatsnaam", "datumGeldigOp"],
+    "filters": ["type", "volledigeNaam", "plaatsnaam", "datumGeldigOp"],
     "sub_resources": ["examenlicenties", "financieringsbesluiten", "instellingsrelaties", "onderwijslicenties", "onderwijslocatiegebruiken", "organisatorische-eenheden"],
     "voorbeeldvragen": [
       "Welke instellingen vallen onder de WHW (Wet op het hoger onderwijs)?",
@@ -62,11 +62,11 @@
     "categorie": "Instellingen",
     "sectie": "Institutionele Registers",
     "documentatie": {
-      "tekst": "RIO LOD API v2 — contactadressen",
-      "url": "https://lod.onderwijsregistratie.nl/api/rio/v2/contactadressen"
+      "tekst": "RIO LOD API v3 — contactadressen (alleen als sub-resource)",
+      "url": "https://lod.onderwijsregistratie.nl/rio-api"
     },
-    "filters": ["contactadrestype", "datumGeldigOp"],
-    "sub_resources": ["organisatorische-eenheid"],
+    "filters": ["datumGeldigOp"],
+    "sub_resources": [],
     "voorbeeldvragen": [
       "In welke steden zitten de meeste onderwijsaanbieders?",
       "Wat zijn de contactgegevens van alle MBO-scholen in Utrecht?",
@@ -88,11 +88,11 @@
     "categorie": "Locaties",
     "sectie": "Institutionele Registers",
     "documentatie": {
-      "tekst": "RIO LOD API v2 — onderwijslocaties",
-      "url": "https://lod.onderwijsregistratie.nl/api/rio/v2/onderwijslocaties"
+      "tekst": "RIO LOD API v3 — onderwijslocaties",
+      "url": "https://lod.onderwijsregistratie.nl/api/rio/v3/onderwijslocaties"
     },
     "filters": ["aangebodenOpleidingId", "datumGeldigOp"],
-    "sub_resources": ["onderwijslocatiegebruik", "aangeboden-opleidingen"],
+    "sub_resources": ["onderwijslocatiegebruiken"],
     "voorbeeldvragen": [
       "In welke steden staan de meeste onderwijslocaties?",
       "Wat zijn de GPS-coördinaten van alle scholen in Friesland?",
@@ -114,10 +114,10 @@
     "categorie": "Locaties",
     "sectie": "Institutionele Registers",
     "documentatie": {
-      "tekst": "RIO LOD API v2 — onderwijslocatiegebruiken",
-      "url": "https://lod.onderwijsregistratie.nl/api/rio/v2/onderwijslocatiegebruiken"
+      "tekst": "RIO LOD API v3 — onderwijslocatiegebruiken (alleen als sub-resource)",
+      "url": "https://lod.onderwijsregistratie.nl/rio-api"
     },
-    "filters": ["onderwijslocatieId", "onderwijsbestuurId", "datumGeldigOp"],
+    "filters": ["datumGeldigOp"],
     "sub_resources": [],
     "voorbeeldvragen": [
       "Welke scholen gebruiken dezelfde locatie?",
@@ -140,11 +140,11 @@
     "categorie": "Aanbod",
     "sectie": "Opleidingsregisters",
     "documentatie": {
-      "tekst": "RIO LOD API v2 — aangeboden-opleidingen",
-      "url": "https://lod.onderwijsregistratie.nl/api/rio/v2/aangeboden-opleidingen"
+      "tekst": "RIO LOD API v3 — aangeboden-opleidingen",
+      "url": "https://lod.onderwijsregistratie.nl/api/rio/v3/aangeboden-opleidingen"
     },
     "filters": ["type", "onderwijslocatieId", "datumGeldigOp", "opleidingseenheidcode", "organisatorischeEenheidcode"],
-    "sub_resources": ["aangeboden-opleiding-cohorten", "onderwijsaanbieder", "onderwijslocatie", "opleiding", "opleidingsfase", "opleidingsgroep", "opleidingsonderdeel"],
+    "sub_resources": ["aangeboden-opleiding-cohorten", "onderwijslocatie", "opleiding", "opleidingsfase", "opleidingsgroep", "opleidingsonderdeel", "organisatorische-eenheid"],
     "voorbeeldvragen": [
       "Welke MBO-opleidingen worden aangeboden in Eindhoven?",
       "Welke instelling biedt de opleiding met CREBO-code 25604 aan?",
@@ -166,10 +166,10 @@
     "categorie": "Aanbod",
     "sectie": "Opleidingsregisters",
     "documentatie": {
-      "tekst": "RIO LOD API v2 — aangeboden-opleiding-cohorten",
-      "url": "https://lod.onderwijsregistratie.nl/api/rio/v2/aangeboden-opleiding-cohorten"
+      "tekst": "RIO LOD API v3 — aangeboden-opleiding-cohorten (alleen als sub-resource)",
+      "url": "https://lod.onderwijsregistratie.nl/rio-api"
     },
-    "filters": ["aangebodenOpleidingCohorttype", "aanmeldperiode", "beginAanmeldperiode", "eindeAanmeldperiode", "datumGeldigOp"],
+    "filters": ["aanmeldperiode"],
     "sub_resources": [],
     "voorbeeldvragen": [
       "Welke MBO-opleidingen bieden flexibele instroom aan?",
@@ -192,11 +192,11 @@
     "categorie": "Opleidingsstructuur",
     "sectie": "Opleidingsregisters",
     "documentatie": {
-      "tekst": "RIO LOD API v2 — opleidingen",
-      "url": "https://lod.onderwijsregistratie.nl/api/rio/v2/opleidingen"
+      "tekst": "RIO LOD API v3 — opleidingen",
+      "url": "https://lod.onderwijsregistratie.nl/api/rio/v3/opleidingen"
     },
-    "filters": ["datumGeldigOp"],
-    "sub_resources": [],
+    "filters": ["datumGeldigOp", "type"],
+    "sub_resources": ["aangeboden-opleidingen", "opleidingserkenningen", "opleidingsrelaties"],
     "voorbeeldvragen": [
       "Welke opleidingen hebben een geldig CREBO-code?",
       "Hoeveel erkende HBO-opleidingen zijn er in Nederland?",
@@ -218,11 +218,11 @@
     "categorie": "Opleidingsstructuur",
     "sectie": "Opleidingsregisters",
     "documentatie": {
-      "tekst": "RIO LOD API v2 — opleidingsfasen",
-      "url": "https://lod.onderwijsregistratie.nl/api/rio/v2/opleidingsfasen"
+      "tekst": "RIO LOD API v3 — opleidingsfasen",
+      "url": "https://lod.onderwijsregistratie.nl/api/rio/v3/opleidingsfasen"
     },
-    "filters": ["opleidingseenheidtype", "datumGeldigOp"],
-    "sub_resources": ["aangeboden-opleidingen", "opleidingserkenning", "opleidingsrelaties"],
+    "filters": ["type", "datumGeldigOp"],
+    "sub_resources": ["aangeboden-opleidingen", "opleidingserkenningen", "opleidingsrelaties"],
     "voorbeeldvragen": [
       "Hoeveel bachelor-opleidingen zijn er per HO-instelling?",
       "Welke instellingen bieden zowel propedeuse als master aan in dezelfde opleiding?",
@@ -244,11 +244,11 @@
     "categorie": "Opleidingsstructuur",
     "sectie": "Opleidingsregisters",
     "documentatie": {
-      "tekst": "RIO LOD API v2 — opleidingsgroepen",
-      "url": "https://lod.onderwijsregistratie.nl/api/rio/v2/opleidingsgroepen"
+      "tekst": "RIO LOD API v3 — opleidingsgroepen",
+      "url": "https://lod.onderwijsregistratie.nl/api/rio/v3/opleidingsgroepen"
     },
-    "filters": ["opleidingseenheidtype", "datumGeldigOp"],
-    "sub_resources": ["aangeboden-opleidingen", "opleidingen", "opleidingserkenning", "opleidingsfasen", "opleidingsrelaties"],
+    "filters": ["type", "datumGeldigOp"],
+    "sub_resources": ["aangeboden-opleidingen", "opleidingserkenning", "opleidingsrelaties"],
     "voorbeeldvragen": [
       "Welke opleidingsgroepen (domeinen) biedt een instelling aan?",
       "Hoeveel techniekopleidingen zijn er gegroepeerd per MBO-school?",
@@ -270,11 +270,11 @@
     "categorie": "Opleidingsstructuur",
     "sectie": "Opleidingsregisters",
     "documentatie": {
-      "tekst": "RIO LOD API v2 — opleidingsonderdelen",
-      "url": "https://lod.onderwijsregistratie.nl/api/rio/v2/opleidingsonderdelen"
+      "tekst": "RIO LOD API v3 — opleidingsonderdelen",
+      "url": "https://lod.onderwijsregistratie.nl/api/rio/v3/opleidingsonderdelen"
     },
-    "filters": ["opleidingseenheidtype", "datumGeldigOp"],
-    "sub_resources": ["aangeboden-opleidingen", "opleidingserkenning", "opleidingsrelaties"],
+    "filters": ["type", "datumGeldigOp"],
+    "sub_resources": ["aangeboden-opleidingen", "opleidingserkenningen", "opleidingsrelaties"],
     "voorbeeldvragen": [
       "Hoeveel onderdelen heeft een specifieke MBO-kwalificatie?",
       "Welke keuzedelen worden aangeboden bij een bepaalde basisopleiding?",
@@ -296,10 +296,10 @@
     "categorie": "Licenties en erkenningen",
     "sectie": "Opleidingsregisters",
     "documentatie": {
-      "tekst": "RIO LOD API v2 — opleidingserkenningen",
-      "url": "https://lod.onderwijsregistratie.nl/api/rio/v2/opleidingserkenningen"
+      "tekst": "RIO LOD API v3 — opleidingserkenningen",
+      "url": "https://lod.onderwijsregistratie.nl/api/rio/v3/opleidingserkenningen"
     },
-    "filters": ["opleidingserkenningtype", "erkendeopleidingscode", "datumGeldigOp"],
+    "filters": ["type", "erkendeopleidingscode", "datumGeldigOp"],
     "sub_resources": ["examenlicenties", "financieringsbesluiten", "onderwijslicenties", "opleiding", "opleidingsfase", "opleidingsgroep", "opleidingsonderdeel"],
     "voorbeeldvragen": [
       "Welke opleidingen hebben zowel een onderwijs- als examenlicentie?",
@@ -322,8 +322,8 @@
     "categorie": "Licenties en erkenningen",
     "sectie": "Opleidingsregisters",
     "documentatie": {
-      "tekst": "RIO LOD API v2 — onderwijslicenties",
-      "url": "https://lod.onderwijsregistratie.nl/api/rio/v2/onderwijslicenties"
+      "tekst": "RIO LOD API v3 — onderwijslicenties",
+      "url": "https://lod.onderwijsregistratie.nl/api/rio/v3/onderwijslicenties"
     },
     "filters": ["type", "datumGeldigOp"],
     "sub_resources": ["opleidingserkenning"],
@@ -348,8 +348,8 @@
     "categorie": "Licenties en erkenningen",
     "sectie": "Opleidingsregisters",
     "documentatie": {
-      "tekst": "RIO LOD API v2 — examenlicenties",
-      "url": "https://lod.onderwijsregistratie.nl/api/rio/v2/examenlicenties"
+      "tekst": "RIO LOD API v3 — examenlicenties",
+      "url": "https://lod.onderwijsregistratie.nl/api/rio/v3/examenlicenties"
     },
     "filters": ["datumGeldigOp"],
     "sub_resources": ["opleidingserkenning"],

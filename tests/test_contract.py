@@ -201,13 +201,22 @@ def test_rio_id_volgt_het_formaat_uit_de_spec():
 
 
 def test_rio_id_formaten_gelijk_aan_de_spec():
+    """De v3-spec noemt geen ID-formaten meer (alleen minLength 1): wat de spec wél zegt moet kloppen,
+    en elke resource met een vastgelegd formaat moet in de spec bestaan. Het formaat zelf toetst
+    tests/test_rio_live.py tegen echte records."""
     yaml = pytest.importorskip("yaml")
     from pathlib import Path
-    spec = yaml.safe_load((Path(__file__).parent.parent / "RIO_LOD_API_v2.yml").read_text())
+    spec = yaml.safe_load((Path(__file__).parent.parent / "RIO_LOD_API_v3.yml").read_text())
+    in_spec = set()
     for pad, item in spec["paths"].items():
         delen = pad.strip("/").split("/")
         if len(delen) != 2 or delen[1] != "{id}":
             continue
-        (prm,) = [p["schema"] for p in item["get"]["parameters"] if p["name"] == "id" and p["in"] == "path"]
-        verwacht = "uuid" if prm.get("format") == "uuid" or prm.get("minLength") == 36 else prm.get("pattern", "opaak")
-        assert c._rio_id_formaat(delen[0]) == verwacht.strip("()"), delen[0]
+        in_spec.add(delen[0])
+        params = [spec["components"]["parameters"][p["$ref"].split("/")[-1]] if "$ref" in p else p
+                  for p in item["get"]["parameters"]]
+        (prm,) = [p["schema"] for p in params if p["name"] == "id" and p["in"] == "path"]
+        if prm.get("format") == "uuid" or prm.get("minLength") == 36 or prm.get("pattern"):
+            verwacht = "uuid" if prm.get("format") == "uuid" or prm.get("minLength") == 36 else prm["pattern"]
+            assert c._rio_id_formaat(delen[0]) == verwacht.strip("()"), delen[0]
+    assert set(c._RIO_ID_FORMATEN) <= in_spec

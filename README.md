@@ -2,7 +2,7 @@
 
 Python client voor Nederlandse onderwijs- en arbeidsmarktdata uit zes bronnen:
 
-- **RIO LOD API v2** — dagelijks bijgewerkt register van instellingen en opleidingen (14 resources)
+- **RIO LOD API v3** — dagelijks bijgewerkt register van instellingen en opleidingen (14 resources, waarvan 3 alleen als sub-resource)
 - **DUO Open Data** — 56 datasets via [onderwijsdata.duo.nl](https://onderwijsdata.duo.nl) (CKAN API)
 - **ROA** — arbeidsmarktprognoses (2 datasets)
 - **UWV** — Open Match Data (1 dataset)
@@ -15,14 +15,14 @@ Niet op PyPI: installeer vanaf GitHub op een vaste release-tag (gebruik niet `ma
 reproduceerbare omgevingen):
 
 ```bash
-pip install "riodata @ git+https://github.com/cedanl/rio-onderwijsdata@v0.5.0"             # alleen clients (httpx)
-pip install "riodata[analyse] @ git+https://github.com/cedanl/rio-onderwijsdata@v0.5.0"    # + pandas, matplotlib, openpyxl
-pip install "riodata[duo] @ git+https://github.com/cedanl/rio-onderwijsdata@v0.5.0"        # + openpyxl (DUO Excel)
-pip install "riodata[sbb] @ git+https://github.com/cedanl/rio-onderwijsdata@v0.5.0"        # + openpyxl (riodata.crebo)
-pip install "riodata[catalogus] @ git+https://github.com/cedanl/rio-onderwijsdata@v0.5.0"  # + anthropic, pyyaml
+pip install "riodata @ git+https://github.com/cedanl/rio-onderwijsdata@v0.6.0"             # alleen clients (httpx)
+pip install "riodata[analyse] @ git+https://github.com/cedanl/rio-onderwijsdata@v0.6.0"    # + pandas, matplotlib, openpyxl
+pip install "riodata[duo] @ git+https://github.com/cedanl/rio-onderwijsdata@v0.6.0"        # + openpyxl (DUO Excel)
+pip install "riodata[sbb] @ git+https://github.com/cedanl/rio-onderwijsdata@v0.6.0"        # + openpyxl (riodata.crebo)
+pip install "riodata[catalogus] @ git+https://github.com/cedanl/rio-onderwijsdata@v0.6.0"  # + anthropic, pyyaml
 ```
 
-Met uv: `uv add "riodata[analyse] @ git+https://github.com/cedanl/rio-onderwijsdata@v0.5.0"`.
+Met uv: `uv add "riodata[analyse] @ git+https://github.com/cedanl/rio-onderwijsdata@v0.6.0"`.
 Controle na installatie: `python -c "import riodata; print(riodata.__version__, riodata.contract.catalog_manifest()['inhoudshash'])"`.
 
 ## RIO LOD API
@@ -32,6 +32,9 @@ from riodata import fetch, get, related
 
 # Alle onderwijslocaties ophalen (pagineert automatisch)
 locaties = fetch("onderwijslocaties")
+
+# Typefilters heten in v3 overal `type` (v2: erkenningtype, opleidingseenheidtype, ...)
+besturen = fetch("erkenningen", type="BEVOEGD_GEZAG", volledigeNaam="ROC Mondriaan")
 
 # Aangeboden opleidingen per instelling via BRIN-code
 aanbod = fetch("aangeboden-opleidingen", organisatorischeEenheidcode="25LH")
@@ -88,8 +91,12 @@ alleen met een filter (RIO-type), resourcekeuze of rijselectie (DUO) leverbaar i
 ## Broncontrole
 
 Een wekelijkse workflow (`.github/workflows/broncontrole.yml`) vergelijkt de DUO CKAN-inventaris en de
-RIO-spec met de catalogus en meldt verschillen als issue. De catalogus wordt daarbij niet automatisch
-vernieuwd. RIO live, SBB, ROA, UWV en Inspectie worden nog niet gecontroleerd.
+RIO-spec met de catalogus, doet één GET per RIO-lijstresource (een verwijderde API-versie valt zo op bij de
+eerstvolgende controle) en meldt verschillen als issue. De catalogus wordt daarbij niet automatisch
+vernieuwd. SBB, ROA, UWV en Inspectie worden nog niet gecontroleerd.
+
+De live contracttest tegen RIO v3 (elke lijstresource, elk filter, de sub-resources en de ID-formaten) draait
+alleen op verzoek: `RIODATA_LIVE=1 uv run pytest tests/test_rio_live.py`.
 
 ## Catalogus
 
@@ -121,11 +128,11 @@ src/riodata/
 data/02-prepared/       bron-JSONs voor de catalogus
 voorbeelden/            analysescripts + plots
 docs/                   GitHub Pages catalogussite
-RIO_LOD_API_v2.yml      OpenAPI spec van de RIO API
+RIO_LOD_API_v3.yml      OpenAPI spec van de RIO API (v3; v2 is op 19-10-2026 verwijderd)
 ```
 
 ## Links
 
 - [Catalogussite](https://cedanl.github.io/rio-onderwijsdata)
-- [RIO LOD API documentatie](https://lod.onderwijsregistratie.nl/api/rio/v2)
+- [RIO LOD API documentatie](https://lod.onderwijsregistratie.nl/rio-api)
 - [DUO Open Data portaal](https://onderwijsdata.duo.nl/datasets)

@@ -30,7 +30,7 @@ def test_readme_aantallen_komen_uit_de_catalogus():
     assert _aantal(r'source="duo"\)\s+# (\d+) DUO') == len(riodata.catalog("duo"))
     assert _aantal(r'source="all"\)\s+# (\d+) gecombineerd') == len(riodata.catalog("all"))
     assert _aantal(r"\*\*DUO Open Data\*\* — (\d+) datasets") == len(riodata.catalog("duo"))
-    assert _aantal(r"\*\*RIO LOD API v2\*\*.*\((\d+) resources\)") == len(riodata.catalog("rio"))
+    assert _aantal(r"\*\*RIO LOD API v3\*\*.*\((\d+) resources") == len(riodata.catalog("rio"))
     assert _aantal(r"\*\*ROA\*\* — .*\((\d+) datasets\)") == len(riodata.catalog("roa"))
     assert _aantal(r"\*\*UWV\*\* — .*\((\d+) dataset\)") == len(riodata.catalog("uwv"))
     assert _aantal(r"\*\*Inspectie van het Onderwijs\*\* — .*\((\d+) datasets\)") == len(riodata.catalog("inspectie"))
