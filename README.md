@@ -66,6 +66,12 @@ df = duo.load("p01hoinges", 1)           # WO ingeschrevenen per geslacht
 df = duo.load("p01hoinges", "b88721ef-9787-4299-afc7-5d74380d29ba")  # op CKAN resource-UUID (stabiel)
 # Een naam-substring die op meer resources past geeft AmbigueResource met de opties.
 
+# Herkomst van wat er geladen is: dataset, resource en url, plus de bestandsversie
+df.attrs["bron"]["last_modified"]  # '2026-04-08T12:51:36.650779': wanneer DUO het bestand verving (UTC)
+df.attrs["bron"]["hash"]           # md5 die DUO opgeeft; None bij een datastore-dump
+df.attrs["bron"]["md5"]            # md5 van de geladen bytes: gelijk aan hash als het DUO's bestand is
+df.attrs["bron"]["etag"]           # ETag van de download
+
 # Officiële kolomtypes per resource (offline; '0106' blijft tekst)
 duo.resource_schemas("p01hoinges")
 ```

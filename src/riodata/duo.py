@@ -20,6 +20,7 @@ Gebruik:
     duo.resource_schemas("p01hoinges")  # officiële kolomtypes per resource, offline
 """
 from __future__ import annotations
+import hashlib
 import io
 import json
 from functools import lru_cache
@@ -201,7 +202,9 @@ def catalog() -> list[dict]:
 def resources(dataset_id: str) -> list[dict]:
     """Geef beschikbare bestanden (resources) voor een dataset.
 
-    Returns lijst van dicts met: naam, url, format, id
+    Returns lijst van dicts met: naam, url, format, id, last_modified, hash. De laatste twee zijn
+    de bestandsversie volgens CKAN: wanneer DUO het bestand verving (ISO, UTC) en de md5 die DUO
+    ervan opgeeft. Een datastore-dump heeft ze niet (None).
     """
     pkg = _ckan("package_show", id=dataset_id)
     return [
@@ -210,6 +213,8 @@ def resources(dataset_id: str) -> list[dict]:
             "url": _public_url(r),
             "format": r.get("format", "").upper(),
             "id": r.get("id", ""),
+            "last_modified": r.get("last_modified") or None,
+            "hash": r.get("hash") or None,
         }
         for r in pkg.get("resources", [])
     ]
@@ -271,6 +276,14 @@ def load(
         "resource_naam": res["naam"],
         "url": url,
         "schema_sha256": schema["schema_sha256"] if schema else None,
+        # De versie van wat er geladen is, zonder extra aanroep: last_modified en hash uit de
+        # package_show van resources(), de ETag van de download, en de md5 van de bytes zelf.
+        # Is md5 gelijk aan hash, dan is dit het bestand dat DUO registreerde. Een datastore-dump
+        # heeft geen last_modified, hash of ETag; md5 is er altijd.
+        "last_modified": res.get("last_modified"),
+        "hash": res.get("hash"),
+        "etag": r.headers.get("ETag"),
+        "md5": hashlib.md5(r.content, usedforsecurity=False).hexdigest(),
     }
     return df
 

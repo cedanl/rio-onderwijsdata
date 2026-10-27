@@ -79,6 +79,7 @@ def test_reader_leest_tekstkolommen_als_tekst(monkeypatch):
 
     class R:
         content = b"STUDIEJAAR,GEMEENTENUMMER,AANTAL_INGESCHREVENEN\n2021,0106,33\n"
+        headers = {}
         def raise_for_status(self): pass
 
     monkeypatch.setattr(duo.httpx, "get", lambda *a, **k: R())
